@@ -84,7 +84,7 @@ public class EphemerisAccurate implements IEphemeris {
     private final Map<String, Integer> indexMap;
 
     // Names of planets, moon, and sun for which ephemeris can be computed
-    private final List<String> bodies;
+    private final Set<String> bodies;
 
     // First valid date
     private final GregorianCalendar firstValidDate;
@@ -93,7 +93,7 @@ public class EphemerisAccurate implements IEphemeris {
     private final GregorianCalendar lastValidDate;
 
     // Singleton instance
-    private static IEphemeris instance = null;
+    public static final IEphemeris the = new EphemerisAccurate();
 
     // Location of the JPL DE405 ephemeris files (text versions) 
     private static final String locationDE405EphemerisFiles = "DE405EphemerisFiles/";
@@ -167,8 +167,7 @@ public class EphemerisAccurate implements IEphemeris {
         indexMap.put("Earth", 11);
 
         // Names of planets, moon, and sun for which ephemeris can be computed
-        bodies = new ArrayList<>();
-        bodies.addAll(indexMap.keySet());
+        bodies = indexMap.keySet();
 
         // First valid date: January 1, 1620
         firstValidDate = JulianDateConverter.convertJulianDateToCalendar(2312752.5);
@@ -181,18 +180,6 @@ public class EphemerisAccurate implements IEphemeris {
         today.setTimeZone(TimeZone.getTimeZone("UTC"));
         currentJulianDateTime = JulianDateConverter.convertCalendarToJulianDate(today);
         planetaryEphemeris(currentJulianDateTime);
-    }
-
-    /**
-     * Get instance of EphemerisAccurate.
-     *
-     * @return instance
-     */
-    public static IEphemeris getInstance() {
-        if (instance == null) {
-            instance = new EphemerisAccurate();
-        }
-        return instance;
     }
 
     @Override
@@ -208,7 +195,13 @@ public class EphemerisAccurate implements IEphemeris {
     @Override
     public List<String> getBodies() {
         // Names of planets, moon, and sun for which DE405 ephemeris is known
-        return Collections.unmodifiableList(bodies);
+        //return Collections.unmodifiableList(bodies);
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean has(String body) {
+        return bodies.contains(body);
     }
 
     @Override

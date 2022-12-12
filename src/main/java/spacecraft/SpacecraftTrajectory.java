@@ -103,7 +103,7 @@ public class SpacecraftTrajectory implements Serializable {
         if ("Sun".equals(centerBodyName)) {
             return positionSpacecraft;
         }
-        Vector3D positionCenterBody = EphemerisSolarSystem.getInstance().getBodyPosition(centerBodyName,dateTime);
+        Vector3D positionCenterBody = EphemerisSolarSystem.the.getBodyPosition(centerBodyName,dateTime);
         return positionCenterBody.plus(positionSpacecraft);
     }
 
@@ -122,7 +122,7 @@ public class SpacecraftTrajectory implements Serializable {
         if ("Sun".equals(centerBodyName)) {
             return velocitySpacecraft;
         }
-        Vector3D velocityCenterBody = EphemerisSolarSystem.getInstance().getBodyVelocity(centerBodyName, dateTime);
+        Vector3D velocityCenterBody = EphemerisSolarSystem.the.getBodyVelocity(centerBodyName, dateTime);
         return velocityCenterBody.plus(velocitySpacecraft);
     }
 

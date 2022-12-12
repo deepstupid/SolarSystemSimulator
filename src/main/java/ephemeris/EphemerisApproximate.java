@@ -37,7 +37,17 @@ public class EphemerisApproximate implements IEphemeris {
     private final GregorianCalendar lastValidDate;
     
     // Major planets for which ephemeris can be approximated
-    private static List<String> majorPlanets;
+    private static final Set<String> majorPlanets = Set.of(
+        "Mercury",
+        "Venus",
+        "EarthMoonBarycenter",
+        "Mars",
+        "Jupiter",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "Pluto System"
+    );
     
     // Singleton instance
     private static IEphemeris instance = null;
@@ -46,18 +56,7 @@ public class EphemerisApproximate implements IEphemeris {
      * Constructor. Singleton pattern.
      */
     private EphemerisApproximate() {
-        // Names of major planets for which ephemeris can be approximated
-        majorPlanets = new ArrayList<>();
-        majorPlanets.add("Mercury");
-        majorPlanets.add("Venus");
-        majorPlanets.add("EarthMoonBarycenter");
-        majorPlanets.add("Mars");
-        majorPlanets.add("Jupiter");
-        majorPlanets.add("Saturn");
-        majorPlanets.add("Uranus");
-        majorPlanets.add("Neptune");
-        majorPlanets.add("Pluto System");
-     
+
         // First valid date 3000 BC
         firstValidDate = new GregorianCalendar(3000,0,1);
         firstValidDate.set(Calendar.ERA, GregorianCalendar.BC);
@@ -92,7 +91,13 @@ public class EphemerisApproximate implements IEphemeris {
     @Override
     public List<String> getBodies() {
         // Names of planets for which approximate ephemeris is known
-        return Collections.unmodifiableList(majorPlanets);
+        //return Collections.unmodifiableList(majorPlanets);
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean has(String body) {
+        return majorPlanets.contains(body);
     }
 
     @Override

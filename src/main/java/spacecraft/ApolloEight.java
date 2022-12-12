@@ -563,7 +563,7 @@ public class ApolloEight extends Spacecraft implements Serializable {
             double velocityMagnitude, double heading, double flightAngle) {
 
         // Position of the Earth with respect to the Sun at given date/time
-        Vector3D positionEarth = EphemerisSolarSystem.getInstance().getBodyPosition("Earth", dateTime);
+        Vector3D positionEarth = EphemerisSolarSystem.the.getBodyPosition("Earth", dateTime);
 
         // Angle of the Earth with respect to the Sun at given date/time
         double angleEarthRad = Math.atan2(positionEarth.getY(),positionEarth.getX());

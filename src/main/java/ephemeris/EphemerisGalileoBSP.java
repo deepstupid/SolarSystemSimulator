@@ -97,7 +97,7 @@ public class EphemerisGalileoBSP implements IEphemeris {
         ephemerisGalileoJupiter = EphemerisGalileoJupiterBSP.getInstance();
 
         // Use ephemeris of Solar System for Jupiter with respect to the Sun
-        ephemerisSolarSystem = EphemerisSolarSystem.getInstance();
+        ephemerisSolarSystem = EphemerisSolarSystem.the;
 
         // First valid date from ephemeris of Interplanetary cruise
         firstValidDate = ephemerisGalileoCruise.getFirstValidDate();

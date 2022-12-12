@@ -70,7 +70,7 @@ public class SolarSystemMoonsExperiment {
      */
     private SolarSystemMoonsExperiment() {
         // Set ephemeris
-        ephemeris = EphemerisSolarSystem.getInstance();
+        ephemeris = EphemerisSolarSystem.the;
 
         // Start simulation at January 1, 1985
         // Note that January is month 0

@@ -28,7 +28,6 @@ import java.util.*;
  * This ephemeris is valid from January 1, 1600 through December 31, 2200.
  * @author Nico Kuijpers and Marco Brassé
  */
-
 public class EphemerisAccurateBSP implements IEphemeris {
 
     // File name of BSP files
@@ -61,7 +60,7 @@ public class EphemerisAccurateBSP implements IEphemeris {
     private final Map<String, Integer> indexMap;
 
     // Singleton instance
-    private static IEphemeris instance = null;
+    public static final IEphemeris the = new EphemerisAccurateBSP();
 
     // Read ephemeris from BSP file
     private final SPK[] spk = new SPK[2];
@@ -184,17 +183,6 @@ public class EphemerisAccurateBSP implements IEphemeris {
         today.setTimeZone(TimeZone.getTimeZone("UTC"));
         currentJulianDateTime = JulianDateConverter.convertCalendarToJulianDate(today);
         planetaryEphemeris(currentJulianDateTime);
-    }
-
-    /**
-     * Get instance of EphemerisPlutoMoons.
-     * @return instance
-     */
-    public static IEphemeris getInstance() {
-        if (instance == null) {
-            instance = new EphemerisAccurateBSP();
-        }
-        return instance;
     }
 
     @Override

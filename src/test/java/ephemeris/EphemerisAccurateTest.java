@@ -52,7 +52,7 @@ public class EphemerisAccurateTest {
     
     @Before
     public void setUp() {
-        ephemerisAccurate = EphemerisAccurate.getInstance();
+        ephemerisAccurate = EphemerisAccurate.the;
     }
     
     @After

@@ -249,7 +249,7 @@ public class EphemerisGalileoJupiterBSP implements IEphemeris {
         bodies.addAll(targets.keySet());
 
         // Use ephemeris of Solar System for Jupiter with respect to the Sun
-        ephemerisSolarSystem = EphemerisSolarSystem.getInstance();
+        ephemerisSolarSystem = EphemerisSolarSystem.the;
 
         // First valid date for ephemeris Primary tour 1995-JUL-01 to 1998-JAN-01
         firstValidDateA = new GregorianCalendar(1995,6,1, 0, 0);
@@ -395,7 +395,7 @@ public class EphemerisGalileoJupiterBSP implements IEphemeris {
             Vector3D velocityInvTransSun = EphemerisUtil.inverseTransformJ2000(velocityJ2000sun);
 
             // Position and velocity of Jupiter
-            Vector3D[] jupiterPosVel = EphemerisAccurateBSP.getInstance().getBodyPositionVelocity("Jupiter", date);
+            Vector3D[] jupiterPosVel = EphemerisAccurateBSP.the.getBodyPositionVelocity("Jupiter", date);
             Vector3D positionJupiter = jupiterPosVel[0];
             Vector3D velocityJupiter = jupiterPosVel[1];
 

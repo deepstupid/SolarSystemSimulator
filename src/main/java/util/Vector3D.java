@@ -136,10 +136,7 @@ public class Vector3D implements Serializable {
      * @return Euclidean distance to other vector
      */
     public double euclideanDistance(Vector3D v) {
-        double dx = v.x - x;
-        double dy = v.y - y;
-        double dz = v.z - z;
-        return Math.sqrt(dx*dx + dy*dy + dz*dz);
+        return Math.sqrt(euclideanDistanceSquare(v));
     }
     
     /**

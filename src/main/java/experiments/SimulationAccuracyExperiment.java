@@ -64,7 +64,7 @@ public class SimulationAccuracyExperiment {
      */
     private SimulationAccuracyExperiment() {
         // Set ephemeris
-        ephemeris = EphemerisAccurate.getInstance();
+        ephemeris = EphemerisAccurate.the;
         
         // Define the bodies of the Solar System to be simulated (except Sun)
         bodyNames = new ArrayList<>();

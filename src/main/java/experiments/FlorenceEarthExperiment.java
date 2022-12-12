@@ -61,7 +61,7 @@ public class FlorenceEarthExperiment {
      */
     private FlorenceEarthExperiment() {
         // Set ephemeris
-        ephemeris = EphemerisSolarSystem.getInstance();
+        ephemeris = EphemerisSolarSystem.the;
         
         // Start simulation at April 1st, 2017
         // Note that January is month 0

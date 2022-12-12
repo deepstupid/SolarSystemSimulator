@@ -41,7 +41,7 @@ public class SolarSystem extends ParticleSystem implements Serializable {
     private static final double DEFAULTMASS = 1.0;
 
     // Ephemeris for the Solar System
-    private static final IEphemeris ephemeris = EphemerisSolarSystem.getInstance();
+    private static final IEphemeris ephemeris = EphemerisSolarSystem.the;
 
     // Solar System parameters
     private static final SolarSystemParameters solarSystemParameters = SolarSystemParameters.getInstance();

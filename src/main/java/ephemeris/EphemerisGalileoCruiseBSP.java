@@ -253,7 +253,7 @@ public class EphemerisGalileoCruiseBSP implements IEphemeris {
         bodies.addAll(targets.keySet());
 
         // Use ephemeris of Solar System for Jupiter with respect to the Sun
-        ephemerisSolarSystem = EphemerisSolarSystem.getInstance();
+        ephemerisSolarSystem = EphemerisSolarSystem.the;
 
         // First valid date for ephemeris of Interplanetary cruise is October 19, 1989 at 01:30
         firstValidDate = new GregorianCalendar(1989,9,19, 1, 30);

@@ -476,7 +476,7 @@ public class EphemerisUtilTest {
         double latitude = 52.0000;
         double longitude = 4.8333;
 
-        Vector3D positionMars = EphemerisSolarSystem.getInstance().getBodyPosition("Mars",dateTime);
+        Vector3D positionMars = EphemerisSolarSystem.the.getBodyPosition("Mars",dateTime);
 
         double[] result =
                 EphemerisUtil.computeAzimuthElevationDistance(positionMars, latitude, longitude, dateTime);
@@ -525,9 +525,9 @@ public class EphemerisUtilTest {
         double longitude = 5.0;
 
         Vector3D positionJupiter =
-                EphemerisSolarSystem.getInstance().getBodyPosition("Jupiter",dateTime);
+                EphemerisSolarSystem.the.getBodyPosition("Jupiter",dateTime);
         Vector3D positionSaturn =
-                EphemerisSolarSystem.getInstance().getBodyPosition("Saturn",dateTime);
+                EphemerisSolarSystem.the.getBodyPosition("Saturn",dateTime);
 
         double[] resultJupiter =
                 EphemerisUtil.computeAzimuthElevationDistance(positionJupiter, latitude, longitude, dateTime);

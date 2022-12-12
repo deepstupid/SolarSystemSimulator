@@ -47,7 +47,14 @@ public interface IEphemeris {
      * Get the names of bodies for which ephemeris data can be obtained.
      * @return list of body names
      */
-    List<String> getBodies();
+    @Deprecated List<String> getBodies();
+
+    default boolean has(String body) {
+        return getBodies().contains(body);
+    }
+//    default Supplier<> getter(String body) {
+//
+//    }
     
     /**
      * Get position [m] of body from Ephemeris.

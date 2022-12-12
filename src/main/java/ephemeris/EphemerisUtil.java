@@ -1465,7 +1465,7 @@ public class EphemerisUtil {
 
         // https://create.arduino.cc/projecthub/30506/calculation-of-right-ascension-and-declination-402218
         // Position of the Earth in ecliptic J2000 coordinates at given date/time
-        Vector3D positionEarth = EphemerisSolarSystem.getInstance().getBodyPosition("Earth",dateTime);
+        Vector3D positionEarth = EphemerisSolarSystem.the.getBodyPosition("Earth",dateTime);
 
         // Geocentric ecliptic coordinates
         Vector3D positionEcliptic = position.minus(positionEarth);

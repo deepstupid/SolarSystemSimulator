@@ -30,8 +30,10 @@ import java.util.*;
 public class EphemerisSolarSystem implements IEphemeris {
 
     // Accurate Ephemeris for Sun, Moon, and major planets including Pluto
-    private final IEphemeris ephemerisAccurate;
-    
+    private final IEphemeris ephemerisAccurate
+            //EphemerisAccurate.the;
+            = EphemerisAccurateBSP.the; // Uses de405.bsp
+
     // Approximate Ephemeris for major planets including Pluto
     private final IEphemeris ephemerisApproximate;
 
@@ -90,7 +92,7 @@ public class EphemerisSolarSystem implements IEphemeris {
     private Vector3D currentVelocityMoon = new Vector3D();
     
     // Singleton instance
-    private static IEphemeris instance = null;
+    public static final EphemerisSolarSystem the = new EphemerisSolarSystem();
     
     /**
      * Constructor. Singleton pattern.
@@ -98,8 +100,6 @@ public class EphemerisSolarSystem implements IEphemeris {
     private EphemerisSolarSystem() {
         
         // Accurate Ephemeris for Sun, Moon, and major planets including Pluto
-        //ephemerisAccurate = EphemerisAccurate.getInstance(); // Uses DE405EphemerisFiles
-        ephemerisAccurate = EphemerisAccurateBSP.getInstance(); // Uses de405.bsp
 
         // Approximate Ephemeris for major planets including Pluto
         ephemerisApproximate = EphemerisApproximate.getInstance();
@@ -166,17 +166,6 @@ public class EphemerisSolarSystem implements IEphemeris {
         today.setTimeZone(TimeZone.getTimeZone("UTC"));
         approximatePositionVelocityEarthMoon(today);
     }
-    
-    /**
-     * Get instance of EphemerisSolarSystem.
-     * @return instance
-     */
-    public static IEphemeris getInstance() {
-        if (instance == null) {
-            instance = new EphemerisSolarSystem();
-        }
-        return instance;
-    }
 
     /**
      * Select suitable ephemeris based on name, first valid date, and last valid date.
@@ -186,84 +175,84 @@ public class EphemerisSolarSystem implements IEphemeris {
      */
     private IEphemeris selectSuitableEphemeris(String name, GregorianCalendar date) {
         // Check whether Accurate Ephemeris can be used
-        if (ephemerisAccurate.getBodies().contains(name) &&
+        if (ephemerisAccurate.has(name) &&
                 date.after(ephemerisAccurate.getFirstValidDate()) &&
                 date.before(ephemerisAccurate.getLastValidDate())) {
             return ephemerisAccurate;
         }
 
         // Check whether Approximate Ephemeris can be used
-        if (ephemerisApproximate.getBodies().contains(name) &&
+        if (ephemerisApproximate.has(name) &&
                 date.after(ephemerisApproximate.getFirstValidDate()) &&
                 date.before(ephemerisApproximate.getLastValidDate())) {
             return ephemerisApproximate;
         }
 
         // Check whether ephemeris for Mars moons can be used
-        if (ephemerisMarsMoons.getBodies().contains(name) &&
+        if (ephemerisMarsMoons.has(name) &&
                 date.after(ephemerisMarsMoons.getFirstValidDate()) &&
                 date.before(ephemerisMarsMoons.getLastValidDate())) {
             return ephemerisMarsMoons;
         }
 
         // Check whether accurate ephemeris for Galilean moons can be used
-        if (ephemerisGalileanMoonsAccurate.getBodies().contains(name) &&
+        if (ephemerisGalileanMoonsAccurate.has(name) &&
                 date.after(ephemerisGalileanMoonsAccurate.getFirstValidDate()) &&
                 date.before(ephemerisGalileanMoonsAccurate.getLastValidDate())) {
             return ephemerisGalileanMoonsAccurate;
         }
 
         // Check whether approximate ephemeris for Galilean moons can be used
-        if (ephemerisGalileanMoonsApproximate.getBodies().contains(name) &&
+        if (ephemerisGalileanMoonsApproximate.has(name) &&
                 date.after(ephemerisGalileanMoonsApproximate.getFirstValidDate()) &&
                 date.before(ephemerisGalileanMoonsApproximate.getLastValidDate())) {
             return ephemerisGalileanMoonsApproximate;
         }
 
         // Check whether accurate ephemeris for Saturn moons can be used
-        if (ephemerisSaturnMoonsAccurate.getBodies().contains(name) &&
+        if (ephemerisSaturnMoonsAccurate.has(name) &&
                 date.after(ephemerisSaturnMoonsAccurate.getFirstValidDate()) &&
                 date.before(ephemerisSaturnMoonsAccurate.getLastValidDate())) {
             return ephemerisSaturnMoonsAccurate;
         }
 
         // Check whether approximate ephemeris for Saturn moons can be used
-        if (ephemerisSaturnMoonsApproximate.getBodies().contains(name) &&
+        if (ephemerisSaturnMoonsApproximate.has(name) &&
                 date.after(ephemerisSaturnMoonsApproximate.getFirstValidDate()) &&
                 date.before(ephemerisSaturnMoonsApproximate.getLastValidDate())) {
             return ephemerisSaturnMoonsApproximate;
         }
 
         // Check whether accurate ephemeris for Uranus moons can be used
-        if (ephemerisUranusMoonsAccurate.getBodies().contains(name) &&
+        if (ephemerisUranusMoonsAccurate.has(name) &&
                 date.after(ephemerisUranusMoonsAccurate.getFirstValidDate()) &&
                 date.before(ephemerisUranusMoonsAccurate.getLastValidDate())) {
             return ephemerisUranusMoonsAccurate;
         }
 
         // Check whether approximate ephemeris for Uranus moons can be used
-        if (ephemerisUranusMoonsApproximate.getBodies().contains(name) &&
+        if (ephemerisUranusMoonsApproximate.has(name) &&
                 date.after(ephemerisUranusMoonsApproximate.getFirstValidDate()) &&
                 date.before(ephemerisUranusMoonsApproximate.getLastValidDate())) {
             return ephemerisUranusMoonsApproximate;
         }
 
         // Check whether ephemeris for Neptune moon Triton can be used
-        if (ephemerisTriton.getBodies().contains(name) &&
+        if (ephemerisTriton.has(name) &&
                 date.after(ephemerisTriton.getFirstValidDate()) &&
                 date.before(ephemerisTriton.getLastValidDate())) {
             return ephemerisTriton;
         }
 
         // Check whether ephemeris for other moons of Neptune can be used
-        if (ephemerisNeptuneMoons.getBodies().contains(name) &&
+        if (ephemerisNeptuneMoons.has(name) &&
                 date.after(ephemerisNeptuneMoons.getFirstValidDate()) &&
                 date.before(ephemerisNeptuneMoons.getLastValidDate())) {
             return ephemerisNeptuneMoons;
         }
 
         // Check whether ephemeris for Pluto System can be used
-        if (ephemerisPlutoSystem.getBodies().contains(name) &&
+        if (ephemerisPlutoSystem.has(name) &&
                 date.after(ephemerisPlutoSystem.getFirstValidDate()) &&
                 date.before(ephemerisPlutoSystem.getLastValidDate())) {
             return ephemerisPlutoSystem;
@@ -281,37 +270,37 @@ public class EphemerisSolarSystem implements IEphemeris {
      */
     private IEphemeris selectAccurateEphemerisForMoon(String name) {
         // Check whether ephemeris for Mars moons can be used
-        if (ephemerisMarsMoons.getBodies().contains(name)) {
+        if (ephemerisMarsMoons.has(name)) {
             return ephemerisMarsMoons;
         }
 
         // Check whether accurate ephemeris for Galilean moons can be used
-        if (ephemerisGalileanMoonsAccurate.getBodies().contains(name)) {
+        if (ephemerisGalileanMoonsAccurate.has(name)) {
             return ephemerisGalileanMoonsAccurate;
         }
 
         // Check whether accurate ephemeris for Saturn moons can be used
-        if (ephemerisSaturnMoonsAccurate.getBodies().contains(name)) {
+        if (ephemerisSaturnMoonsAccurate.has(name)) {
             return ephemerisSaturnMoonsAccurate;
         }
 
         // Check whether accurate ephemeris for Uranus moons can be used
-        if (ephemerisUranusMoonsAccurate.getBodies().contains(name)) {
+        if (ephemerisUranusMoonsAccurate.has(name)) {
             return ephemerisUranusMoonsAccurate;
         }
 
         // Check whether ephemeris for Neptune moon Triton can be used
-        if (ephemerisTriton.getBodies().contains(name)) {
+        if (ephemerisTriton.has(name)) {
             return ephemerisTriton;
         }
 
         // Check whether ephemeris for other moons of Neptune can be used
-        if (ephemerisNeptuneMoons.getBodies().contains(name)) {
+        if (ephemerisNeptuneMoons.has(name)) {
             return ephemerisNeptuneMoons;
         }
 
         // Check whether ephemeris for Pluto System can be used
-        if (ephemerisPlutoSystem.getBodies().contains(name)) {
+        if (ephemerisPlutoSystem.has(name)) {
             return ephemerisPlutoSystem;
         }
 
