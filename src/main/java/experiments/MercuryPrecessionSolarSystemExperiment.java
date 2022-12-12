@@ -70,8 +70,7 @@ public class MercuryPrecessionSolarSystemExperiment {
         Vector3D finalPositionPerihelionMercury = positionPerihelionMercury();
 
         // Precession
-        double precessionMercury = finalPositionPerihelionMercury.angleDeg(initialPositionPerihelionMercury);
-        return precessionMercury;
+        return finalPositionPerihelionMercury.angleDeg(initialPositionPerihelionMercury);
     }
 
     // Determine argument of perihelion for Mercury [degrees]
@@ -84,15 +83,14 @@ public class MercuryPrecessionSolarSystemExperiment {
 
         // Compute orbital elements from position and velocity
         double muSun = SolarSystemParameters.getInstance().getMu("Sun");
-        double orbitElements[]
+        double[] orbitElements
                 = EphemerisUtil.computeOrbitalElementsFromPositionVelocity(muSun,positionMercury, velocityMercury);
 
         // Set mean anomaly to zero to compute position of perihelion
         orbitElements[3] = 0.0;
 
         // Compute postition of perihelion
-        Vector3D positionPerihelion = EphemerisUtil.computePosition(orbitElements);
-        return positionPerihelion;
+        return EphemerisUtil.computePosition(orbitElements);
     }
 
     /**

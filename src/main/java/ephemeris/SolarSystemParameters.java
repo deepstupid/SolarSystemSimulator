@@ -3192,8 +3192,6 @@ public class SolarSystemParameters {
         massMap.put("Nereid", NEREIDMASS);
         massMap.put("Proteus", PROTEUSMASS);
         massMap.put("Pluto System", PLUTOMASS + CHARONMASS);
-        massMap.put("Pluto", PLUTOMASS);
-        massMap.put("Charon", CHARONMASS);
         massMap.put("Nix", NIXMASS);
         massMap.put("Hydra", HYDRAMASS);
         massMap.put("Kerberos", KERBEROSMASS);
@@ -3662,7 +3660,7 @@ public class SolarSystemParameters {
      * @return names of moons
      */
     public List<String> getMoons() {
-        return Collections.unmodifiableList(new ArrayList(moons.keySet()));
+        return List.copyOf(moons.keySet());
     }
 
     /**
@@ -3672,8 +3670,7 @@ public class SolarSystemParameters {
      * @return name of planet
      */
     public String getPlanetOfMoon(String moonName) {
-        String planetName = moons.get(moonName);
-        return planetName;
+        return moons.get(moonName);
     }
 
     /**
@@ -3729,7 +3726,7 @@ public class SolarSystemParameters {
      * @return orbital parameters of Solar System body
      */
     public double[] getOrbitParameters(String name) {
-        if (!orbitParametersMap.keySet().contains(name)) {
+        if (!orbitParametersMap.containsKey(name)) {
             System.err.println("No orbital parameters for " + name);
         }
         return orbitParametersMap.get(name);
@@ -3763,11 +3760,7 @@ public class SolarSystemParameters {
      * @return flattening
      */
     public double getFlattening(String name) {
-        if (flatteningMap.keySet().contains(name)) {
-            return flatteningMap.get(name);
-        } else {
-            return 0.0;
-        }
+        return flatteningMap.getOrDefault(name, 0.0);
     }
 
     /**
@@ -3776,7 +3769,7 @@ public class SolarSystemParameters {
      * @return names of oblate planets
      */
     public List<String> getOblatePlanets() {
-        return Collections.unmodifiableList(new ArrayList<>(oblateMuMap.keySet()));
+        return List.copyOf(oblateMuMap.keySet());
     }
 
     /**
@@ -3837,11 +3830,7 @@ public class SolarSystemParameters {
      * @return
      */
     public double getSiderealRotationalPeriod(String name) {
-        if (siderealRotationalPeriodMap.keySet().contains(name)) {
-            return siderealRotationalPeriodMap.get(name);
-        } else {
-            return 24.0;
-        }
+        return siderealRotationalPeriodMap.getOrDefault(name, 24.0);
     }
 
     /**
@@ -3851,10 +3840,10 @@ public class SolarSystemParameters {
      * A default value of RA = 0.0 and DECL = 90.0 is returned when not defined.
      */
     public double[] getRotationPole(String name) {
-        if (rotationPoleMap.keySet().contains(name)) {
+        if (rotationPoleMap.containsKey(name)) {
             return rotationPoleMap.get(name);
         } else {
-            if (moons.keySet().contains(name)) {
+            if (moons.containsKey(name)) {
                 String planetName = moons.get(name);
                 return rotationPoleMap.get(planetName);
             } else {

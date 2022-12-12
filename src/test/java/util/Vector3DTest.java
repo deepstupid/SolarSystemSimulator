@@ -22,6 +22,7 @@ package util;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for class Vector3D.
@@ -84,7 +85,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(2.0,0.0,0.0);
         Vector3D expected = new Vector3D(1.0,0.0,0.0);
         Vector3D actual = v.normalize();
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -92,7 +93,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(0.0,2.0,0.0);
         Vector3D expected = new Vector3D(0.0,1.0,0.0);
         Vector3D actual = v.normalize();
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -100,7 +101,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(0.0,0.0,2.0);
         Vector3D expected = new Vector3D(0.0,0.0,1.0);
         Vector3D actual = v.normalize();
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -108,7 +109,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D();
         Vector3D expected = new Vector3D();
         Vector3D actual = v.normalize();
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -117,7 +118,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D(4.0,2.0,2.0);
         Vector3D expected = new Vector3D(1.0,0.0,0.0);
         Vector3D actual = v.direction(u);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -126,7 +127,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D(2.0,4.0,2.0);
         Vector3D expected = new Vector3D(0.0,1.0,0.0);
         Vector3D actual = v.direction(u);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -135,7 +136,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D(2.0,2.0,4.0);
         Vector3D expected = new Vector3D(0.0,0.0,1.0);
         Vector3D actual = v.direction(u);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -144,7 +145,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D(2.0,2.0,2.0);
         Vector3D expected = new Vector3D(0.0,0.0,0.0);
         Vector3D actual = v.direction(u);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -187,7 +188,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D(4.0,5.0,6.0);
         Vector3D expected = new Vector3D(5.0,7.0,9.0);
         Vector3D actual = v.plus(u);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -196,7 +197,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D(1.0,2.0,3.0);
         Vector3D expected = new Vector3D(3.0,3.0,3.0);
         Vector3D actual = v.minus(u);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -204,7 +205,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(1.0,2.0,3.0);
         Vector3D expected = new Vector3D(2.0,4.0,6.0);
         Vector3D actual = v.scalarProduct(2.0);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -240,7 +241,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D();
         Vector3D expected = new Vector3D();
         Vector3D actual = v.crossProduct(u);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
 
     @Test
@@ -249,7 +250,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D(0.0,1.0,0.0);
         Vector3D expected = new Vector3D(0.0,0.0,1.0);
         Vector3D actual = v.crossProduct(u);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
 
     @Test
@@ -258,7 +259,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D(1.0,0.0,0.0);
         Vector3D expected = new Vector3D(0.0,0.0,-1.0);
         Vector3D actual = v.crossProduct(u);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -266,7 +267,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(0.0,1.0,0.0);
         Vector3D expected = new Vector3D(0.0,0.0,1.0);
         Vector3D actual = v.rotateXdeg(90.0);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -274,7 +275,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(1.0,0.0,0.0);
         Vector3D expected = new Vector3D(0.0,0.0,-1.0);
         Vector3D actual = v.rotateYdeg(90.0);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -282,7 +283,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(1.0,0.0,0.0);
         Vector3D expected = new Vector3D(0.0,1.0,0.0);
         Vector3D actual = v.rotateZdeg(90.0);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -290,7 +291,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(0.0,1.0,0.0);
         Vector3D expected = new Vector3D(0.0,0.0,1.0);
         Vector3D actual = v.rotateXrad(0.5*Math.PI);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -298,7 +299,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(1.0,0.0,0.0);
         Vector3D expected = new Vector3D(0.0,0.0,-1.0);
         Vector3D actual = v.rotateYrad(0.5*Math.PI);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -306,7 +307,7 @@ public class Vector3DTest {
         Vector3D v = new Vector3D(1.0,0.0,0.0);
         Vector3D expected = new Vector3D(0.0,1.0,0.0);
         Vector3D actual = v.rotateZrad(0.5*Math.PI);
-        assertEquals(true,equalVectors(expected,actual));
+        assertTrue(equalVectors(expected, actual));
     }
     
     @Test
@@ -315,7 +316,7 @@ public class Vector3DTest {
         Vector3D u = new Vector3D(4.0,5.0,6.0);
         Vector3D expected = new Vector3D(5.0,7.0,9.0);
         v.addVector(u);
-        assertEquals(true,equalVectors(expected,v));
+        assertTrue(equalVectors(expected, v));
     }
     
     @Test
@@ -326,7 +327,7 @@ public class Vector3DTest {
         assertEquals(expected,actual);
     }
     
-    private boolean equalVectors(Vector3D u, Vector3D v) {
+    private static boolean equalVectors(Vector3D u, Vector3D v) {
         boolean result = true;
         result = result && Math.abs(v.getX() - u.getX()) < 1.0E-14;
         result = result && Math.abs(v.getY() - u.getY()) < 1.0E-14;

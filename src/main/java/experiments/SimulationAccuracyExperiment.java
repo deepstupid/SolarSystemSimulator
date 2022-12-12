@@ -62,7 +62,7 @@ public class SimulationAccuracyExperiment {
      * Constructor.
      * Set ephemeris, names of Solar System bodies, and simulation time step.
      */
-    public SimulationAccuracyExperiment() {
+    private SimulationAccuracyExperiment() {
         // Set ephemeris
         ephemeris = EphemerisAccurate.getInstance();
         
@@ -80,7 +80,7 @@ public class SimulationAccuracyExperiment {
         bodyNames.add("Pluto");
 
         // Set simulation time step to 1 hour
-        deltaT = (long) (60 * 60);
+        deltaT = 60 * 60;
     }
 
     /**
@@ -146,8 +146,8 @@ public class SimulationAccuracyExperiment {
                 particleSystem.advanceRungeKutta(deltaT);
             }
             else {
-                particleSystem.advanceABM4(deltaT/2);
-                particleSystem.advanceABM4(deltaT/2);
+                particleSystem.advanceABM4(deltaT/2f);
+                particleSystem.advanceABM4(deltaT/2f);
             }
             
             // Correction for position of Sun
@@ -171,7 +171,7 @@ public class SimulationAccuracyExperiment {
      * Run simulation using Newton Mechanics for given number of years.
      * @param nrYears number of years
      */
-    public void simulateNewtonMechanics(int nrYears) {
+    private void simulateNewtonMechanics(int nrYears) {
         // Initialize simulation
         initSimulation();
         
@@ -189,7 +189,7 @@ public class SimulationAccuracyExperiment {
      * Run simulation using General Relativity for given number of years.
      * @param nrYears number of years
      */
-    public void simulateGeneralRelativity(int nrYears) {
+    private void simulateGeneralRelativity(int nrYears) {
         // Initialize simulation
         initSimulation();
         

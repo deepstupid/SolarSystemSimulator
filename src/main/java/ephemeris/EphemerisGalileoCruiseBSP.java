@@ -32,13 +32,13 @@ import java.util.*;
 public class EphemerisGalileoCruiseBSP implements IEphemeris {
 
     // Files name of BSP file
-    private final String BSPfilename = "EphemerisFilesBSP/s970311a.bsp";
+    private static final String BSPfilename = "EphemerisFilesBSP/s970311a.bsp";
 
     // Target codes for BSP file
-    private Map<String,Integer> targets;
+    private final Map<String,Integer> targets;
 
     // Bodies for which ephemeris can be computed or approximated
-    private List<String> bodies;
+    private final List<String> bodies;
 
     // First valid date
     private final GregorianCalendar firstValidDate;

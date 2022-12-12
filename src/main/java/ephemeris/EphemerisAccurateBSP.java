@@ -32,11 +32,11 @@ import java.util.*;
 public class EphemerisAccurateBSP implements IEphemeris {
 
     // File name of BSP files
-    private final String BSPfilenameA = "EphemerisFilesBSP/de405_1600_1899.bsp";
-    private final String BSPfilenameB = "EphemerisFilesBSP/de405_1900_2200.bsp";
+    private static final String BSPfilenameA = "EphemerisFilesBSP/de405_1600_1899.bsp";
+    private static final String BSPfilenameB = "EphemerisFilesBSP/de405_1900_2200.bsp";
 
     // Bodies for which ephemeris can be computed or approximated
-    private List<String> bodies;
+    private final List<String> bodies;
 
     // First valid date
     private final GregorianCalendar firstValidDate;
@@ -46,7 +46,7 @@ public class EphemerisAccurateBSP implements IEphemeris {
 
     // First valid julian date for de405_1900_2200.bsp is Jan 1, 1900
     // Julian date for January 1, 1990, 00:00 UTC is 2415020.5
-    private final double firstValidJulianDateTimeB = 2415020.5;
+    private static final double firstValidJulianDateTimeB = 2415020.5;
 
     // Current Julian date/time for which positions and velocities are available
     private double currentJulianDateTime;
@@ -64,7 +64,7 @@ public class EphemerisAccurateBSP implements IEphemeris {
     private static IEphemeris instance = null;
 
     // Read ephemeris from BSP file
-    private SPK[] spk = new SPK[2];
+    private final SPK[] spk = new SPK[2];
 
     /**
      * Constructor. Singleton pattern.
@@ -267,7 +267,7 @@ public class EphemerisAccurateBSP implements IEphemeris {
      * and the Sun.
      * @param date current date/time for ephemeris
      */
-    public void updateEphemeris(GregorianCalendar date) {
+    private void updateEphemeris(GregorianCalendar date) {
         // Compute Julian date/time
         double julianDateTime = JulianDateConverter.convertCalendarToJulianDate(date);
 

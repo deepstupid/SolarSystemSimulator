@@ -38,16 +38,16 @@ public class SpacecraftTrajectory implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // Start date/time for this trajectory
-    private GregorianCalendar startDateTime;
+    private final GregorianCalendar startDateTime;
 
     // Stop date/time for this trajectory
-    private GregorianCalendar stopDateTime;
+    private final GregorianCalendar stopDateTime;
 
     // Name of center body
-    private String centerBodyName;
+    private final String centerBodyName;
 
     // Orbital parameters
-    private double[] orbitPars;
+    private final double[] orbitPars;
 
     /**
      * Constructor.

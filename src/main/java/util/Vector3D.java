@@ -111,8 +111,7 @@ public class Vector3D implements Serializable {
      * @return direction to other vector
      */
     public Vector3D direction(Vector3D v) {
-        Vector3D direction = new Vector3D(v.x - x,v.y - y,v.z - z);
-        return direction.normalize();
+        return new Vector3D(v.x - x,v.y - y,v.z - z).normalize();
     }
     
     /**

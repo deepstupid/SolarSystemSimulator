@@ -38,10 +38,10 @@ import java.util.*;
 public class SolarSystemMoonsExperiment {
 
     // Ephemeris
-    private IEphemeris ephemeris;
+    private final IEphemeris ephemeris;
 
     // The Solar System
-    private SolarSystem solarSystem;
+    private final SolarSystem solarSystem;
 
     // Start date for simulation
     private final GregorianCalendar simulationStartDateTime;
@@ -68,7 +68,7 @@ public class SolarSystemMoonsExperiment {
      * Constructor.
      * Set simulation start and end date. Create the Solar System.
      */
-    public SolarSystemMoonsExperiment() {
+    private SolarSystemMoonsExperiment() {
         // Set ephemeris
         ephemeris = EphemerisSolarSystem.getInstance();
 
@@ -96,7 +96,7 @@ public class SolarSystemMoonsExperiment {
         // Define moons to gather results from
         moons = new HashMap<>();
         moons.put("Earth",
-                new ArrayList<>(Arrays.asList("Moon")));
+                new ArrayList<>(List.of("Moon")));
         moons.put("Jupiter",
                 new ArrayList<>(Arrays.asList("Io","Europa","Ganymede","Callisto")));
         moons.put("Saturn",
@@ -104,7 +104,7 @@ public class SolarSystemMoonsExperiment {
         moons.put("Uranus",
                 new ArrayList<>(Arrays.asList("Miranda","Ariel","Umbriel","Titania","Oberon")));
         moons.put("Neptune",
-                new ArrayList<>(Arrays.asList("Triton")));
+                new ArrayList<>(List.of("Triton")));
 
         // Store results
         resultsPlanets = new HashMap<>();
@@ -139,7 +139,7 @@ public class SolarSystemMoonsExperiment {
     /**
      * Show simulation set-up.
      */
-    public void showSimulationSetup() {
+    private void showSimulationSetup() {
         System.out.println("Experiment date/time       : " +
                 CalendarUtil.calendarToString(new GregorianCalendar()));
         System.out.println("Simulation start date/time : " +
@@ -158,7 +158,7 @@ public class SolarSystemMoonsExperiment {
     /**
      * Simulate the Solar System.
      */
-    public void simulate() {
+    private void simulate() {
         while(solarSystem.getSimulationDateTime().before(simulationEndDateTime)) {
             // Advance one time step
             solarSystem.advanceSimulationForward(1);
@@ -166,13 +166,13 @@ public class SolarSystemMoonsExperiment {
             // Collect results for the last year
             if (solarSystem.getSimulationDateTime().after(startCollectingResultsDateTime))
             {
-                for (String planetName : resultsPlanets.keySet()) {
-                    double distancePlanet = computeDistancePlanet(planetName,solarSystem.getSimulationDateTime());
-                    resultsPlanets.get(planetName).add(distancePlanet);
+                for (Map.Entry<String, List<Double>> entry : resultsPlanets.entrySet()) {
+                    double distancePlanet = computeDistancePlanet(entry.getKey(),solarSystem.getSimulationDateTime());
+                    entry.getValue().add(distancePlanet);
                 }
-                for (String moonName : resultsMoons.keySet()) {
-                    double distanceMoon = computeDistanceMoon(moonName,solarSystem.getSimulationDateTime());
-                    resultsMoons.get(moonName).add(distanceMoon);
+                for (Map.Entry<String, List<Double>> entry : resultsMoons.entrySet()) {
+                    double distanceMoon = computeDistanceMoon(entry.getKey(),solarSystem.getSimulationDateTime());
+                    entry.getValue().add(distanceMoon);
                 }
                 startCollectingResultsDateTime.add(Calendar.HOUR,24);
             }
@@ -182,7 +182,7 @@ public class SolarSystemMoonsExperiment {
     /**
      * Show results of simulation.
      */
-    public void showResults() {
+    private void showResults() {
         System.out.println("Deviation is averaged over final year of simulation");
         System.out.println("Deviation for planets is relative to the Sun");
         System.out.println("Deviation for moons is relative to their planet");
@@ -265,7 +265,7 @@ public class SolarSystemMoonsExperiment {
      * @param values list of values
      * @return average
      */
-    private double computeAverage(List<Double> values) {
+    private static double computeAverage(Collection<Double> values) {
         double sum = 0.0;
         for (double value : values) {
             sum += value;
@@ -278,7 +278,7 @@ public class SolarSystemMoonsExperiment {
      * Simulate and compute deviation for each moon.
      * @param args input arguments (not used)
      */
-    public static void main (String[] args) throws SolarSystemException {
+    public static void main (String[] args) {
 
         // Experiment set-up
         SolarSystemMoonsExperiment experiment = new SolarSystemMoonsExperiment();

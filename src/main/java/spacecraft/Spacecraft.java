@@ -35,7 +35,7 @@ public abstract class Spacecraft extends SolarSystemBody implements Serializable
     private static final long serialVersionUID = 1L;
 
     // Trajectories
-    private List<SpacecraftTrajectory> trajectories;
+    private final List<SpacecraftTrajectory> trajectories;
 
     /**
      * Constructor.
@@ -43,7 +43,7 @@ public abstract class Spacecraft extends SolarSystemBody implements Serializable
      * @param centerBodyName name of the center body
      * @param solarSystem    the Solar System
      */
-    public Spacecraft(String name, String centerBodyName, SolarSystem solarSystem) {
+    Spacecraft(String name, String centerBodyName, SolarSystem solarSystem) {
         this.setName(name);
         this.setCenterBody(solarSystem.getBody(centerBodyName));
         this.trajectories = defineTrajectories();
@@ -92,8 +92,7 @@ public abstract class Spacecraft extends SolarSystemBody implements Serializable
      */
     private Vector3D[] computeTrajectory() {
         List<Vector3D> trajectoryAsList = new ArrayList<>();
-        for (int i = 0; i < trajectories.size(); i++) {
-            SpacecraftTrajectory trajectory = trajectories.get(i);
+        for (SpacecraftTrajectory trajectory : trajectories) {
             trajectoryAsList.addAll(trajectory.computeTrajectory());
         }
         int nrPositions = trajectoryAsList.size();

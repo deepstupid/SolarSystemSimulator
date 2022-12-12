@@ -33,7 +33,7 @@ public class EphemerisUtil {
     /**
      * Number of seconds per day.
      */
-    public static final double NRSECONDSPERDAY = 24 * 60 * 60;
+    private static final double NRSECONDSPERDAY = 24 * 60 * 60;
 
     /** 
      * Number of days per century.
@@ -59,7 +59,7 @@ public class EphemerisUtil {
      * @param  Teph Julian Ephemeris Date
      * @return number of centuries past J2000.0
      */
-    public static double computeNrCenturiesPastJ2000(double Teph) {
+    private static double computeNrCenturiesPastJ2000(double Teph) {
 
         // https://ssd.jpl.nasa.gov/txt/aprx_pos_planets.pdf
         // T = (Teph - 2451545.0) / 36525
@@ -186,7 +186,7 @@ public class EphemerisUtil {
      * @param coordinates input coordinates
      * @return coordinates after transformation
      */
-    public static Vector3D transformJ2000(Vector3D coordinates) {
+    private static Vector3D transformJ2000(Vector3D coordinates) {
         // https://space.fandom.com/wiki/Axial_tilt
         // Axial tilt epoch 2000 is 23° 26’ 21.44” or 23.439289 degrees
         double sinEP = 0.397776995;
@@ -208,7 +208,7 @@ public class EphemerisUtil {
         // https://space.fandom.com/wiki/Axial_tilt
         // Axial tilt epoch 2000 is 23° 26’ 21.44” or 23.439289 degrees
         double sinEP = -0.397776995;
-        double cosEP = Math.sqrt(1.0 - sinEP*sinEP);
+        double cosEP = Math.sqrt(1 - sinEP*sinEP);
         double x = coordinates.getX();
         double y = coordinates.getY();
         double z = coordinates.getZ();
@@ -535,8 +535,7 @@ public class EphemerisUtil {
         // https://en.wikipedia.org/wiki/True_anomaly
         double x = Math.sqrt(1.0 - eccentricity) * Math.cos(Erad / 2.0);
         double y = Math.sqrt(1.0 + eccentricity) * Math.sin(Erad / 2.0);
-        double Frad = 2.0 * Math.atan2(y, x);
-        return Frad;
+        return 2.0 * Math.atan2(y, x);
     }
     
     /**
@@ -592,7 +591,7 @@ public class EphemerisUtil {
      * @param Teph      Julian EphemerisUtil Date
      * @return orbital elements for given date
      */
-    public static double[] computeOrbitalElementsForMajorPlanets(
+    private static double[] computeOrbitalElementsForMajorPlanets(
             double[] orbitPars, double Teph) {
 
         // Computation of six orbital elements (or Keplerian elements) is based on
@@ -789,8 +788,8 @@ public class EphemerisUtil {
      * @param Erad eccentric anamaly [radians]
      * @return heliocentric coordinates [au]
      */
-    public static Vector3D computeHeliocentricPosition(double axis,
-            double eccentricity, double Erad) {
+    private static Vector3D computeHeliocentricPosition(double axis,
+                                                        double eccentricity, double Erad) {
 
         // Compute the planet's heliocentric coordinates in its orbital plane
         // where the x-axis is aligned from the focus to the perihelion
@@ -810,8 +809,8 @@ public class EphemerisUtil {
      * @param Hrad hyperbolic anomaly [radians]
      * @return heliocentric coordinates [au]
      */
-    public static Vector3D computeHeliocentricPositionHyperbolic(double axis,
-            double eccentricity, double Hrad) {
+    private static Vector3D computeHeliocentricPositionHyperbolic(double axis,
+                                                                  double eccentricity, double Hrad) {
 
         // https://studentportalen.uu.se/portal/portal/uusp/student/
         // filearea?uusp.portalpage=true&mode=filearea36238&toolMode=studentUse&entityId=59763&toolAttachmentId=36238
@@ -834,8 +833,8 @@ public class EphemerisUtil {
      * @param Frad true anomaly [radians]
      * @return velocity in heliocentric coordinates [m/s]
      */
-    public static Vector3D computeVelocityRelativeToCenterbody(double mu, double a,
-            double e, double Frad) {
+    private static Vector3D computeVelocityRelativeToCenterbody(double mu, double a,
+                                                                double e, double Frad) {
 
         // http://exoplanets.astro.yale.edu/workshop/EPRV/Bibliography_files/Radial_Velocity.pdf
         // See formula (9)
@@ -855,8 +854,8 @@ public class EphemerisUtil {
      * @param Hrad hyperbolic anomaly [radians]
      * @return velocity in heliocentric coordinates [m/s]
      */
-    public static Vector3D computeVelocityRelativeToCenterBodyHyperbolic(double mu, double a,
-            double e, double Hrad) {
+    private static Vector3D computeVelocityRelativeToCenterBodyHyperbolic(double mu, double a,
+                                                                          double e, double Hrad) {
 
         // https://studentportalen.uu.se/portal/portal/uusp/student/
         // filearea?uusp.portalpage=true&mode=filearea36238&toolMode=studentUse&entityId=59763&toolAttachmentId=36238
@@ -881,7 +880,7 @@ public class EphemerisUtil {
      * @param inclination inclination [degrees]
      * @return coordinates in the J2000 ecliptic plane [au]
      */
-    public static Vector3D convertHeliocentricToEclipticPlaneCoordinates(
+    private static Vector3D convertHeliocentricToEclipticPlaneCoordinates(
             Vector3D helioCentric, double argPerihelion,
             double longNode, double inclination) {
 
@@ -1051,11 +1050,9 @@ public class EphemerisUtil {
                         helioCentricPosition, argPerihelion, longNode, inclination);
 
         // Position of the planet in m
-        Vector3D position
-                = eclipticPlanePosition.scalarProduct(SolarSystemParameters.ASTRONOMICALUNIT);
 
         // Return (x,y,z) position of planet in m
-        return position;
+        return eclipticPlanePosition.scalarProduct(SolarSystemParameters.ASTRONOMICALUNIT);
     }
 
     /**
@@ -1116,10 +1113,9 @@ public class EphemerisUtil {
         double v  = Math.sqrt(mu*(2.0/r - 1.0/a));
         
         // Compute velocity as a vector in m/s
-        Vector3D velocity = direction.scalarProduct(v);
-        
+
         // Return (x,y,z) velocity of body in m/s
-        return velocity;
+        return direction.scalarProduct(v);
     }
     
     
@@ -1177,12 +1173,10 @@ public class EphemerisUtil {
 
         // Compute velocity [m/s] in the J2000 ecliptic plane, with the x-axis
         // aligned toward the equinox
-        Vector3D eclipticPlaneVelocity
-                = convertHeliocentricToEclipticPlaneCoordinates(
-                        heliocentricVelocity, argPerihelion, longNode, inclination);
 
         // Return (x,y,z) velocity of planet in m/s
-        return eclipticPlaneVelocity;
+        return convertHeliocentricToEclipticPlaneCoordinates(
+                heliocentricVelocity, argPerihelion, longNode, inclination);
     }
 
     /**
@@ -1293,8 +1287,7 @@ public class EphemerisUtil {
         
         // Compute eccentricity [-]
         double e = Math.sqrt(1.0 - (h*h)/(a*mu));
-        double eccentricity = e;
-        
+
         // Compute inclination, i [rad], and convert to degrees
         // i is in the range 0.0 through pi
         // Inclination is in the range 0 through 180 degrees
@@ -1377,7 +1370,7 @@ public class EphemerisUtil {
         // Six Keplerian elements for given date
         double[] orbitElements = new double[6];
         orbitElements[0] = axis;          // semi-major axis [au]
-        orbitElements[1] = eccentricity;  // eccentricity [-]
+        orbitElements[1] = e;  // eccentricity [-]
         orbitElements[2] = inclination;   // inclination [degrees]
         orbitElements[3] = meanAnomaly;   // mean anomaly [degrees]
         orbitElements[4] = argPerihelion; // argument of perihelion [degrees]
@@ -1499,10 +1492,9 @@ public class EphemerisUtil {
         // Horizontal coordinates
         double xHor = x * Math.cos(Math.toRadians(90.0 - latitude)) -
                 z * Math.sin(Math.toRadians(90.0 - latitude));
-        double yHor = y;
         double zHor = x * Math.sin(Math.toRadians(90.0 - latitude)) +
                 z * Math.cos(Math.toRadians(90.0 - latitude));
-        double azimuth = Math.toDegrees(Math.atan2(yHor,xHor)) + 180.0;
+        double azimuth = Math.toDegrees(Math.atan2(y,xHor)) + 180.0;
         double elevation = Math.toDegrees(Math.asin(zHor));
 
         return new double[]{azimuth,elevation,distanceAU};

@@ -28,7 +28,7 @@ import java.util.concurrent.Future;
  *
  * @author Nico Kuijpers
  */
-public abstract class PausableTask implements Runnable {
+abstract class PausableTask implements Runnable {
 
     /*
      * This code is extended from
@@ -36,7 +36,7 @@ public abstract class PausableTask implements Runnable {
      * http://handling-thread.blogspot.com/2012/05/pause-and-resume-thread.html
      */
 
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private Future<?> publisher;
     private boolean paused = true;
 
@@ -47,7 +47,7 @@ public abstract class PausableTask implements Runnable {
 
     @Override
     public void run() {
-        while(!Thread.currentThread().interrupted()) {
+        while(!Thread.interrupted()) {
             task();
         }
     }
@@ -55,7 +55,7 @@ public abstract class PausableTask implements Runnable {
     /**
      * Start task.
      */
-    public void start() {
+    private void start() {
         publisher = executor.submit(this);
         paused = false;
     }
@@ -90,9 +90,8 @@ public abstract class PausableTask implements Runnable {
     /**
      * Let task sleep for some period of time.
      * @param period Period of time in milliseconds
-     * @throws InterruptedException
      */
-    public void sleep(int period) throws InterruptedException {
+    public void sleep(int period) {
         try {
             Thread.sleep(period);
         }

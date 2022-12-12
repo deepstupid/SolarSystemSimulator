@@ -355,15 +355,13 @@ public class EphemerisSolarSystem implements IEphemeris {
         // Approximate position of the Earth
         if ("Earth".equals(name)) {
             approximatePositionVelocityEarthMoon(date);
-            Vector3D positionEarth = new Vector3D(currentPositionEarth);
-            return positionEarth;
+            return new Vector3D(currentPositionEarth);
         }
 
         // Approximate position of the Moon
         if ("Moon".equals(name)) {
             approximatePositionVelocityEarthMoon(date);
-            Vector3D positionMoon = new Vector3D(currentPositionMoon);
-            return positionMoon;
+            return new Vector3D(currentPositionMoon);
         }
 
         // Approximate position of other moons of the Solar System
@@ -410,15 +408,13 @@ public class EphemerisSolarSystem implements IEphemeris {
         // Approximate velocity of the Earth
         if ("Earth".equals(name)) {
             approximatePositionVelocityEarthMoon(date);
-            Vector3D velocityEarth = new Vector3D(currentVelocityEarth);
-            return velocityEarth;
+            return new Vector3D(currentVelocityEarth);
         }
 
         // Approximate velocity of the Moon
         if ("Moon".equals(name)) {
             approximatePositionVelocityEarthMoon(date);
-            Vector3D velocityMoon = new Vector3D(currentVelocityMoon);
-            return velocityMoon;
+            return new Vector3D(currentVelocityMoon);
         }
 
         // Approximate velocity of other moons of the Solar System

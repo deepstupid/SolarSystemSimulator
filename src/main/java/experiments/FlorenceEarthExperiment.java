@@ -41,7 +41,7 @@ import java.util.TimeZone;
 public class FlorenceEarthExperiment {
     
     // Ephemeris
-    private IEphemeris ephemeris;
+    private final IEphemeris ephemeris;
     
     // The Solar System
     private final SolarSystem solarSystem;
@@ -59,7 +59,7 @@ public class FlorenceEarthExperiment {
      * Constructor.
      * Set simulation start and end date. Create the Solar System.
      */
-    public FlorenceEarthExperiment() {
+    private FlorenceEarthExperiment() {
         // Set ephemeris
         ephemeris = EphemerisSolarSystem.getInstance();
         
@@ -88,13 +88,13 @@ public class FlorenceEarthExperiment {
         
         // Set simulation time step in seconds
         //deltaT = (long) 60; // 1 minute
-        deltaT = (long) (60*60); // 1 hour
+        deltaT = 60*60; // 1 hour
     }
 
     /**
      * Simulate passage of Florence.
      */
-    public void simulateFlorenceEarthPassage() {
+    private void simulateFlorenceEarthPassage() {
         // Planet Earth (simulation particle)
         Particle earth = solarSystem.getParticle("Earth");
         
@@ -161,7 +161,7 @@ public class FlorenceEarthExperiment {
     /**
      * Compute passage of Florence from ephemeris.
      */
-    public void computeFlorenceEarthPassage() {
+    private void computeFlorenceEarthPassage() {
         
         // Initialize minimum distance between Earth and Florence
         double minimumDistance = SolarSystemParameters.ASTRONOMICALUNIT;
@@ -214,7 +214,7 @@ public class FlorenceEarthExperiment {
      * @param calendar GregorianCalendar-object
      * @return era, date, and time as string
      */
-    private String calendarToString(GregorianCalendar calendar) {
+    private static String calendarToString(GregorianCalendar calendar) {
         // Obtain era, date, and time from calendar
         int era = calendar.get(Calendar.ERA);
         int year = calendar.get(Calendar.YEAR);

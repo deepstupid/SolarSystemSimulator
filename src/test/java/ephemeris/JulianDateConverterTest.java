@@ -308,13 +308,12 @@ public class JulianDateConverterTest {
         startDate.set(Calendar.ERA,GregorianCalendar.BC);
         GregorianCalendar endDate = new GregorianCalendar(5000,0,1,12,0);
         endDate.setTimeZone(TimeZone.getTimeZone("UTC"));
-        GregorianCalendar date = startDate;
         double expResult = 0.0;
         int nrMinutesPerDay = 24*60;
-        while (date.before(endDate)) {
-            double result = JulianDateConverter.convertCalendarToJulianDate(date);
+        while (startDate.before(endDate)) {
+            double result = JulianDateConverter.convertCalendarToJulianDate(startDate);
             assertEquals(expResult, result, 1.0E-14);
-            date.add(Calendar.MINUTE, nrMinutesPerDay);
+            startDate.add(Calendar.MINUTE, nrMinutesPerDay);
             expResult = expResult + 1.0;
         }
     }
@@ -329,12 +328,11 @@ public class JulianDateConverterTest {
         startDate.set(Calendar.ERA,GregorianCalendar.BC);
         GregorianCalendar endDate = new GregorianCalendar(5000,0,1,12,0);
         endDate.setTimeZone(TimeZone.getTimeZone("UTC"));
-        GregorianCalendar date = startDate;
         double expResult = 0.0;
-        while (date.before(endDate)) {
-            double result = JulianDateConverter.convertCalendarToJulianDate(date);
+        while (startDate.before(endDate)) {
+            double result = JulianDateConverter.convertCalendarToJulianDate(startDate);
             assertEquals(expResult, result, 1.0E-09);
-            date.add(Calendar.MINUTE, 60);
+            startDate.add(Calendar.MINUTE, 60);
             // Use current result to compute expected result for the next test
             // to avoid a cummulative error when computing expected result
             expResult = result + 1.0/24;

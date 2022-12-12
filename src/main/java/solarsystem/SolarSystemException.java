@@ -23,7 +23,7 @@ package solarsystem;
  * Solar System exception.
  * @author Nico Kuijpers
  */
-public class SolarSystemException extends Exception {
+class SolarSystemException extends Exception {
 
     /**
      * Creates a new instance of SolarSystemException without

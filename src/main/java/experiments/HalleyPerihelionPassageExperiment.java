@@ -38,27 +38,27 @@ import java.util.*;
 public class HalleyPerihelionPassageExperiment {
 
     // Solar system
-    private SolarSystem solarSystem;
+    private final SolarSystem solarSystem;
 
     // Start date for simulation
-    private GregorianCalendar simulationStartDate;
+    private final GregorianCalendar simulationStartDate;
 
     // End date for simulation
-    private GregorianCalendar simulationEndDate;
+    private final GregorianCalendar simulationEndDate;
 
     // Simulation time step in s
-    private final int timeStep = -(60 * 60); // -1 hour
+    private static final int timeStep = -(60 * 60); // -1 hour
 
     // List of expected perihelion passages
-    List<Calendar> expectedPassageDates;
+    private final List<Calendar> expectedPassageDates;
 
     // List of actual perihelion passages
-    List<Calendar> actualPassageDates;
+    private final List<Calendar> actualPassageDates;
 
     /**
      * Default constructor. Experiment set-up.
      */
-    public HalleyPerihelionPassageExperiment() {
+    private HalleyPerihelionPassageExperiment() {
 
         // Orbital elements of Halley's Comet at Epoch 2449400.5 (1994-Feb-17.0)
         simulationStartDate = new GregorianCalendar(1994,1,17);
@@ -184,7 +184,7 @@ public class HalleyPerihelionPassageExperiment {
      * @param date
      * @return date as string
      */
-    private String calendarToString(Calendar date) {
+    private static String calendarToString(Calendar date) {
         int year = date.get(Calendar.YEAR);
         int month = date.get(Calendar.MONTH) + 1;
         int dayOfMonth = date.get(Calendar.DAY_OF_MONTH);

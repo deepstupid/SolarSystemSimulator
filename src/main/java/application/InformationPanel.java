@@ -22,8 +22,6 @@ package application;
 import ephemeris.EphemerisUtil;
 import ephemeris.SolarSystemParameters;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -44,7 +42,7 @@ import java.text.DecimalFormat;
  * Information panel to show information on body of the Solar System.
  * @author Nico Kuijpers
  */
-public class InformationPanel extends Stage {
+class InformationPanel extends Stage {
 
     // Definition of constant values
     private static final int PANELWIDTH = 420;
@@ -80,16 +78,16 @@ public class InformationPanel extends Stage {
     private final boolean moon;
 
     // Initial mass
-    double initialMass;
+    private double initialMass;
 
     // Elliptical or hyperbolic orbit
-    boolean ellipticOrbit;
+    private boolean ellipticOrbit;
 
     // Position corresponding to selected orbital elements
-    Vector3D position = null;
+    private Vector3D position = null;
 
     // Orbit corresponding to selected orbital elements
-    Vector3D[] orbit = null;
+    private Vector3D[] orbit = null;
 
     // Labels
     private final Label labelDistance;
@@ -123,9 +121,9 @@ public class InformationPanel extends Stage {
     private final Slider sliderLongNode;
 
     // Buttons
-    private Button buttonApplyMass;
-    private Button buttonCancelMass;
-    private Button buttonResetMass;
+    private final Button buttonApplyMass;
+    private final Button buttonCancelMass;
+    private final Button buttonResetMass;
     private Button buttonApplyOrbit;
     private Button buttonCancelOrbit;
     private Button buttonResetOrbit;
@@ -135,13 +133,13 @@ public class InformationPanel extends Stage {
     private RadioButton radioButtonHyperbolicOrbit;
 
     // Current values of mass and orbital elements
-    double currentMass;
-    double currentAxis;
-    double currentEccentricity;
-    double currentInclination;
-    double currentMeanAnomaly;
-    double currentArgPerihelion;
-    double currentLongNode;
+    private double currentMass;
+    private double currentAxis;
+    private double currentEccentricity;
+    private double currentInclination;
+    private double currentMeanAnomaly;
+    private double currentArgPerihelion;
+    private double currentLongNode;
 
     /**
      * Constructor.
@@ -220,46 +218,26 @@ public class InformationPanel extends Stage {
 
         // Slider to adapt body mass
         sliderMass = createSlider(0.0, 100.0, 50.0, 10.0);
-        sliderMass.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                updateMass(valueToMass(sliderMass.getValue()));
-            }
-        });
+        sliderMass.valueProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> updateMass(valueToMass(sliderMass.getValue())));
         grid.add(sliderMass, 1, rowIndex++, colSpanSlider, 1);
 
         // Button to apply selected mass
         buttonApplyMass = new Button("Apply Mass");
         buttonApplyMass.setMinWidth(BUTTONWIDTH);
-        buttonApplyMass.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                applySelectedMass();
-            }
-        });
+        buttonApplyMass.setOnAction((EventHandler) event -> applySelectedMass());
         grid.add(buttonApplyMass, 1, rowIndex, colSpanButton, 1);
 
         // Button to cancel selected mass
         buttonCancelMass = new Button("Cancel Mass");
         buttonCancelMass.setMinWidth(BUTTONWIDTH);
-        buttonCancelMass.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                resetSelectedMass();
-            }
-        });
+        buttonCancelMass.setOnAction((EventHandler) event -> resetSelectedMass());
         grid.add(buttonCancelMass, 2, rowIndex, colSpanButton, 1);
 
 
         // Button to reset mass
         buttonResetMass = new Button("Reset Mass");
         buttonResetMass.setMinWidth(BUTTONWIDTH);
-        buttonResetMass.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                setInitialMass();
-            }
-        });
+        buttonResetMass.setOnAction((EventHandler) event -> setInitialMass());
         grid.add(buttonResetMass, 3, rowIndex++, colSpanButton, 1);
 
         // Leave some room
@@ -305,22 +283,12 @@ public class InformationPanel extends Stage {
             Tooltip tooltipEllipticOrbit =
                     new Tooltip("Elliptic orbit: semi-major axis > 0 and 0 <= eccentricity < 1");
             radioButtonEllipticOrbit.setTooltip(tooltipEllipticOrbit);
-            radioButtonEllipticOrbit.setOnAction(new EventHandler() {
-                @Override
-                public void handle(Event event) {
-                    setEllipticOrbit();
-                }
-            });
+            radioButtonEllipticOrbit.setOnAction((EventHandler) event -> setEllipticOrbit());
             radioButtonHyperbolicOrbit = new RadioButton("Hyperbolic orbit");
             Tooltip tooltipHyperbolicOrbit =
                     new Tooltip("Hyperbolic orbit: semi-major axis < 0 and eccentricity > 1");
             radioButtonHyperbolicOrbit.setTooltip(tooltipHyperbolicOrbit);
-            radioButtonHyperbolicOrbit.setOnAction(new EventHandler() {
-                @Override
-                public void handle(Event event) {
-                    setHyperbolicOrbit();
-                }
-            });
+            radioButtonHyperbolicOrbit.setOnAction((EventHandler) event -> setHyperbolicOrbit());
             ToggleGroup toggleGroupOrbitType = new ToggleGroup();
             radioButtonEllipticOrbit.setToggleGroup(toggleGroupOrbitType);
             radioButtonHyperbolicOrbit.setToggleGroup(toggleGroupOrbitType);
@@ -337,16 +305,13 @@ public class InformationPanel extends Stage {
             grid.add(textFieldAxis,colIndexTextField,rowIndex++,colSpanTextField,1);
 
             // Slider to adapt semi-major axis [km] or [au]
-            sliderAxis.valueProperty().addListener(new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    double value = sliderAxis.getValue();
-                    if (!ellipticOrbit) {
-                        value = -value;
-                    }
-                    updateAxis(value);
-                    computeOrbit();
+            sliderAxis.valueProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+                double value = sliderAxis.getValue();
+                if (!ellipticOrbit) {
+                    value = -value;
                 }
+                updateAxis(value);
+                computeOrbit();
             });
             grid.add(sliderAxis, 1, rowIndex++, colSpanSlider, 1);
 
@@ -359,12 +324,9 @@ public class InformationPanel extends Stage {
             grid.add(textFieldEccentricity,colIndexTextField,rowIndex++,colSpanTextField,1);
 
             // Slider to adapt eccentricity
-            sliderEccentricity.valueProperty().addListener(new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    computeOrbit();
-                    updateEccentricity(sliderEccentricity.getValue());
-                }
+            sliderEccentricity.valueProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+                computeOrbit();
+                updateEccentricity(sliderEccentricity.getValue());
             });
             grid.add(sliderEccentricity, 1, rowIndex++, colSpanSlider, 1);
 
@@ -377,12 +339,9 @@ public class InformationPanel extends Stage {
             grid.add(textFieldInclination,colIndexTextField,rowIndex++,colSpanTextField,1);
 
             // Slider to adapt inclination (range 0 - 180 degrees)
-            sliderInclination.valueProperty().addListener(new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    computeOrbit();
-                    updateInclination(sliderInclination.getValue());
-                }
+            sliderInclination.valueProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+                computeOrbit();
+                updateInclination(sliderInclination.getValue());
             });
             grid.add(sliderInclination, 1, rowIndex++, colSpanSlider, 1);
 
@@ -395,12 +354,9 @@ public class InformationPanel extends Stage {
             grid.add(textFieldMeanAnomaly,colIndexTextField,rowIndex++,colSpanTextField,1);
 
             // Slider to adapt mean anomaly
-            sliderMeanAnomaly.valueProperty().addListener(new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    computeOrbit();
-                    updateMeanAnomaly(sliderMeanAnomaly.getValue());
-                }
+            sliderMeanAnomaly.valueProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+                computeOrbit();
+                updateMeanAnomaly(sliderMeanAnomaly.getValue());
             });
             grid.add(sliderMeanAnomaly, 1, rowIndex++, colSpanSlider, 1);
 
@@ -413,12 +369,9 @@ public class InformationPanel extends Stage {
             grid.add(textFieldArgPerihelion,colIndexTextField,rowIndex++,colSpanTextField,1);
 
             // Slider to adapt argument of perihelion
-            sliderArgPerihelion.valueProperty().addListener(new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    computeOrbit();
-                    updateArgPerihelion(sliderArgPerihelion.getValue());
-                }
+            sliderArgPerihelion.valueProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+                computeOrbit();
+                updateArgPerihelion(sliderArgPerihelion.getValue());
             });
             grid.add(sliderArgPerihelion, 1, rowIndex++, colSpanSlider, 1);
 
@@ -431,28 +384,22 @@ public class InformationPanel extends Stage {
             grid.add(textFieldLongNode,colIndexTextField,rowIndex++,colSpanTextField,1);
 
             // Slider to adapt longitude of ascending node
-            sliderLongNode.valueProperty().addListener(new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    computeOrbit();
-                    updateLongNode(sliderLongNode.getValue());
-                }
+            sliderLongNode.valueProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+                computeOrbit();
+                updateLongNode(sliderLongNode.getValue());
             });
             grid.add(sliderLongNode, 1, rowIndex++, colSpanSlider, 1);
 
             // Button to set orbital elements
             buttonApplyOrbit = new Button("Apply Orbit");
             buttonApplyOrbit.setMinWidth(BUTTONWIDTH);
-            buttonApplyOrbit.setOnAction(new EventHandler() {
-                @Override
-                public void handle(Event event) {
-                    try {
-                        setPositionVelocityParticle();
-                        updatePanel();
-                    }
-                    catch (SolarSystemException ex) {
-                        System.err.println(ex.getMessage());
-                    }
+            buttonApplyOrbit.setOnAction((EventHandler) event -> {
+                try {
+                    setPositionVelocityParticle();
+                    updatePanel();
+                }
+                catch (SolarSystemException ex) {
+                    System.err.println(ex.getMessage());
                 }
             });
             grid.add(buttonApplyOrbit, 1, rowIndex, colSpanButton, 1);
@@ -460,15 +407,12 @@ public class InformationPanel extends Stage {
             // Button to cancel selection of orbital elements
             buttonCancelOrbit = new Button("Cancel Orbit");
             buttonCancelOrbit.setMinWidth(BUTTONWIDTH);
-            buttonCancelOrbit.setOnAction(new EventHandler() {
-                @Override
-                public void handle(Event event) {
-                    try {
-                        updatePanel();
-                    }
-                    catch (SolarSystemException ex) {
-                        System.err.println(ex.getMessage());
-                    }
+            buttonCancelOrbit.setOnAction((EventHandler) event -> {
+                try {
+                    updatePanel();
+                }
+                catch (SolarSystemException ex) {
+                    System.err.println(ex.getMessage());
                 }
             });
             grid.add(buttonCancelOrbit, 2, rowIndex, colSpanButton, 1);
@@ -476,17 +420,14 @@ public class InformationPanel extends Stage {
             // Button to reset orbital elements
             buttonResetOrbit = new Button("Reset Orbit");
             buttonResetOrbit.setMinWidth(BUTTONWIDTH);
-            buttonResetOrbit.setOnAction(new EventHandler() {
-                @Override
-                public void handle(Event event) {
-                    try {
-                        SolarSystemBody body = solarSystem.getBody(bodyName);
-                        solarSystem.setPositionVelocity(bodyName, body.getPosition(), body.getVelocity());
-                        updatePanel();
-                    }
-                    catch (SolarSystemException ex) {
-                        System.err.println(ex.getMessage());
-                    }
+            buttonResetOrbit.setOnAction((EventHandler) event -> {
+                try {
+                    SolarSystemBody body = solarSystem.getBody(bodyName);
+                    solarSystem.setPositionVelocity(bodyName, body.getPosition(), body.getVelocity());
+                    updatePanel();
+                }
+                catch (SolarSystemException ex) {
+                    System.err.println(ex.getMessage());
                 }
             });
             grid.add(buttonResetOrbit, 3, rowIndex++, colSpanButton, 1);
@@ -708,7 +649,7 @@ public class InformationPanel extends Stage {
      * @param valueAU value to be converted [A.U.]
      * @return converted value [km]
      */
-    private double convertAUtoKM(double valueAU) {
+    private static double convertAUtoKM(double valueAU) {
         return 0.001 * valueAU * SolarSystemParameters.ASTRONOMICALUNIT;
     }
 
@@ -717,7 +658,7 @@ public class InformationPanel extends Stage {
      * @param valueKM value to be converted [km]
      * @return converted value [A.U.]
      */
-    private double convertKMtoAU(double valueKM) {
+    private static double convertKMtoAU(double valueKM) {
         return 1000 * valueKM / SolarSystemParameters.ASTRONOMICALUNIT;
     }
 
@@ -752,7 +693,7 @@ public class InformationPanel extends Stage {
      * @param maxValue maximum value
      * @return value in range [minValue maxValue] or currentValue in case of parse exception
      */
-    private double getValueFromTextField(TextField textField, double currentValue, double minValue, double maxValue) {
+    private static double getValueFromTextField(TextField textField, double currentValue, double minValue, double maxValue) {
         double value;
         try {
             // Value is bounded by given minimum and maximum
@@ -871,8 +812,8 @@ public class InformationPanel extends Stage {
         }
         double[] orbitElements = getOrbitElementsFromTextFields();
         orbit = EphemerisUtil.computeOrbit(orbitElements);
-        for (int i = 0; i < orbit.length; i++) {
-            orbit[i].addVector(positionCenterParticle);
+        for (Vector3D vector3D : orbit) {
+            vector3D.addVector(positionCenterParticle);
         }
     }
 
@@ -898,7 +839,7 @@ public class InformationPanel extends Stage {
      * @param tick major tick unit
      * @return the new slider
      */
-    private Slider createSlider(double minVal, double maxVal, double initVal, double tick) {
+    private static Slider createSlider(double minVal, double maxVal, double initVal, double tick) {
         Slider slider = new Slider();
         slider.setMinWidth(SLIDERSIZE);
         slider.setMin(minVal);

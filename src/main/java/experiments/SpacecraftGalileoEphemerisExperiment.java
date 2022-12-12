@@ -47,12 +47,12 @@ public class SpacecraftGalileoEphemerisExperiment {
     private static final int timeStep = 60; // 1 minute
 
     // Maximum allowed deviation in position [m]
-    private final double maxDeviationPosition = 1.0E05; // 100 km
+    private static final double maxDeviationPosition = 1.0E05; // 100 km
 
     // Maximum allowed deviation in velocity [m/s]
-    private final double maxDeviationVelocity = 1.0E03; // 1 km/s
+    private static final double maxDeviationVelocity = 1.0E03; // 1 km/s
 
-    public SpacecraftGalileoEphemerisExperiment() {
+    private SpacecraftGalileoEphemerisExperiment() {
     }
 
     /**

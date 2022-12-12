@@ -115,8 +115,7 @@ public class EphemerisUtilTest {
         double eccentricity = 0.0;
         while (eccentricity < 1.0) {
             for (int i = 0; i < 360; i++) {
-                double M = (double) i;
-                double Mrad = Math.toRadians(M);
+                double Mrad = Math.toRadians(i);
                 double Erad = EphemerisUtil.solveKeplerEquationFixedPointIteration(Mrad,eccentricity,maxError);
                 double error = Mrad - (Erad -  eccentricity*Math.sin(Erad));
                 assertEquals(error,0.0,maxError);
@@ -145,8 +144,7 @@ public class EphemerisUtilTest {
         double eccentricity = 0.0;
         while (eccentricity < 1.0) {
             for (int i = 0; i < 360; i++) {
-                double M = (double) i;
-                double Mrad = Math.toRadians(M);
+                double Mrad = Math.toRadians(i);
                 double Erad = EphemerisUtil.solveKeplerEquationNewtonRaphson(Mrad,eccentricity,maxError);
                 double error = Mrad - (Erad -  eccentricity*Math.sin(Erad));
                 assertEquals(error,0.0,maxError);
@@ -175,8 +173,7 @@ public class EphemerisUtilTest {
         double eccentricity = 0.0;
         while (eccentricity < 1.0) {
             for (int i = 0; i < 360; i++) {
-                double M = (double) i;
-                double Mrad = Math.toRadians(M);
+                double Mrad = Math.toRadians(i);
                 double Erad = EphemerisUtil.solveKeplerEquationHalley(Mrad,eccentricity,maxError);
                 double error = Mrad - (Erad -  eccentricity*Math.sin(Erad));
                 assertEquals(error,0.0,maxError);
@@ -205,8 +202,7 @@ public class EphemerisUtilTest {
         double eccentricity = 1.01;
         while (eccentricity < 10.0) {
             for (int i = 0; i < 360; i++) {
-                double M = (double) i;
-                double Mrad = Math.toRadians(M);
+                double Mrad = Math.toRadians(i);
                 double Hrad = EphemerisUtil.solveHyperbolicKeplerEquationHalley(Mrad,eccentricity,maxError);
                 double error = Mrad - (eccentricity*Math.sinh(Hrad) - Hrad);
                 assertEquals(error,0.0,maxError);
@@ -345,7 +341,7 @@ public class EphemerisUtilTest {
         while (day < nrDays) {
 
             // Compute orbital elements for given date
-            double orbitElementsExpected[] = EphemerisUtil.computeOrbitalElements(orbitPars, date);
+            double[] orbitElementsExpected = EphemerisUtil.computeOrbitalElements(orbitPars, date);
 
             // Compute (x,y,z) position of Jupiter [m] from orbital elements
             Vector3D position = EphemerisUtil.computePosition(orbitElementsExpected);
@@ -355,7 +351,7 @@ public class EphemerisUtilTest {
             Vector3D velocity = EphemerisUtil.computeVelocity(muSun,orbitElementsExpected);
 
             // Compute orbital elements from position and velocity
-            double orbitElementsActual[]
+            double[] orbitElementsActual
                     = EphemerisUtil.computeOrbitalElementsFromPositionVelocity(muSun,position,velocity);
 
             // Expected orbital elements
@@ -375,7 +371,7 @@ public class EphemerisUtilTest {
             double longNodeActual = orbitElementsActual[5]; // longitude of ascending node [degrees]
 
             // Compare actual orbital elements to expected orbital elements
-            Assert.assertEquals("Wrong semi-major axis(day " + day + ")", axisExpected, axisActual, 1.0E-14);
+            Assert.assertEquals("Wrong semi-major axis(day " + day + ")", axisExpected, axisActual, 1.0E-13);
             Assert.assertEquals("Wrong eccentricity (day " + day + ")", eccentricityExpected, eccentricityActual, 1.0E-13);
             Assert.assertEquals("Wrong inclination (day " + day + ")", inclinationExpected, inclinationActual, 1.0E-12);
             Assert.assertEquals("Wrong mean anomaly (day " + day + ")", meanAnomalyExpected, meanAnomalyActual, 1.0E-08);
@@ -404,7 +400,7 @@ public class EphemerisUtilTest {
         while (day < nrDays) {
 
             // Compute orbital elements for given date
-            double orbitElementsExpected[] = EphemerisUtil.computeOrbitalElements(orbitPars, date);
+            double[] orbitElementsExpected = EphemerisUtil.computeOrbitalElements(orbitPars, date);
 
             // Compute (x,y,z) position of Mercury [m] from orbital elements
             Vector3D position = EphemerisUtil.computePosition(orbitElementsExpected);
@@ -414,7 +410,7 @@ public class EphemerisUtilTest {
             Vector3D velocity = EphemerisUtil.computeVelocity(muSun,orbitElementsExpected);
 
             // Compute orbital elements from position and velocity
-            double orbitElementsActual[]
+            double[] orbitElementsActual
                     = EphemerisUtil.computeOrbitalElementsFromPositionVelocity(muSun,position,velocity);
 
             // Expected orbital elements

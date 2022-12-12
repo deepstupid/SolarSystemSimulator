@@ -1146,7 +1146,7 @@ public class EphemerisGalileanMoons implements IEphemeris {
                 ELEM[2*(ib-2)+2]=IM_RESULT+val[2*(ib-2)+1];
             }
         }
-    };
+    }
 
     private void bncp(double dat0, int nsat, double[] ELEM)
     {
@@ -1215,12 +1215,12 @@ public class EphemerisGalileanMoons implements IEphemeris {
                 ELEM[2*(ib-2)+2]=IM_RESULT;
             }
         }
-    };
+    }
 
-    private void ELEM2PV(double MU, double[] ELEM, double[] XV)
+    private static void ELEM2PV(double MU, double[] ELEM, double[] XV)
     {
-        double G[];
-        double E[];
+        double[] G;
+        double[] E;
         G= new double[3];
         E= new double[3];
         double K=ELEM[3];
@@ -1260,7 +1260,7 @@ public class EphemerisGalileanMoons implements IEphemeris {
         XV[4]=VX1*P2+VY1*PQ ;
         XV[5]=VX1*PQ+VY1*Q2 ;
         XV[6]=(Q*VY1-VX1*P)*F2  ;
-    };
+    }
 
     private Vector3D[] getPositionVelocity(double ET, int nsat, int is)
     {

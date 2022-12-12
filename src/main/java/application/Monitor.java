@@ -27,7 +27,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Monitor for thread synchronization between drawing and simulating.
  * @author Nico Kuijpers
  */
-public class Monitor {
+class Monitor {
 
     private final Lock monLock = new ReentrantLock();
     private final Condition okToDraw = monLock.newCondition();

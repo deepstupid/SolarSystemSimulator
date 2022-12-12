@@ -84,7 +84,6 @@ public class EphemerisSaturnMoons implements IEphemeris {
         }
         ELEM[5]=S1;
         ELEM[6]=S2;
-        return;
     }
     //
     //SUBROUTINE CALCLON(DJ,DLO)
@@ -109,7 +108,6 @@ public class EphemerisSaturnMoons implements IEphemeris {
                 DLO[IS]=0.0;
             }
         }
-        return;
     }
     //
     //SUBROUTINE EDERED(ELEM,XYZ,VXYZ,ISAT)
@@ -173,7 +171,7 @@ public class EphemerisSaturnMoons implements IEphemeris {
         VXYZ[2]=                  SI  * VXYZ2[1] +  CI   * VXYZ2[2];
     }
     //
-    public void POSIRED7(double aDateJulian, int IS, double[] XYZ, double[] VXYZ)
+    private void POSIRED7(double aDateJulian, int IS, double[] XYZ, double[] VXYZ)
     {
         //DIMENSION XYZ(3),VXYZ(3),ELEM(6),DLO(8)
         double[] ELEM = new double[7];
@@ -189,18 +187,18 @@ public class EphemerisSaturnMoons implements IEphemeris {
         //System.out.println("<"+XYZ[0]+" "+XYZ[1]+" "+XYZ[2]);
     }
     //
-    private double[][][][] SERIES;
-    private int[][][][] IKS;
-    private double[] TMAS;
-    private double[] AAM;
-    private int[][] NTR;
+    private final double[][][][] SERIES;
+    private final int[][][][] IKS;
+    private final double[] TMAS;
+    private final double[] AAM;
+    private final int[][] NTR;
     private double GK;
     private double GK1;
     private double TAS;
     private double AIA;
     private double OMA;
-    private double[] AL0;
-    private double[] AN0;
+    private final double[] AL0;
+    private final double[] AN0;
     private double RADSDG;
     private double PI;
     //
@@ -236,7 +234,7 @@ public class EphemerisSaturnMoons implements IEphemeris {
     // Javafied Fortran code for reading data file
     // saturnMoonsEphemeris.txt
     //
-    private final void LECSER()
+    private void LECSER()
     {
 
         File ephemerisData;
@@ -337,7 +335,7 @@ public class EphemerisSaturnMoons implements IEphemeris {
                 s.useLocale(Locale.ENGLISH);
                 NT = s.nextInt();
                 if (9998>NT) {
-                    int IK[] = new int[9];
+                    int[] IK = new int[9];
                     double A1 = s.nextDouble();
                     double A2 = s.nextDouble();
                     double A3 = s.nextDouble();
@@ -350,10 +348,7 @@ public class EphemerisSaturnMoons implements IEphemeris {
                         SERIES[KT][1][IEQ][IS] = A1;
                         SERIES[KT][2][IEQ][IS] = A2;
                         SERIES[KT][3][IEQ][IS] = A3;
-                        for (int JS=1;JS<=8;JS++)
-                        {
-                            IKS[KT][IEQ][IS][JS] = IK[JS];
-                        }
+                        System.arraycopy(IK, 1, IKS[KT][IEQ][IS], 1, 8);
                     }
                 }
                 else if (9998==NT)

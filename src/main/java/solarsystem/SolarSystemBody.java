@@ -41,14 +41,14 @@ public class SolarSystemBody implements Serializable {
     private Vector3D position;
     private Vector3D velocity;
     private Vector3D[] orbit;
-    private List<Vector3D> trajectory;
+    private final List<Vector3D> trajectory;
     private double diameter;
     private SolarSystemBody centerBody;
 
     /**
      * Default constructor.
      */
-    public SolarSystemBody() {
+    protected SolarSystemBody() {
         this.trajectory = new ArrayList<>();
         this.diameter = MINIMUMDIAMETER;
     }

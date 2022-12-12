@@ -57,7 +57,7 @@ public class EphemerisUranusMoons implements IEphemeris {
     //
     // KEPLKH (RL,RK,RH,F,IT,IPRT)
     //
-    public double KEPLKH(double RL, double RK, double RH)
+    private static double KEPLKH(double RL, double RK, double RH)
     {
         double F=0.0;
         if (RL==0.0) {
@@ -466,11 +466,11 @@ public class EphemerisUranusMoons implements IEphemeris {
      *     SUBROUTINE UTILISEE : KEPLKH
      *
      */
-    private void ELLIPX( int IS, double[][] ELL, double RMU[], double[][] XYZ)
+    private static void ELLIPX(int IS, double[][] ELL, double[] RMU, double[][] XYZ)
     {
-        double ROT[][]=new double[4][3];
-        double TX1[] = new double[3];
-        double TX1T[] = new double[3];
+        double[][] ROT =new double[4][3];
+        double[] TX1 = new double[3];
+        double[] TX1T = new double[3];
         double RA,RL,RK,RH,RQ,RP,F;
         double RN,PHI,RKI,PSI;
 
@@ -620,32 +620,32 @@ public class EphemerisUranusMoons implements IEphemeris {
         TRANS[3][3]=SD;
     }
     // added first (0.0) element due to indexing from 1 in fortran
-    private final double FQN[] = { 0.0,4445190.550E-06,2492952.519E-06,1516148.111E-06, 721718.509E-06,466692.120E-06 };
-    private final double FQE[] = { 0.0,20.082,6.217,2.865,2.078,0.386 };
-    private final double FQI[]= { 0.0,-20.309,-6.288,-2.836,-1.843,-0.259 } ;
-    private final double PHN[] = { 0.0,-238051.0E-06,3098046.0E-06,2285402.0E-06,856359.0E-06,-915592.0E-06 };
-    private final double PHE[] = {0.0,0.611392,2.408974,2.067774,0.735131,0.426767};
-    private final double PHI[] = {0.0,5.702313,0.395757,0.589326,1.746237,4.206896 };
-    private final double GMS[] = { 0.0,4.4,86.1,84.0,230.0,200.0 };
-    private final double GMSU = 5794554.5;
-    private final double ALF=1.3370385623111227;
-    private final double DEL=0.26236177166923647;
+    private final double[] FQN = { 0.0,4445190.550E-06,2492952.519E-06,1516148.111E-06, 721718.509E-06,466692.120E-06 };
+    private final double[] FQE = { 0.0,20.082,6.217,2.865,2.078,0.386 };
+    private final double[] FQI = { 0.0,-20.309,-6.288,-2.836,-1.843,-0.259 } ;
+    private final double[] PHN = { 0.0,-238051.0E-06,3098046.0E-06,2285402.0E-06,856359.0E-06,-915592.0E-06 };
+    private final double[] PHE = {0.0,0.611392,2.408974,2.067774,0.735131,0.426767};
+    private final double[] PHI = {0.0,5.702313,0.395757,0.589326,1.746237,4.206896 };
+    private final double[] GMS = { 0.0,4.4,86.1,84.0,230.0,200.0 };
+    private static final double GMSU = 5794554.5;
+    private static final double ALF=1.3370385623111227;
+    private static final double DEL=0.26236177166923647;
     //private final double ALF = 76.60666666666667;
     //private final double DEL = 15.03222222222222;
     //private final double UA = 149597870.0;
-    private final double T1950 = 2433282.423;
-    private final double T2000 = 2451545.0;
-    private final double T0 = 2444239.5;
+    private static final double T1950 = 2433282.423;
+    private static final double T2000 = 2451545.0;
+    private static final double T0 = 2444239.5;
     //
-    private double R[][];
-    private double EL[][];
-    private double XU[][];
-    private double XE[][];
-    private double RMU[];
-    private double TRANS[][];
-    private double AN[];
-    private double AE[];
-    private double AI[];
+    private final double[][] R;
+    private final double[][] EL;
+    private final double[][] XU;
+    private final double[][] XE;
+    private final double[] RMU;
+    private final double[][] TRANS;
+    private final double[] AN;
+    private final double[] AE;
+    private final double[] AI;
     private double DPI;
     private double DGRAD;
     private double SEJ2;

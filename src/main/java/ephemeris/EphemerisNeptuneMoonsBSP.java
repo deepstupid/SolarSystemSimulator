@@ -32,16 +32,16 @@ import java.util.*;
 public class EphemerisNeptuneMoonsBSP implements IEphemeris {
 
     // File name of BSP file
-    private final String BSPfilename = "EphemerisFilesBSP/nep081_NeptuneMoons_1970_2025.bsp";
+    private static final String BSPfilename = "EphemerisFilesBSP/nep081_NeptuneMoons_1970_2025.bsp";
 
     // Observer code for BSP file
-    private final int observer = 8;
+    private static final int observer = 8;
 
     // Target codes for BSP file
-    private Map<String,Integer> targets;
+    private final Map<String,Integer> targets;
 
     // Bodies for which ephemeris can be computed or approximated
-    private List<String> bodies;
+    private final List<String> bodies;
 
     // First valid date
     private final GregorianCalendar firstValidDate;

@@ -27,7 +27,7 @@ import java.util.*;
 /**
  * Settings for visualization of events such as spacecraft flybys, solar eclipses, etc.
  */
-public class VisualizationSettings {
+class VisualizationSettings {
     // Name of event
     private String eventName = "No name";
 

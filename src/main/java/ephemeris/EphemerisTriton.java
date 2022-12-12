@@ -61,38 +61,38 @@ public class EphemerisTriton implements IEphemeris {
     // Parameters of the model of solar motion
     // N.V. Emelyanov and M.Yu. Samorodov 2015, Table 1
     // Values from the mean elements
-    private double a_accent     = 4504449760.0;   // [km]
-    private double i_accent     = 27.923658;      // [degrees]
-    private double Omega_accent = 200.788305;     // [degrees]
-    private double u0_accent    = 258.329018;     // [degrees]
-    private double u_dot_accent = 0.00598182615;  // [degrees/day]
+    private static final double a_accent     = 4504449760.0;   // [km]
+    private static final double i_accent     = 27.923658;      // [degrees]
+    private static final double Omega_accent = 200.788305;     // [degrees]
+    private static final double u0_accent    = 258.329018;     // [degrees]
+    private static final double u_dot_accent = 0.00598182615;  // [degrees/day]
 
     // Coefficients for long-period perturbations from the Sun's attraction
     // N.V. Emelyanov and M.Yu. Samorodov 2015, Table 2
-    private double KI[] = {0.0,0.00096486,0.00664662,0.00004687,0.00095975,-0.00037627,-0.00000225};
-    private double KU[] = {-0.00012327,-0.00279453,-0.04335625,-0.00017215,-0.00233686,0.00170605,0.00000730};
-    private double KO[] = {0.00063339,-0.00178908,-0.01560110,-0.00009186,-0.00218071,0.00096231,0.00000536};
-    private double k1[] = {2,2,0,-2,2,0,-2};
-    private double k2[] = {0,1,1,1,2,2,2};
+    private final double[] KI = {0.0,0.00096486,0.00664662,0.00004687,0.00095975,-0.00037627,-0.00000225};
+    private final double[] KU = {-0.00012327,-0.00279453,-0.04335625,-0.00017215,-0.00233686,0.00170605,0.00000730};
+    private final double[] KO = {0.00063339,-0.00178908,-0.01560110,-0.00009186,-0.00218071,0.00096231,0.00000536};
+    private final double[] k1 = {2,2,0,-2,2,0,-2};
+    private final double[] k2 = {0,1,1,1,2,2,2};
 
     // Parameters of the model of Triton's motion obtained from numerical integration of the
     // equations of motion
     // N.V. Emelyanov and M.Yu. Samorodov 2015, Table 3
-    private double a         = 354758.98;     // [km]
-    private double I0        = 156.86561883;  // [degrees]
-    private double u0        = 32.66861530;   // [degrees]
-    private double u_dot     = 61.2586972029; // [degrees/day]
-    private double Omega0 = 72.89882654;   // [degrees]
-    private double Omega_dot = 0.00143381955; // [degrees/day]
-    private double alpha     = Math.toRadians(299.46088779); // Converted from [degrees] to [radians]
-    private double delta     = Math.toRadians(43.40655561);  // Converted from [degrees] to [radians]
+    private static final double a         = 354758.98;     // [km]
+    private static final double I0        = 156.86561883;  // [degrees]
+    private static final double u0        = 32.66861530;   // [degrees]
+    private static final double u_dot     = 61.2586972029; // [degrees/day]
+    private static final double Omega0 = 72.89882654;   // [degrees]
+    private static final double Omega_dot = 0.00143381955; // [degrees/day]
+    private final double alpha     = Math.toRadians(299.46088779); // Converted from [degrees] to [radians]
+    private final double delta     = Math.toRadians(43.40655561);  // Converted from [degrees] to [radians]
 
     // N.V. Emelyanov and M.Yu. Samorodov 2015, Table 3, Formula 5
-    private double t0  = 2378520.5; // [JED] Jan 25, 1800
-    private double ts  = 2451545.0; // [JED] Jan 1, 2000
+    private static final double t0  = 2378520.5; // [JED] Jan 25, 1800
+    private static final double ts  = 2451545.0; // [JED] Jan 1, 2000
 
     // Convert from 'earth'to 'ecliptic'
-    private double eclipticAngle = Math.toRadians(23.43929); // Converted from [degrees] to [radians]
+    private final double eclipticAngle = Math.toRadians(23.43929); // Converted from [degrees] to [radians]
 
     /**
      * Constructor. Singleton pattern.

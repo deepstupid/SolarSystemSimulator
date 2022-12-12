@@ -558,7 +558,7 @@ public class ApolloEight extends Spacecraft implements Serializable {
      * @param flightAngle       Flight angle [degrees]
      * @return position [m] and velocity [m/s] in J2000 ecliptic plane with center body Earth
      */
-    private Vector3D[] convertEarthTrajectoryParametersToPositionVelocity(
+    private static Vector3D[] convertEarthTrajectoryParametersToPositionVelocity(
             GregorianCalendar dateTime, double latitude, double longitude, double altitude,
             double velocityMagnitude, double heading, double flightAngle) {
 
@@ -638,7 +638,7 @@ public class ApolloEight extends Spacecraft implements Serializable {
      * @param dateTime    date/time
      * @return orbital parameters in J2000 ecliptic plane with center body Earth
      */
-    private double[] computeOrbitalParametersECI(Vector3D positionECI, Vector3D velocityECI, GregorianCalendar dateTime) {
+    private static double[] computeOrbitalParametersECI(Vector3D positionECI, Vector3D velocityECI, GregorianCalendar dateTime) {
         // Convert position and velocity to J2000 ecliptic plane
         Vector3D positionB1969Equatorial = positionECI.scalarProduct(FOOT);
         Vector3D velocityB1969Equatorial = velocityECI.scalarProduct(FOOT);
@@ -651,10 +651,9 @@ public class ApolloEight extends Spacecraft implements Serializable {
         double muEarth = SolarSystemParameters.getInstance().getMu("Earth");
 
         // Orbital parameters in J2000 ecliptic plane with center body Earth
-        double[] orbitPars= EphemerisUtil.computeOrbitalParametersFromPositionVelocity(
-                muEarth, positionJ2000Ecliptic, velocityJ2000Ecliptic, dateTime);
 
-        return orbitPars;
+        return EphemerisUtil.computeOrbitalParametersFromPositionVelocity(
+                muEarth, positionJ2000Ecliptic, velocityJ2000Ecliptic, dateTime);
     }
 
     /**
@@ -666,7 +665,7 @@ public class ApolloEight extends Spacecraft implements Serializable {
      * @param dateTime    date/time
      * @return orbital parameters in J2000 ecliptic plane with center body Moon
      */
-    private double[] computeOrbitalParametersMCI(Vector3D positionMCI, Vector3D velocityMCI, GregorianCalendar dateTime) {
+    private static double[] computeOrbitalParametersMCI(Vector3D positionMCI, Vector3D velocityMCI, GregorianCalendar dateTime) {
         // Convert position and velocity to J2000 ecliptic plane
         Vector3D positionB1969Equatorial = positionMCI.scalarProduct(FOOT);
         Vector3D velocityB1969Equatorial = velocityMCI.scalarProduct(FOOT);
@@ -679,9 +678,8 @@ public class ApolloEight extends Spacecraft implements Serializable {
         double muMoon = SolarSystemParameters.getInstance().getMu("Moon");
 
         // Orbital parameters in J2000 ecliptic plane with center body Moon
-        double[] orbitPars= EphemerisUtil.computeOrbitalParametersFromPositionVelocity(
-                muMoon, positionJ2000Ecliptic, velocityJ2000Ecliptic, dateTime);
 
-        return orbitPars;
+        return EphemerisUtil.computeOrbitalParametersFromPositionVelocity(
+                muMoon, positionJ2000Ecliptic, velocityJ2000Ecliptic, dateTime);
     }
 }

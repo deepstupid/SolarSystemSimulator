@@ -34,23 +34,23 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
 
-public class SPK {
+class SPK {
 
-    final int MAX_RECORDS = 1024;
+    private static final int MAX_RECORDS = 1024;
 
     // AUXILIARY CLASS
-    public class SummaryRecords
+    class SummaryRecords
     {
         private int nRecords;
-        public double[] _etbeg;
-        public double[] _etend;
-        public int[] _t;
-        public int[] _o;
-        public int[] _frame;
-        public int[] _type;
-        public int[] _rbeg;
-        public int[] _rend;
-        public SummaryRecords()
+        final double[] _etbeg;
+        final double[] _etend;
+        final int[] _t;
+        final int[] _o;
+        final int[] _frame;
+        final int[] _type;
+        final int[] _rbeg;
+        final int[] _rend;
+        SummaryRecords()
         {
             nRecords=0;
             _etbeg = new double[MAX_RECORDS];
@@ -62,7 +62,7 @@ public class SPK {
             _rbeg = new int[MAX_RECORDS];
             _rend = new int[MAX_RECORDS];
         }
-        public void addRecord( double etbeg, double etend, int t, int o, int frame, int type, int rbeg, int rend)
+        void addRecord(double etbeg, double etend, int t, int o, int frame, int type, int rbeg, int rend)
         {
             if (nRecords<MAX_RECORDS)
             {
@@ -77,7 +77,7 @@ public class SPK {
                 nRecords = nRecords + 1;
             }
         }
-        public int searchRecord(double et, int target, int observer)
+        int searchRecord(double et, int target, int observer)
         {
             int res = -1;
             int m = 0;
@@ -95,12 +95,12 @@ public class SPK {
             }
             return res;
         }
-    };
+    }
 
-    private final int RECLEN = 1024;
-    private double[] data;
+    private static final int RECLEN = 1024;
+    private final double[] data;
     private byte[] bbuf;
-    private SummaryRecords summary;
+    private final SummaryRecords summary;
     private MappedByteBuffer buffer;
     private Boolean isInit;
     private Boolean isLittleEndian;
@@ -112,7 +112,7 @@ public class SPK {
         isLittleEndian = Boolean.TRUE;
     }
 
-    private Boolean isEqualByteArray(byte[] a, byte[] b, int n)
+    private static Boolean isEqualByteArray(byte[] a, byte[] b, int n)
     {
         return ByteBuffer.wrap(a, 0, n).equals(ByteBuffer.wrap(b, 0, n));
     }
@@ -127,7 +127,7 @@ public class SPK {
         else {
             bb.order(ByteOrder.BIG_ENDIAN);
         }
-        return bb.getInt() & 0xffffffffl;
+        return bb.getInt() & 0xffffffffL;
     }
 
     private double getDouble(byte[] data)
@@ -168,7 +168,7 @@ public class SPK {
         return data[offset+1] + two_x * bkp1 - bkp2;
     }
 
-    private double[] spke01(double ET, double[] RECORD)
+    private static double[] spke01(double ET, double[] RECORD)
     {
         //     Based on original FORTRAN code by Fred T. Krogh
         //     Unpack the contents of the MDA array.
@@ -187,7 +187,7 @@ public class SPK {
         //
         double TL = RECORD[0];
         double[] G = new double[15];
-        for (int i=0; i<15; i++) G[i] = RECORD[i+1];
+        System.arraycopy(RECORD, 1, G, 0, 15);
         double[] REFPOS = new double[3];
         double[] REFVEL = new double[3];
         REFPOS[0] = RECORD[16];
@@ -197,7 +197,7 @@ public class SPK {
         REFVEL[1] = RECORD[19];
         REFVEL[2] = RECORD[21];
         double[] DT = new double[45];
-        for (int i=0; i<45; i++) DT[i] = RECORD[i+22];
+        System.arraycopy(RECORD, 22, DT, 0, 45);
         int KQMAX1 = (int)(RECORD[67]);
         int[] KQ = new int[3];
         KQ[0] = (int)(RECORD[68]);
@@ -345,13 +345,13 @@ public class SPK {
                 int n;
                 buffer.position(summary_offset);
                 buffer.get(bbuf, 0, 8);
-                nxt = (int) ((double) getDouble(bbuf));
+                nxt = (int) getDouble(bbuf);
                 buffer.position(summary_offset+8);
                 buffer.get(bbuf, 0, 8);
-                prv = (int) ((double) getDouble(bbuf)); // not used
+                prv = (int) getDouble(bbuf); // not used
                 buffer.position(summary_offset+16);
                 buffer.get(bbuf, 0, 8);
-                nsum = (int) ((double) getDouble(bbuf));
+                nsum = (int) getDouble(bbuf);
                 summary_offset = summary_offset + 24;
                 for (int i = 0; i<nsum; i++)
                 {
@@ -359,14 +359,14 @@ public class SPK {
                     int[] irec = new int[ni];
                     // read nd==2 doubles
                     buffer.position(summary_offset);
-                    for (int j = 0; j<(int) nd; j++)
+                    for (int j = 0; j< nd; j++)
                     {
                         double rec;
                         buffer.get(bbuf, 0, 8);
-                        drec[j] = (double) getDouble(bbuf);
+                        drec[j] = getDouble(bbuf);
                     }
                     // read ni==6 unsigned int
-                    for (int j = 0; j<(int) ni; j++)
+                    for (int j = 0; j< ni; j++)
                     {
                         buffer.get(bbuf, 0, 4);
                         irec[j] = (int) getUnsignedInt(bbuf);
@@ -385,7 +385,6 @@ public class SPK {
             System.out.println("Error (e.g. opening file, wrong detection of endianness)");
         }
         isInit = true;
-        return;
     }
 
     /**
@@ -466,26 +465,26 @@ public class SPK {
             int offset = (rend - 4) * 8;
             buffer.position(offset);
             buffer.get(bbuf, 0, 8);
-            double init = (double) getDouble(bbuf);
+            double init = getDouble(bbuf);
             buffer.get(bbuf, 0, 8);
-            double intlen = (double) getDouble(bbuf);
+            double intlen = getDouble(bbuf);
             buffer.get(bbuf, 0, 8);
-            double rsize = (double) getDouble(bbuf);
+            double rsize = getDouble(bbuf);
             buffer.get(bbuf, 0, 8);
-            double _n = (double) getDouble(bbuf);
+            double _n = getDouble(bbuf);
             int internal_offset = (int) (Math.floor((et - init) / intlen) * rsize);
-            int record = 8 * (int) (rbeg + internal_offset);
+            int record = 8 * (rbeg + internal_offset);
 
             for (int i = 0; i < (int) rsize; i++) {
                 buffer.position(((record - 8) + i * 8));
                 buffer.get(bbuf, 0, 8);
-                data[i] = (double) getDouble(bbuf);
+                data[i] = getDouble(bbuf);
             }
 
             if (type==2) { // Type II specific interpolation
-                order = (int) (((int) (rsize) - 2) / 3 - 1);
+                order = ((int) (rsize) - 2) / 3 - 1;
                 double tau = (et - data[0]) / data[1];
-                int deg = (int) (order + 1);
+                int deg = order + 1;
                 double factor = 1.0 / data[1];
 
                 px = chebyshev(order, tau, 2 + 0 * deg);
@@ -496,9 +495,9 @@ public class SPK {
                 vz = der_chebyshev(order, tau, 2 + 2 * deg) * factor;
             }
             else { // Type III specific interpolation
-                order = (int) (((int) (rsize) - 2) / 6 - 1);
+                order = ((int) (rsize) - 2) / 6 - 1;
                 double tau = (et - data[0]) / data[1];
-                int deg = (int) (order + 1);
+                int deg = order + 1;
                 px = chebyshev(order, tau, 2 + 0 * deg);
                 py = chebyshev(order, tau, 2 + 1 * deg);
                 pz = chebyshev(order, tau, 2 + 2 * deg);

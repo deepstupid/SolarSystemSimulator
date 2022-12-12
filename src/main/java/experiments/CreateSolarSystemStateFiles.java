@@ -36,7 +36,7 @@ import java.util.TimeZone;
 public class CreateSolarSystemStateFiles {
     
     // File extension
-    private final String EXTENSION = ".sol";
+    private static final String EXTENSION = ".sol";
     
     // The Solar System
     private final SolarSystem solarSystem;
@@ -57,7 +57,7 @@ public class CreateSolarSystemStateFiles {
      * Constructor.
      * Set simulation start and end date. Create the Solar System.
      */
-    public CreateSolarSystemStateFiles() {
+    private CreateSolarSystemStateFiles() {
         // Simulation start date/time
         simulationStartDateTime = new GregorianCalendar();
         
@@ -95,7 +95,7 @@ public class CreateSolarSystemStateFiles {
     /**
      * Simulate the Solar System and create Solar System state files.
      */
-    public void createStateFiles() {
+    private void createStateFiles() {
         // Initialize simulation date/time
         GregorianCalendar simulationDateTime;
         simulationDateTime = solarSystem.getSimulationDateTime();
@@ -130,7 +130,7 @@ public class CreateSolarSystemStateFiles {
      * Save current simulation state to file.
      * @param dateTime
      */
-    public void saveStateFile(GregorianCalendar dateTime) {
+    private void saveStateFile(GregorianCalendar dateTime) {
         String fileName = calendarToString(dateTime) + EXTENSION;
         File file = new File(filePath,fileName);
         System.out.println("Save simulation state to file " + file);
@@ -141,7 +141,7 @@ public class CreateSolarSystemStateFiles {
         catch (FileNotFoundException ex) {
             System.err.println("Error: file not found");
         }
-        try (ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+        try (ObjectOutput objectOut = new ObjectOutputStream(fileOut)) {
             objectOut.writeObject(solarSystem);
         }
         catch (IOException ex) {
@@ -154,7 +154,7 @@ public class CreateSolarSystemStateFiles {
      * @param calendar GregorianCalendar-object
      * @return era, date, and time as string
      */
-    private String calendarToString(GregorianCalendar calendar) {
+    private static String calendarToString(GregorianCalendar calendar) {
         // Obtain era, date, and time from calendar
         int era = calendar.get(Calendar.ERA);
         int year = calendar.get(Calendar.YEAR);

@@ -35,15 +35,15 @@ import java.util.*;
 public class EphemerisGalileoJupiterBSP implements IEphemeris {
 
     // Files name of BSP files
-    private final String BSPfilenameA = "EphemerisFilesBSP/s980326a.bsp";
-    private final String BSPfilenameB = "EphemerisFilesBSP/s000131a.bsp";
-    private final String BSPfilenameC = "EphemerisFilesBSP/s030916a.bsp";
+    private static final String BSPfilenameA = "EphemerisFilesBSP/s980326a.bsp";
+    private static final String BSPfilenameB = "EphemerisFilesBSP/s000131a.bsp";
+    private static final String BSPfilenameC = "EphemerisFilesBSP/s030916a.bsp";
 
     // Target codes for BSP file
-    private Map<String,Integer> targets;
+    private final Map<String,Integer> targets;
 
     // Bodies for which ephemeris can be computed or approximated
-    private List<String> bodies;
+    private final List<String> bodies;
 
     // First valid date for ephemeris Primary tour 1995-JUL-01 to 1998-JAN-01
     private final GregorianCalendar firstValidDateA;
@@ -64,12 +64,12 @@ public class EphemerisGalileoJupiterBSP implements IEphemeris {
     private static IEphemeris instance = null;
 
     // Read ephemeris from BSP file
-    private SPK[] spk = new SPK[3];
+    private final SPK[] spk = new SPK[3];
 
     // Compute position and velocity in case no record is found
-    private Vector3D positionStored = new Vector3D();
-    private Vector3D velocityStored = new Vector3D();
-    private GregorianCalendar dateTimeStored = null;
+    private final Vector3D positionStored = new Vector3D();
+    private final Vector3D velocityStored = new Vector3D();
+    private final GregorianCalendar dateTimeStored = null;
 
     /**
      * Constructor. Singleton pattern.

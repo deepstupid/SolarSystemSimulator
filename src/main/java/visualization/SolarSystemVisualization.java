@@ -116,55 +116,76 @@ public class SolarSystemVisualization extends Stage {
     private double zoom = INITZOOM;
 
     // Material for sphere representing shadow of the Earth
-    private PhongMaterial materialTransparent;
-    private PhongMaterial materialShadowEarth;
+    private final PhongMaterial materialTransparent;
+    private final PhongMaterial materialShadowEarth;
 
     // Scene
-    private Group solarSystemGroup;
-    private SubScene subScene;
-    private Text displayObservedBody;
-    private Text displayDateTime;
+    private final Group solarSystemGroup;
+    private final SubScene subScene;
+    private final Text displayObservedBody;
+    private final Text displayDateTime;
 
     // Spheres representing Sun, Moon, major planets, Galilean moons, and Shoemaker-Levy 9
-    private Sphere sun, moon;
-    private Sphere mercury, venus, earth, mars, jupiter, saturn, uranus, neptune;
-    private Sphere plutoSystem, pluto;
-    private Sphere shoemaker;
-    private Sphere earthLowRes, earthHighRes, cloudsEarthHighRes;
-    private Sphere io, europa, ganymede, callisto;
-    private Sphere shadowIo, shadowEuropa, shadowGanymede, shadowCallisto;
+    private final Sphere sun;
+    private final Sphere moon;
+    private final Sphere mercury;
+    private final Sphere venus;
+    private final Sphere earth;
+    private final Sphere mars;
+    private final Sphere jupiter;
+    private final Sphere saturn;
+    private final Sphere uranus;
+    private final Sphere neptune;
+    private final Sphere plutoSystem;
+    private final Sphere pluto;
+    private final Sphere shoemaker;
+    private final Sphere earthLowRes;
+    private final Sphere earthHighRes;
+    private final Sphere cloudsEarthHighRes;
+    private final Sphere io;
+    private final Sphere europa;
+    private final Sphere ganymede;
+    private final Sphere callisto;
+    private final Sphere shadowIo;
+    private final Sphere shadowEuropa;
+    private final Sphere shadowGanymede;
+    private final Sphere shadowCallisto;
 
     // Rings of Saturn and Uranus
-    private Cylinder ringSaturn, ringUranus;
+    private final Cylinder ringSaturn;
+    private final Cylinder ringUranus;
 
     // Corona of the Sun which is visible during total solar eclipse
-    private Cylinder coronaSun;
+    private final Cylinder coronaSun;
 
     // Shadows of the Earth, Jupiter, Saturn, Uranus, and Neptune
-    private Cylinder shadowEarth;
-    private Cylinder shadowJupiter, shadowSaturn, shadowUranus, shadowNeptune;
+    private final Cylinder shadowEarth;
+    private final Cylinder shadowJupiter;
+    private final Cylinder shadowSaturn;
+    private final Cylinder shadowUranus;
+    private final Cylinder shadowNeptune;
 
     // 3D shapes and their rotations
-    private Map<String,Node> bodies;
-    private Map<String,Rotate> bodyRotationsX;
-    private Map<String,Rotate> bodyRotationsY;
-    private Map<String,Rotate> bodyRotationsZ;
-    private Map<String,Rotate> bodyRotationsObliquity;
-    private Map<String,Rotate> bodyRotationsRevolution;
-    private Map<String,Double> offsetRevolution;
-    private PerspectiveCamera camera;
-    private PointLight pointLight;
-    private Sphere locationOnEarth;
+    private final Map<String,Node> bodies;
+    private final Map<String,Rotate> bodyRotationsX;
+    private final Map<String,Rotate> bodyRotationsY;
+    private final Map<String,Rotate> bodyRotationsZ;
+    private final Map<String,Rotate> bodyRotationsObliquity;
+    private final Map<String,Rotate> bodyRotationsRevolution;
+    private final Map<String,Double> offsetRevolution;
+    private final PerspectiveCamera camera;
+    private final PointLight pointLight;
+    private final Sphere locationOnEarth;
 
     // Names of spacecraft
-    private List<String> spacecraftNames;
+    private final List<String> spacecraftNames;
 
     // Camera rotation and position
-    private Translate pivotCamera;
-    private Rotate xRotateCamera;
-    private Rotate yRotateCamera;
-    private Rotate zRotateCamera;
-    private Translate positionCamera;
+    private final Translate pivotCamera;
+    private final Rotate xRotateCamera;
+    private final Rotate yRotateCamera;
+    private final Rotate zRotateCamera;
+    private final Translate positionCamera;
 
     // Location Amsterdam, The Netherlands
     private double latitude = 52.3676; // degrees
@@ -172,13 +193,13 @@ public class SolarSystemVisualization extends Stage {
     private final static double LOCATION_HEIGHT = 1.0E5; // 100 km
 
     // Reference to the Solar System
-    private SolarSystem solarSystem;
+    private final SolarSystem solarSystem;
 
     // Solar System parameters
-    private SolarSystemParameters solarSystemParameters;
+    private final SolarSystemParameters solarSystemParameters;
 
     // Factory for 3D shapes for visualization
-    SolarSystemShapeFactory shapeFactory;
+    private final SolarSystemShapeFactory shapeFactory;
 
     // Selected body
     private String selectedBody = "Sun";
@@ -316,8 +337,9 @@ public class SolarSystemVisualization extends Stage {
         spacecraftNames.add("ISS");
 
         // Set body rotations and offset for revolution for all shapes
-        for (String name : bodies.keySet()) {
-            Node node = bodies.get(name);
+        for (Map.Entry<String, Node> entry : bodies.entrySet()) {
+            String name = entry.getKey();
+            Node node = entry.getValue();
             setBodyRotations(name,node);
             offsetRevolution.put(name,0.0);
         }
@@ -549,7 +571,7 @@ public class SolarSystemVisualization extends Stage {
      */
     private void refreshDisplayObservedBody() {
         StringBuilder sb = new StringBuilder();
-        if (viewMode.equals(SolarSystemViewMode.TELESCOPE)) {
+        if (viewMode == SolarSystemViewMode.TELESCOPE) {
             if ("Earth".equals(selectedBody) || "EarthMoonBarycenter".equals(selectedBody)) {
                 sb.append("Earth observed from the Sun");
             }
@@ -582,7 +604,7 @@ public class SolarSystemVisualization extends Stage {
                 relativeVelocity = velocitySelectedBody;
             }
             long velocity = Math.round(relativeVelocity.magnitude());
-            sb.append(observedBody + " observed from ");
+            sb.append(observedBody).append(" observed from ");
             sb.append(selectedBody);
             sb.append("\n");
             sb.append("Distance ");
@@ -604,7 +626,7 @@ public class SolarSystemVisualization extends Stage {
         StringBuilder sb = new StringBuilder(dateTimeString);
         int index = dateTimeString.length() - 4;
         sb.replace(index,index + 4," ");
-        sb.append("(" + dateTime.getTimeZone().getID() + ")");
+        sb.append("(").append(dateTime.getTimeZone().getID()).append(")");
         displayDateTime.setText(sb.toString());
     }
 
@@ -618,7 +640,7 @@ public class SolarSystemVisualization extends Stage {
     private void setCameraSettings(double fieldOfView, double nearDistance, double farDistance) {
         double fieldOfViewZoom = Math.min(90.0, Math.max(0.0, (10.0 - 0.1 * zoom) * fieldOfView));
         camera.setFieldOfView(fieldOfViewZoom);
-        if (viewMode.equals(SolarSystemViewMode.TELESCOPE)) {
+        if (viewMode == SolarSystemViewMode.TELESCOPE) {
             // Ignore given values for near/far distance
             camera.setNearClip(0.1 * SCREENDEPTH);
             // Use 3 * SCREENDEPTH to see Saturn when observing Jupiter during
@@ -662,54 +684,24 @@ public class SolarSystemVisualization extends Stage {
     private double diameterBody(String bodyName) {
         double diameter;
         switch (bodyName) {
-            case "Pioneer 10":
-            case "Pioneer 11":
-                diameter = DIAMETERPIONEER;
-                break;
-            case "Voyager 1":
-            case "Voyager 2":
-                diameter = DIAMETERVOYAGER;
-                break;
-            case "New Horizons":
-                diameter = DIAMETERNEWHORIZONS;
-                break;
-            case "Rosetta":
-                diameter = DIAMETERROSETTA;
-                break;
-            case "Cassini":
-                diameter = DIAMETERCASSINI;
-                break;
-            case "Galileo":
-                diameter = DIAMETERGALILEO;
-                break;
-            case "ISS":
-                diameter = DIAMETERISS;
-                break;
-            case "Apollo 8":
-                diameter = DIAMETERAPOLLO;
-                break;
-            case "Pallas":
-            case "Juno":
-                diameter = SCALESMALLBODY * solarSystemParameters.getDiameter(bodyName);
-                break;
-            case "Ida":
-            case "Gaspra":
-                diameter = SCALEIDAGASPRA * solarSystemParameters.getDiameter(bodyName);
-                break;
-            case "Phobos":
-            case "Deimos":
-            case "Nix":
-            case "Hydra":
-            case "Kerberos":
-            case "Styx":
-                diameter = SCALESMALLMOON * solarSystemParameters.getDiameter(bodyName);
-                break;
-            default:
+            case "Pioneer 10", "Pioneer 11" -> diameter = DIAMETERPIONEER;
+            case "Voyager 1", "Voyager 2" -> diameter = DIAMETERVOYAGER;
+            case "New Horizons" -> diameter = DIAMETERNEWHORIZONS;
+            case "Rosetta" -> diameter = DIAMETERROSETTA;
+            case "Cassini" -> diameter = DIAMETERCASSINI;
+            case "Galileo" -> diameter = DIAMETERGALILEO;
+            case "ISS" -> diameter = DIAMETERISS;
+            case "Apollo 8" -> diameter = DIAMETERAPOLLO;
+            case "Pallas", "Juno" -> diameter = SCALESMALLBODY * solarSystemParameters.getDiameter(bodyName);
+            case "Ida", "Gaspra" -> diameter = SCALEIDAGASPRA * solarSystemParameters.getDiameter(bodyName);
+            case "Phobos", "Deimos", "Nix", "Hydra", "Kerberos", "Styx" ->
+                    diameter = SCALESMALLMOON * solarSystemParameters.getDiameter(bodyName);
+            default -> {
                 diameter = solarSystemParameters.getDiameter(bodyName);
                 if (diameter <= MAXDIAMETERSMALLBODY) {
                     diameter *= SCALESMALLBODY;
                 }
-                break;
+            }
         }
         return diameter;
     }
@@ -719,7 +711,7 @@ public class SolarSystemVisualization extends Stage {
      * @param position 3D position in m
      * @return x-position in pixels
      */
-    private double screenX(Vector3D position) {
+    private static double screenX(Vector3D position) {
         return -SCREENWIDTH * (position.getX() / SCREENSCALE);
     }
 
@@ -728,7 +720,7 @@ public class SolarSystemVisualization extends Stage {
      * @param position 3D position in m
      * @return y-postion in pixels
      */
-    private double screenY(Vector3D position) {
+    private static double screenY(Vector3D position) {
         return -SCREENHEIGHT * (position.getY() / SCREENSCALE);
     }
 
@@ -737,7 +729,7 @@ public class SolarSystemVisualization extends Stage {
      * @param position 3D position in m
      * @return z-postion in pixels
      */
-    private double screenZ(Vector3D position) {
+    private static double screenZ(Vector3D position) {
         return SCREENDEPTH * (position.getZ() / SCREENSCALE);
     }
 
@@ -774,8 +766,9 @@ public class SolarSystemVisualization extends Stage {
         double nrDaysPastJ2000 = EphemerisUtil.computeNrDaysPastJ2000(dateTime);
 
         // Update rotations of all visible objects
-        for (String name : bodies.keySet()) {
-            Node node = bodies.get(name);
+        for (Map.Entry<String, Node> entry : bodies.entrySet()) {
+            String name = entry.getKey();
+            Node node = entry.getValue();
             if (node.isVisible()) {
                 if (spacecraftNames.contains(name)) {
                     if ("Apollo 8".equals(name)) {
@@ -825,9 +818,8 @@ public class SolarSystemVisualization extends Stage {
                     double[] rotationPoleEcliptic = EphemerisUtil.equatorialToEcliptic(rotationPoleEquatorial);
                     double lambda = rotationPoleEcliptic[0];
                     double beta = rotationPoleEcliptic[1];
-                    double thetaDeg = lambda;
                     double phiDeg = (90.0 - beta);
-                    double thetaRad = Math.toRadians(thetaDeg);
+                    double thetaRad = Math.toRadians(lambda);
                     double sinTheta = Math.sin(thetaRad);
                     double cosTheta = Math.cos(thetaRad);
                     Point3D rotationAxisObliquity = new Point3D(cosTheta, 0.0, sinTheta);
@@ -871,7 +863,7 @@ public class SolarSystemVisualization extends Stage {
      * @param position 3D position in m
      * @return translated and rotated position
      */
-    private Vector3D translateRotatePosition(Vector3D cameraPosition, Vector3D cameraDirection, Vector3D position) {
+    private static Vector3D translateRotatePosition(Vector3D cameraPosition, Vector3D cameraDirection, Vector3D position) {
 
         // Upward viewing orientation of camera is towards celestial north pole
         double uvoX = 0.0;
@@ -891,8 +883,7 @@ public class SolarSystemVisualization extends Stage {
 
         // Rotate
         // https://www.ntu.edu.sg/home/ehchua/programming/opengl/cg_basicstheory.html
-        Vector3D positionRotated = positionTranslated.rotate(xc,yc,zc);
-        return positionRotated;
+        return positionTranslated.rotate(xc,yc,zc);
     }
 
     /**
@@ -905,8 +896,9 @@ public class SolarSystemVisualization extends Stage {
         Vector3D positionMoon = solarSystem.getParticle("Moon").getPosition();
         Vector3D positionJupiter = solarSystem.getParticle("Jupiter").getPosition();
         double diameterJupiter = solarSystemParameters.getDiameter("Jupiter");
-        for (String name : bodies.keySet()) {
-            Node node = bodies.get(name);
+        for (Map.Entry<String, Node> entry : bodies.entrySet()) {
+            String name = entry.getKey();
+            Node node = entry.getValue();
             if (node.isVisible()) {
                 Vector3D positionBody;
                 if (name.startsWith("shadow")) {
@@ -921,10 +913,10 @@ public class SolarSystemVisualization extends Stage {
                     // Assume Sun is located at position (0,0,0)
                     if (positionShadow == null || positionGalileanMoon.magnitude() > positionJupiter.magnitude()) {
                         positionBody = new Vector3D();
-                        bodies.get(name).setVisible(false);
+                        entry.getValue().setVisible(false);
                     } else {
                         positionBody = positionShadow;
-                        bodies.get(name).setVisible(true);
+                        entry.getValue().setVisible(true);
                     }
                 } else {
                     // Not a shadow
@@ -1150,7 +1142,7 @@ public class SolarSystemVisualization extends Stage {
 
         // Direction of camera from position to look at
         Vector3D cameraDirection = lookAtPosition.direction(cameraPosition);
-        if (viewMode.equals(SolarSystemViewMode.TELESCOPE)) {
+        if (viewMode == SolarSystemViewMode.TELESCOPE) {
             cameraPosition = lookAtPosition.plus(cameraDirection.scalarProduct(0.5 * SCREENSCALE));
         }
 
@@ -1161,9 +1153,9 @@ public class SolarSystemVisualization extends Stage {
         updateBodyRotations(cameraDirection);
 
         // Choose between high resolution and low resolution version of the Earth and Earth's clouds
-        boolean highres = viewMode.equals(SolarSystemViewMode.TELESCOPE) &&
+        boolean highres = viewMode == SolarSystemViewMode.TELESCOPE &&
                 ("Earth".equals(selectedBody) || "EarthMoonBarycenter".equals(selectedBody));
-        if (viewMode.equals(SolarSystemViewMode.FROMSPACECRAFT) && earth.isVisible()) {
+        if (viewMode == SolarSystemViewMode.FROMSPACECRAFT && earth.isVisible()) {
             Vector3D earthPosition = solarSystem.getPosition("Earth");
             double distance = cameraPosition.euclideanDistance(earthPosition);
             highres = distance < HIGHRESMAXDISTANCE; // 50 000 km
@@ -1259,7 +1251,6 @@ public class SolarSystemVisualization extends Stage {
         Vector3D sunDirection = cameraPosition.direction(sunPosition);
         double sunDistance = cameraPosition.euclideanDistance(sunPosition);
         double nearDistance = 0.9*sunDistance;
-        double farDistance = sunDistance;
         double sunRadiusFactor = 1.0;
         if (moon.isVisible()) {
             // Correction of Sun radius for Solar eclipse
@@ -1300,7 +1291,7 @@ public class SolarSystemVisualization extends Stage {
         // Set field of view of camera
         double diameterSun = diameterBody("Sun");
         double fieldOfView = sunRadiusFactor * diameterSun / FIELDOFVIEWFACTORTELESCOPE;
-        setCameraSettings(fieldOfView, nearDistance, farDistance);
+        setCameraSettings(fieldOfView, nearDistance, sunDistance);
     }
 
     /**
@@ -1576,7 +1567,7 @@ public class SolarSystemVisualization extends Stage {
      * @param latitude      latitude of location on the Earth [degrees]
      * @param longitude     longitude of location on the Earth [degrees]
      */
-    public void update(Set<String> bodiesShown, String selectedBody, String observedBody,
+    public void update(Collection<String> bodiesShown, String selectedBody, String observedBody,
                        SolarSystemViewMode viewMode, double latitude, double longitude) {
 
         /*
@@ -1597,8 +1588,8 @@ public class SolarSystemVisualization extends Stage {
         shadowEuropa.setVisible(false);
         shadowGanymede.setVisible(false);
         shadowCallisto.setVisible(false);
-        for (String bodyName : bodies.keySet()) {
-            bodies.get(bodyName).setVisible(bodiesShown.contains(bodyName));
+        for (Map.Entry<String, Node> entry : bodies.entrySet()) {
+            entry.getValue().setVisible(bodiesShown.contains(entry.getKey()));
         }
 
         // Pluto and Pluto System are both visualized using a sphere with texture of Pluto
@@ -1636,7 +1627,7 @@ public class SolarSystemVisualization extends Stage {
             this.angleX = 0.0;
             this.angleY = 0.0;
             this.zoom = INITZOOM;
-            if (selectedBody == null || "".equals(selectedBody)) {
+            if (selectedBody == null || selectedBody.isEmpty()) {
                 this.selectedBody = "Sun";
             }
             else {
@@ -1649,7 +1640,7 @@ public class SolarSystemVisualization extends Stage {
             this.angleX = 0.0;
             this.angleY = 0.0;
             this.zoom = INITZOOM;
-            if (observedBody != null && !"".equals(observedBody)) {
+            if (observedBody != null && !observedBody.isEmpty()) {
                 this.observedBody = observedBody;
             }
             else {
@@ -1681,7 +1672,7 @@ public class SolarSystemVisualization extends Stage {
                 shoemaker.setRadius(screenDiameter("Shoemaker-Levy 9"));
             }
             // Check for impact of Shoemaker-Levy observed from spacecraft Galileo
-            if (viewMode.equals(SolarSystemViewMode.FROMSPACECRAFT) && "Jupiter".equals(this.selectedBody)) {
+            if (viewMode == SolarSystemViewMode.FROMSPACECRAFT && "Jupiter".equals(this.selectedBody)) {
                 this.viewMode = viewMode;
                 this.selectedBody = "Galileo";
                 this.observedBody = "Jupiter";
@@ -1706,46 +1697,44 @@ public class SolarSystemVisualization extends Stage {
         // Update the position and orientation of all visible objects
         try {
             locationOnEarth.setVisible(false);
-            if (viewMode.equals(SolarSystemViewMode.FROMSPACECRAFT)) {
+            if (viewMode == SolarSystemViewMode.FROMSPACECRAFT) {
                 // View from spacecraft
                 bodies.get(this.selectedBody).setVisible(false);
                 switch (this.selectedBody) {
-                    case "ISS":
+                    case "ISS" -> {
                         earth.setVisible(true);
                         bodies.get("ISS").setVisible(true);
                         viewFromISS();
-                        break;
-                    case "Apollo 8":
+                    }
+                    case "Apollo 8" -> {
                         earth.setVisible(true);
                         moon.setVisible(true);
                         viewFromApollo();
-                        break;
-                    default:
-                        viewFromSpacecraft();
-                        break;
+                    }
+                    default -> viewFromSpacecraft();
                 }
             }
             else {
                 // Telescope view
                 switch (this.selectedBody) {
-                    case "Sun":
+                    case "Sun" -> {
                         earth.setVisible(false);
                         moon.setVisible(true);
                         shadowEarth.setVisible(false);
                         pointLight.setVisible(false);
                         viewFromEarthSurfaceToSun();
-                        break;
-                    case "Earth":
+                    }
+                    case "Earth" -> {
                         sun.setVisible(false);
                         viewFromSunToEarth();
-                        break;
-                    case "Moon":
+                    }
+                    case "Moon" -> {
                         earth.setVisible(false);
                         moon.setVisible(true);
                         shadowEarth.setVisible(true);
                         viewFromEarthSurfaceToMoon();
-                        break;
-                    case "EarthMoonBarycenter":
+                    }
+                    case "EarthMoonBarycenter" -> {
                         earthLowRes.setRadius(6.0 * screenDiameter("Earth"));
                         earthHighRes.setRadius(6.0 * screenDiameter("Earth"));
                         cloudsEarthHighRes.setRadius(CLOUDFACTOR * 6.0 * screenDiameter("Earth"));
@@ -1754,26 +1743,18 @@ public class SolarSystemVisualization extends Stage {
                         moon.setVisible(true);
                         shadowEarth.setVisible(false);
                         viewEarthMoonSystem();
-                        break;
-                    case "Pioneer 10":
-                    case "Pioneer 11":
-                    case "Voyager 1":
-                    case "Voyager 2":
-                    case "New Horizons":
-                    case "Rosetta":
-                    case "Galileo":
-                    case "Cassini":
+                    }
+                    case "Pioneer 10", "Pioneer 11", "Voyager 1", "Voyager 2", "New Horizons", "Rosetta", "Galileo", "Cassini" -> {
                         if ("Earth".equals(observedBody)) {
                             sun.setVisible(false);
                             viewFromSunToEarth();
-                        }
-                        else {
+                        } else {
                             earth.setVisible(false);
                             viewFromEarthSurfaceToSelectedBody();
                         }
-                        break;
-                    default:
-                        if (bodies.keySet().contains(this.selectedBody)) {
+                    }
+                    default -> {
+                        if (bodies.containsKey(this.selectedBody)) {
                             earth.setVisible(false);
                             shadowEarth.setVisible(false);
                             viewFromEarthSurfaceToSelectedBody();
@@ -1783,7 +1764,7 @@ public class SolarSystemVisualization extends Stage {
                             moon.setVisible(true);
                             viewFromSunToEarth();
                         }
-                        break;
+                    }
                 }
             }
         } catch (SolarSystemException e) {

@@ -23,12 +23,9 @@ import ephemeris.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -215,11 +212,11 @@ public class SolarSystemApplication extends Application {
      * NASA Scientific Visualization Studio - Earthrise
      * https://svs.gsfc.nasa.gov/3936
      */
-    private GregorianCalendar startEarthRise =
+    private final GregorianCalendar startEarthRise =
             CalendarUtil.createGregorianCalendar(1968, 12, 24, 16, 37, 50);
-    private GregorianCalendar endEarthRise =
+    private final GregorianCalendar endEarthRise =
             CalendarUtil.createGregorianCalendar(1968, 12, 24, 16, 39, 0);
-    private GregorianCalendar entryTrajectInitApolloEight =
+    private final GregorianCalendar entryTrajectInitApolloEight =
             CalendarUtil.createGregorianCalendar(1968, 12, 27, 15, 36, 52);
 
     /*
@@ -234,15 +231,15 @@ public class SolarSystemApplication extends Application {
      * 1973-12-04  02:26:00 Jupiter closest approach at 200,000 km
      * 1973-12-04  02:36:00 Jupiter equator plane crossing
      */
-    private GregorianCalendar startPioneerTenCallisto =
+    private final GregorianCalendar startPioneerTenCallisto =
             CalendarUtil.createGregorianCalendar(1973,12,2,12,0,0);
-    private GregorianCalendar startPioneerTenGanymede =
+    private final GregorianCalendar startPioneerTenGanymede =
             CalendarUtil.createGregorianCalendar(1973,12,3,0,0,0);
-    private GregorianCalendar startPioneerTenEuropa =
+    private final GregorianCalendar startPioneerTenEuropa =
             CalendarUtil.createGregorianCalendar(1973,12,3,15,0,0);
-    private GregorianCalendar startPioneerTenIo =
+    private final GregorianCalendar startPioneerTenIo =
             CalendarUtil.createGregorianCalendar(1973,12,3,20,0,0);
-    private GregorianCalendar startPioneerTenJupiter =
+    private final GregorianCalendar startPioneerTenJupiter =
             CalendarUtil.createGregorianCalendar(1973,12,3,23,0,0);
 
     /*
@@ -258,15 +255,15 @@ public class SolarSystemApplication extends Application {
      * 1974-12-03  22:29:00 Amalthea flyby at 127,500 km.
      * Note that Amalthea is not simulated.
      */
-    private GregorianCalendar startPioneerElevenCallisto =
+    private final GregorianCalendar startPioneerElevenCallisto =
             CalendarUtil.createGregorianCalendar(1974,12,2,0,0,0);
-    private GregorianCalendar startPioneerElevenGanymede =
+    private final GregorianCalendar startPioneerElevenGanymede =
             CalendarUtil.createGregorianCalendar(1974,12,2,8,0,0);
-    private GregorianCalendar startPioneerElevenIo =
+    private final GregorianCalendar startPioneerElevenIo =
             CalendarUtil.createGregorianCalendar(1974,12,2,23,0,0);
-    private GregorianCalendar startPioneerElevenEuropa =
+    private final GregorianCalendar startPioneerElevenEuropa =
             CalendarUtil.createGregorianCalendar(1974,12,3,3,0,0);
-    private GregorianCalendar startPioneerElevenJupiter =
+    private final GregorianCalendar startPioneerElevenJupiter =
             CalendarUtil.createGregorianCalendar(1974,12,3,7,0,0);
 
     /*
@@ -295,17 +292,17 @@ public class SolarSystemApplication extends Application {
      * 1979-09-01  22:15:27 Rhea flyby at 345,303 km.
      * 1979-09-02  18:00:33 Titan flyby at 362,962 km.
      */
-    private GregorianCalendar startPioneerElevenIapetus =
+    private final GregorianCalendar startPioneerElevenIapetus =
             CalendarUtil.createGregorianCalendar(1979,8,29,0,0,0);
-    private GregorianCalendar startPioneerElevenSaturnA =
+    private final GregorianCalendar startPioneerElevenSaturnA =
             CalendarUtil.createGregorianCalendar(1979,8,29,12,0,0);
-    private GregorianCalendar startPioneerElevenMimas =
+    private final GregorianCalendar startPioneerElevenMimas =
             CalendarUtil.createGregorianCalendar(1979,9,1,15,0,0);
-    private GregorianCalendar startPioneerElevenSaturnB =
+    private final GregorianCalendar startPioneerElevenSaturnB =
             CalendarUtil.createGregorianCalendar(1979,9,1,18,0,0);
-    private GregorianCalendar startPioneerElevenTitan =
+    private final GregorianCalendar startPioneerElevenTitan =
             CalendarUtil.createGregorianCalendar(1979,9,2,12,0,0);
-    private GregorianCalendar startPioneerElevenSaturnC =
+    private final GregorianCalendar startPioneerElevenSaturnC =
             CalendarUtil.createGregorianCalendar(1979,9,2,21,0,0);
 
     /*
@@ -321,15 +318,15 @@ public class SolarSystemApplication extends Application {
      * 1979-03-06  17:08	Callisto flyby at 126,400 km.
      * Note that Amalthea is not simulated.
      */
-    private GregorianCalendar startVoyagerOneIo =
+    private final GregorianCalendar startVoyagerOneIo =
             CalendarUtil.createGregorianCalendar(1979,3,5,12,0,0);
-    private GregorianCalendar startVoyagerOneEuropa =
+    private final GregorianCalendar startVoyagerOneEuropa =
             CalendarUtil.createGregorianCalendar(1979,3,5,15,0,0);
-    private GregorianCalendar startVoyagerOneGanymede =
+    private final GregorianCalendar startVoyagerOneGanymede =
             CalendarUtil.createGregorianCalendar(1979,3,5,21,0,0);
-    private GregorianCalendar startVoyagerOneCallisto =
+    private final GregorianCalendar startVoyagerOneCallisto =
             CalendarUtil.createGregorianCalendar(1979,3,6,2,0,0);
-    private GregorianCalendar startVoyagerOneJupiter =
+    private final GregorianCalendar startVoyagerOneJupiter =
             CalendarUtil.createGregorianCalendar(1979,3,6,18,0,0);
 
     /*
@@ -346,13 +343,13 @@ public class SolarSystemApplication extends Application {
      * 1980-11-13  16:44:41	 Hyperion flyby at 880,440 km.
      * Note that Hyperion is not simulated.
      */
-    private GregorianCalendar startVoyagerOneTitan =
+    private final GregorianCalendar startVoyagerOneTitan =
             CalendarUtil.createGregorianCalendar(1980,11,12,0,0,0);
-    private GregorianCalendar startVoyagerOneSaturnAfterTitan =
+    private final GregorianCalendar startVoyagerOneSaturnAfterTitan =
             CalendarUtil.createGregorianCalendar(1980,11,12,5,0,0);
-    private GregorianCalendar startVoyagerOneRhea =
+    private final GregorianCalendar startVoyagerOneRhea =
             CalendarUtil.createGregorianCalendar(1980,11,13,3,0,0);
-    private GregorianCalendar startVoyagerOneSaturnAfterRhea =
+    private final GregorianCalendar startVoyagerOneSaturnAfterRhea =
             CalendarUtil.createGregorianCalendar(1980,11,13,7,0,0);
 
     /*
@@ -368,13 +365,13 @@ public class SolarSystemApplication extends Application {
      * 1979-07-09  23:17  Io flyby at 1,129,900 km.
      * Note that Amalthea is not simulated.
      */
-    private GregorianCalendar startVoyagerTwoCallisto =
+    private final GregorianCalendar startVoyagerTwoCallisto =
             CalendarUtil.createGregorianCalendar(1979,7,8,5,0,0);
-    private GregorianCalendar startVoyagerTwoGanymede =
+    private final GregorianCalendar startVoyagerTwoGanymede =
             CalendarUtil.createGregorianCalendar(1979,7,8,14,0,0);
-    private GregorianCalendar startVoyagerTwoEuropa =
+    private final GregorianCalendar startVoyagerTwoEuropa =
             CalendarUtil.createGregorianCalendar(1979,7,9,9,0,0);
-    private GregorianCalendar startVoyagerTwoJupiter =
+    private final GregorianCalendar startVoyagerTwoJupiter =
             CalendarUtil.createGregorianCalendar(1979,7,9,18,0,0);
     /*
      * Date/times in UTC to control 3D visualization from Voyager 2 during flyby of Saturn
@@ -392,13 +389,13 @@ public class SolarSystemApplication extends Application {
      * 1981-08-26  06:28:48  Rhea flyby at 645,260 km.
      * Note that Hyperion is not simulated.
      */
-    private GregorianCalendar startVoyagerTwoTitan =
+    private final GregorianCalendar startVoyagerTwoTitan =
             CalendarUtil.createGregorianCalendar(1981,8,25,0,0,0);
-    private GregorianCalendar startVoyagerTwoSaturnAfterTitan =
+    private final GregorianCalendar startVoyagerTwoSaturnAfterTitan =
             CalendarUtil.createGregorianCalendar(1981,8,25,9,0,0);
-    private GregorianCalendar startVoyagerTwoTethys =
+    private final GregorianCalendar startVoyagerTwoTethys =
             CalendarUtil.createGregorianCalendar(1981,8,26,3,0,0);
-    private GregorianCalendar startVoyagerTwoSaturnAfterTethys =
+    private final GregorianCalendar startVoyagerTwoSaturnAfterTethys =
             CalendarUtil.createGregorianCalendar(1981,8,26,9,0,0);
 
     /*
@@ -413,17 +410,17 @@ public class SolarSystemApplication extends Application {
      * 1986-01-24  17:25     Oberon flyby at 470,600 km.
      * 1986-01-24  17:59:47  Uranus closest approach at 107,000 km from the center of mass.
      */
-    private GregorianCalendar startVoyagerTwoOberon =
+    private final GregorianCalendar startVoyagerTwoOberon =
             CalendarUtil.createGregorianCalendar(1986,1,24,12,0,0);
-    private GregorianCalendar startVoyagerTwoTitania =
+    private final GregorianCalendar startVoyagerTwoTitania =
             CalendarUtil.createGregorianCalendar(1986,1,24,13,0,0);
-    private GregorianCalendar startVoyagerTwoUmbriel =
+    private final GregorianCalendar startVoyagerTwoUmbriel =
             CalendarUtil.createGregorianCalendar(1986,1,24,14,0,0);
-    private GregorianCalendar startVoyagerTwoAriel =
+    private final GregorianCalendar startVoyagerTwoAriel =
             CalendarUtil.createGregorianCalendar(1986,1,24,15,0,0);
-    private GregorianCalendar startVoyagerTwoMiranda =
+    private final GregorianCalendar startVoyagerTwoMiranda =
             CalendarUtil.createGregorianCalendar(1986,1,24,16,0,0);
-    private GregorianCalendar startVoyagerTwoUranus =
+    private final GregorianCalendar startVoyagerTwoUranus =
             CalendarUtil.createGregorianCalendar(1986,1,24,17,0,0);
 
     /*
@@ -434,9 +431,9 @@ public class SolarSystemApplication extends Application {
      * 1989-08-25  03:56:36  Neptune closest approach at 4,950 km.
      * 1989-08-25  09:23     Triton flyby at 39,800 km.
      */
-    private GregorianCalendar startVoyagerTwoTriton =
+    private final GregorianCalendar startVoyagerTwoTriton =
             CalendarUtil.createGregorianCalendar(1989,8,25,6,0,0);
-    private GregorianCalendar startVoyagerTwoNeptune =
+    private final GregorianCalendar startVoyagerTwoNeptune =
             CalendarUtil.createGregorianCalendar(1989,8,25,10,0,0);
 
     /*
@@ -446,9 +443,9 @@ public class SolarSystemApplication extends Application {
      * https://en.wikipedia.org/wiki/New_Horizons
      * 2015-07-14  11:49  Pluto fly by
      */
-    private GregorianCalendar startNewHorizonsPlutoFlyby =
+    private final GregorianCalendar startNewHorizonsPlutoFlyby =
             CalendarUtil.createGregorianCalendar(2015, 7, 1, 0, 0, 0);
-    private GregorianCalendar endNewHorizonsPlutoFlyby =
+    private final GregorianCalendar endNewHorizonsPlutoFlyby =
             CalendarUtil.createGregorianCalendar(2015, 7, 14, 12, 0, 0);
 
     /*
@@ -459,7 +456,7 @@ public class SolarSystemApplication extends Application {
      * Rosetta reached 67P/Churyumov–Gerasimenko on 7 May 2014.
      * It performed a series of manoeuvres to enter orbit between then and 6 August 2014.
      */
-    private GregorianCalendar startRosetta67P =
+    private final GregorianCalendar startRosetta67P =
             CalendarUtil.createGregorianCalendar(2014, 7, 11, 0, 0, 0);
 
     // Flag to indicate whether ephemeris is shown on screen
@@ -478,7 +475,7 @@ public class SolarSystemApplication extends Application {
     private boolean stepMode = false;
 
     // Time step in seconds for single-step simulation
-    private double singleStepTimeStep = 60.0;
+    private static final double singleStepTimeStep = 60.0;
 
     // Time step in seconds for simulation step mode
     private double stepModeTimeStep = 60.0;
@@ -500,12 +497,7 @@ public class SolarSystemApplication extends Application {
 
         // Body selector panel with check boxes for each body to be shown
         bodySelectorPanel = new BodySelectorPanel();
-        bodySelectorPanel.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                bodySelectorPanel.hide();
-            }
-        });
+        bodySelectorPanel.setOnCloseRequest(event -> bodySelectorPanel.hide());
 
         // Create check box for each body of the solar system
         checkBoxesBodies = new HashMap<>();
@@ -519,25 +511,18 @@ public class SolarSystemApplication extends Application {
 
         // 3D visualization
         visualization = new SolarSystemVisualization(solarSystem);
-        visualization.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                visualization.hide();
-            }
-        });
+        visualization.setOnCloseRequest(event -> visualization.hide());
 
         // Close all panels when primary stage closes
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                for (InformationPanel panel : informationPanels.values()) {
-                    panel.close();
-                }
-                if (bodySelectorPanel != null) {
-                    bodySelectorPanel.close();
-                }
-                if (visualization != null) {
-                    visualization.close();
-                }
+        primaryStage.setOnCloseRequest(we -> {
+            for (InformationPanel panel : informationPanels.values()) {
+                panel.close();
+            }
+            if (bodySelectorPanel != null) {
+                bodySelectorPanel.close();
+            }
+            if (visualization != null) {
+                visualization.close();
             }
         });
 
@@ -567,7 +552,7 @@ public class SolarSystemApplication extends Application {
      * Create the scene, i.e., canvas, buttons, sliders, etc.
      * @return scene
      */
-    public Scene createScene() {
+    private Scene createScene() {
 
         // Define grid pane
         GridPane grid;
@@ -593,29 +578,14 @@ public class SolarSystemApplication extends Application {
 
         // Add mouse clicked event to screen
         screen.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        screenMouseClicked(event);
-                    }
-                });
+                this::screenMouseClicked);
 
         // Add mouse pressed event to screen
         screen.addEventHandler(MouseEvent.MOUSE_PRESSED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        screenMousePressed(event);
-                    }
-                });
+                this::screenMousePressed);
 
         // Add mouse dragged event to screen
-        screen.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                screenMouseDragged(event);
-            }
-        });
+        screen.setOnMouseDragged(this::screenMouseDragged);
 
 
         // Create the Solar System
@@ -644,12 +614,9 @@ public class SolarSystemApplication extends Application {
         // Date/time selector to view and set era, date, and time
         dateTimeSelector = new DateTimeSelector(solarSystem.getSimulationDateTime());
         dateTimeSelector.setFont(new Font("Courier", 16));
-        dateTimeSelector.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                if (!simulationIsRunning()) {
-                    initializeSimulation();
-                }
+        dateTimeSelector.setOnAction((EventHandler) event -> {
+            if (!simulationIsRunning()) {
+                initializeSimulation();
             }
         });
         dateTimeSelector.setMinWidth(SELECTORWIDTH);
@@ -658,12 +625,7 @@ public class SolarSystemApplication extends Application {
         // Event selector
         rowIndex++;
         eventSelector = new ComboBox();
-        eventSelector.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setVisualizationSettings((VisualizationSettings) eventSelector.getValue());
-            }
-        });
+        eventSelector.setOnAction((EventHandler<ActionEvent>) event -> setVisualizationSettings((VisualizationSettings) eventSelector.getValue()));
         ObservableList<VisualizationSettings> events =
                 FXCollections.observableArrayList(new ArrayList<>());
         events.addAll(createVisualizationSettings());
@@ -678,12 +640,7 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipInitialize =
                 new Tooltip("Initialize simulation state for given date");
         buttonInitialize.setTooltip(tooltipInitialize);
-        buttonInitialize.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                initializeSimulation();
-            }
-        });
+        buttonInitialize.setOnAction((EventHandler) event -> initializeSimulation());
         buttonInitialize.setMinWidth(BUTTONWIDTH);
         grid.add(buttonInitialize, 1, rowIndex, 9, 1);
 
@@ -692,14 +649,11 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipLoadState =
                 new Tooltip("Load simulation state from file");
         buttonLoadState.setTooltip(tooltipLoadState);
-        buttonLoadState.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                if (observationFromEarth) {
-                    checkBoxObservationFromEarth.setSelected(false);
-                }
-                loadSimulationState();
+        buttonLoadState.setOnAction((EventHandler) event -> {
+            if (observationFromEarth) {
+                checkBoxObservationFromEarth.setSelected(false);
             }
+            loadSimulationState();
         });
         buttonLoadState.setMinWidth(BUTTONWIDTH);
         grid.add(buttonLoadState, 8, rowIndex, 10, 1);
@@ -709,14 +663,11 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipSaveState =
                 new Tooltip("Save simulation state to file");
         buttonSaveState.setTooltip(tooltipSaveState);
-        buttonSaveState.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                if (observationFromEarth) {
-                    checkBoxObservationFromEarth.setSelected(false);
-                }
-                saveSimulationState();
+        buttonSaveState.setOnAction((EventHandler) event -> {
+            if (observationFromEarth) {
+                checkBoxObservationFromEarth.setSelected(false);
             }
+            saveSimulationState();
         });
         buttonSaveState.setMinWidth(BUTTONWIDTH);
         grid.add(buttonSaveState, 15, rowIndex, 10, 1);
@@ -726,12 +677,7 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipPause =
                 new Tooltip("Pause simulation to view current state");
         buttonPause.setTooltip(tooltipPause);
-        buttonPause.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                pauseSimulation();
-            }
-        });
+        buttonPause.setOnAction((EventHandler) event -> pauseSimulation());
         buttonPause.setMinWidth(BUTTONWIDTH);
         grid.add(buttonPause, 22, rowIndex, 10, 1);
 
@@ -741,16 +687,13 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipFastBackward =
                 new Tooltip("Normal mode: fast backward, step mode: backward with selected speed");
         buttonFastBackward.setTooltip(tooltipFastBackward);
-        buttonFastBackward.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                if (stepMode) {
-                    startSimulationStepModeBackward();
-                } else {
-                    startSimulationFastBackward();
-                }
-                automaticSimulationFast = true;
+        buttonFastBackward.setOnAction((EventHandler) event -> {
+            if (stepMode) {
+                startSimulationStepModeBackward();
+            } else {
+                startSimulationFastBackward();
             }
+            automaticSimulationFast = true;
         });
         buttonFastBackward.setMinWidth(BUTTONWIDTH);
         grid.add(buttonFastBackward, 1, rowIndex, 7, 1);
@@ -760,16 +703,13 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipBackward =
                 new Tooltip("Normal mode: backward with selected speed, step mode: single step of 60 s");
         buttonBackward.setTooltip(tooltipBackward);
-        buttonBackward.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                if (stepMode) {
-                    smallStepBackward();
-                } else {
-                    startSimulationBackward();
-                }
-                automaticSimulationFast = false;
+        buttonBackward.setOnAction((EventHandler) event -> {
+            if (stepMode) {
+                smallStepBackward();
+            } else {
+                startSimulationBackward();
             }
+            automaticSimulationFast = false;
         });
         buttonBackward.setMinWidth(BUTTONWIDTH);
         grid.add(buttonBackward, 8, rowIndex, 7, 1);
@@ -779,16 +719,13 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipForward =
                 new Tooltip("Normal mode: forward with selected speed, step mode: single step of 60 s");
         buttonForward.setTooltip(tooltipForward);
-        buttonForward.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                if (stepMode) {
-                    smallStepForward();
-                } else {
-                    startSimulationForward();
-                }
-                automaticSimulationFast = false;
+        buttonForward.setOnAction((EventHandler) event -> {
+            if (stepMode) {
+                smallStepForward();
+            } else {
+                startSimulationForward();
             }
+            automaticSimulationFast = false;
         });
         buttonForward.setMinWidth(BUTTONWIDTH);
         grid.add(buttonForward, 15, rowIndex, 7, 1);
@@ -798,16 +735,13 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipFastForward =
                 new Tooltip("Normal mode: fast forward, step mode: forward with selected speed");
         buttonFastForward.setTooltip(tooltipFastForward);
-        buttonFastForward.setOnAction(new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                if (stepMode) {
-                    startSimulationStepModeForward();
-                } else {
-                    startSimulationFastForward();
-                }
-                automaticSimulationFast = true;
+        buttonFastForward.setOnAction((EventHandler) event -> {
+            if (stepMode) {
+                startSimulationStepModeForward();
+            } else {
+                startSimulationFastForward();
             }
+            automaticSimulationFast = true;
         });
         buttonFastForward.setMinWidth(BUTTONWIDTH);
         grid.add(buttonFastForward, 22, rowIndex, 7, 1);
@@ -823,23 +757,13 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipNewtonMechanics =
                 new Tooltip("Simulation based on Newton Mechanics is faster");
         radioNewtonMechanics.setTooltip(tooltipNewtonMechanics);
-        radioNewtonMechanics.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                solarSystem.setGeneralRelativityFlag(!newValue);
-            }
-        });
+        radioNewtonMechanics.selectedProperty().addListener((observable, oldValue, newValue) -> solarSystem.setGeneralRelativityFlag(!newValue));
         radioGeneralRelativity =
                 new RadioButton("General Relativity");
         Tooltip tooltipGeneralRelativity =
                 new Tooltip("Simulation based on General Relativity is even more accurate");
         radioGeneralRelativity.setTooltip(tooltipGeneralRelativity);
-        radioGeneralRelativity.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                solarSystem.setGeneralRelativityFlag(newValue);
-            }
-        });
+        radioGeneralRelativity.selectedProperty().addListener((observable, oldValue, newValue) -> solarSystem.setGeneralRelativityFlag(newValue));
         ToggleGroup simulationMethod = new ToggleGroup();
         radioNewtonMechanics.setToggleGroup(simulationMethod);
         radioGeneralRelativity.setToggleGroup(simulationMethod);
@@ -851,13 +775,10 @@ public class SolarSystemApplication extends Application {
         // Check box to select step mode
         rowIndex++;
         checkBoxStepMode = new CheckBox("Single-step mode");
-        checkBoxStepMode.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                stepMode = newValue;
-                if (stepMode) {
-                    pauseSimulation();
-                }
+        checkBoxStepMode.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            stepMode = newValue;
+            if (stepMode) {
+                pauseSimulation();
             }
         });
         Tooltip toolTipStepMode =
@@ -878,13 +799,10 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipEphemerisOnly =
                 new Tooltip("Show ephemeris only; simulation results are not shown");
         radioEphemerisOnly.setTooltip(tooltipEphemerisOnly);
-        radioEphemerisOnly.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    showEphemeris = true;
-                    showSimulation = false;
-                }
+        radioEphemerisOnly.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                showEphemeris = true;
+                showSimulation = false;
             }
         });
         radioSimulationOnly =
@@ -892,13 +810,10 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipSimulationOnly =
                 new Tooltip("Show simulation only; ephemeris is not shown");
         radioSimulationOnly.setTooltip(tooltipSimulationOnly);
-        radioSimulationOnly.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    showEphemeris = false;
-                    showSimulation = true;
-                }
+        radioSimulationOnly.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                showEphemeris = false;
+                showSimulation = true;
             }
         });
         radioEphemerisAndSimulation =
@@ -906,13 +821,10 @@ public class SolarSystemApplication extends Application {
         Tooltip tooltipEphemerisAndSimulation =
                 new Tooltip("Show ephemeris (green) and simulation results (blue)");
         radioEphemerisAndSimulation.setTooltip(tooltipEphemerisAndSimulation);
-        radioEphemerisAndSimulation.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    showEphemeris = true;
-                    showSimulation = true;
-                }
+        radioEphemerisAndSimulation.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                showEphemeris = true;
+                showSimulation = true;
             }
         });
         ToggleGroup visualizationMethod = new ToggleGroup();
@@ -929,12 +841,7 @@ public class SolarSystemApplication extends Application {
         // Check box to select observation from Earth
         rowIndex++;
         checkBoxObservationFromEarth = new CheckBox("Observe from Earth");
-        checkBoxObservationFromEarth.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                handleObservationFromEarth();
-            }
-        });
+        checkBoxObservationFromEarth.selectedProperty().addListener((observable, oldValue, newValue) -> handleObservationFromEarth());
         Tooltip toolTipObservationFromEarth =
                 new Tooltip("Check to set observation from surface of the Earth toward the selected body");
         checkBoxObservationFromEarth.setTooltip(toolTipObservationFromEarth);
@@ -943,12 +850,7 @@ public class SolarSystemApplication extends Application {
 
         // Check box to indicate whether ruler should be shown
         checkBoxShowRuler = new CheckBox("Show ruler");
-        checkBoxShowRuler.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                showRuler = newValue;
-            }
-        });
+        checkBoxShowRuler.selectedProperty().addListener((observable, oldValue, newValue) -> showRuler = newValue);
         Tooltip toolTipShowRuler =
                 new Tooltip("Check to show ruler indicating distance or angular diameter");
         checkBoxShowRuler.setTooltip(toolTipShowRuler);
@@ -964,23 +866,17 @@ public class SolarSystemApplication extends Application {
         radioTelescopeView = new RadioButton("Telescope view");
         Tooltip tooltipTelescopeView = new Tooltip("View selected object from the Earth");
         radioTelescopeView.setTooltip(tooltipTelescopeView);
-        radioTelescopeView.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    viewMode = SolarSystemViewMode.TELESCOPE;
-                }
+        radioTelescopeView.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                viewMode = SolarSystemViewMode.TELESCOPE;
             }
         });
         radioSpacecraftView = new RadioButton("Spacecraft view");
         Tooltip tooltipFromSpacecraftView = new Tooltip("View observed object from spacecraft");
         radioSpacecraftView.setTooltip(tooltipFromSpacecraftView);
-        radioSpacecraftView.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    viewMode = SolarSystemViewMode.FROMSPACECRAFT;
-                }
+        radioSpacecraftView.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                viewMode = SolarSystemViewMode.FROMSPACECRAFT;
             }
         });
         ToggleGroup visualizationViewMode = new ToggleGroup();
@@ -995,13 +891,10 @@ public class SolarSystemApplication extends Application {
         checkBoxAutomaticView = new CheckBox("Automatic");
         Tooltip tooltipAutomicView = new Tooltip("Set automatic view");
         checkBoxAutomaticView.setTooltip(tooltipAutomicView);
-        checkBoxAutomaticView.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                automaticView = newValue;
-                if (automaticView) {
-                    updateVisualizationSettings();
-                }
+        checkBoxAutomaticView.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            automaticView = newValue;
+            if (automaticView) {
+                updateVisualizationSettings();
             }
         });
         checkBoxAutomaticView.setSelected(automaticView);
@@ -1015,19 +908,15 @@ public class SolarSystemApplication extends Application {
         textFieldLatitude = new TextField();
         textFieldLatitude.setMaxWidth(100.0);
         textFieldLatitude.setText(DECIMAL_FORMAT_LATLON.format(latitude));
-        textFieldLatitude.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    latitude = Double.parseDouble(textFieldLatitude.getText());
-                    latitude = Math.max(-90.0,Math.min(90.0,latitude));
-                    textFieldLatitude.setText(DECIMAL_FORMAT_LATLON.format(latitude));
-                    sliderLatitude.setValue(latitude);
-                }
-                catch (Exception e) {
-                    latitude = sliderLatitude.getValue();
-                    textFieldLatitude.setText(DECIMAL_FORMAT_LATLON.format(latitude));
-                }
+        textFieldLatitude.setOnAction(event -> {
+            try {
+                latitude = Double.parseDouble(textFieldLatitude.getText());
+                latitude = Math.max(-90.0, Math.min(90.0, latitude));
+                textFieldLatitude.setText(DECIMAL_FORMAT_LATLON.format(latitude));
+                sliderLatitude.setValue(latitude);
+            } catch (Exception e) {
+                latitude = sliderLatitude.getValue();
+                textFieldLatitude.setText(DECIMAL_FORMAT_LATLON.format(latitude));
             }
         });
         grid.add(textFieldLatitude, 20, rowIndex, 20, 1);
@@ -1041,12 +930,9 @@ public class SolarSystemApplication extends Application {
         sliderLatitude.setMajorTickUnit(20);
         sliderLatitude.setMinorTickCount(10);
         sliderLatitude.setBlockIncrement(10);
-        sliderLatitude.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                latitude = (double) newValue;
-                textFieldLatitude.setText(DECIMAL_FORMAT_LATLON.format(latitude));
-            }
+        sliderLatitude.valueProperty().addListener((observable, oldValue, newValue) -> {
+            latitude = (double) newValue;
+            textFieldLatitude.setText(DECIMAL_FORMAT_LATLON.format(latitude));
         });
         rowIndex++;
         grid.add(sliderLatitude, 1, rowIndex, 28,1);
@@ -1058,19 +944,15 @@ public class SolarSystemApplication extends Application {
         textFieldLongitude= new TextField();
         textFieldLongitude.setMaxWidth(100.0);
         textFieldLongitude.setText(DECIMAL_FORMAT_LATLON.format(longitude));
-        textFieldLongitude.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    longitude = Double.parseDouble(textFieldLongitude.getText());
-                    longitude = Math.max(-180.0,Math.min(180.0,longitude));
-                    textFieldLongitude.setText(DECIMAL_FORMAT_LATLON.format(longitude));
-                    sliderLongitude.setValue(longitude);
-                }
-                catch (Exception e) {
-                    longitude = sliderLongitude.getValue();
-                    textFieldLongitude.setText(DECIMAL_FORMAT_LATLON.format(longitude));
-                }
+        textFieldLongitude.setOnAction(event -> {
+            try {
+                longitude = Double.parseDouble(textFieldLongitude.getText());
+                longitude = Math.max(-180.0, Math.min(180.0, longitude));
+                textFieldLongitude.setText(DECIMAL_FORMAT_LATLON.format(longitude));
+                sliderLongitude.setValue(longitude);
+            } catch (Exception e) {
+                longitude = sliderLongitude.getValue();
+                textFieldLongitude.setText(DECIMAL_FORMAT_LATLON.format(longitude));
             }
         });
         grid.add(textFieldLongitude, 20, rowIndex, 20, 1);
@@ -1084,12 +966,9 @@ public class SolarSystemApplication extends Application {
         sliderLongitude.setMajorTickUnit(40);
         sliderLongitude.setMinorTickCount(20);
         sliderLongitude.setBlockIncrement(20);
-        sliderLongitude.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                longitude = (double) newValue;
-                textFieldLongitude.setText(DECIMAL_FORMAT_LATLON.format(longitude));
-            }
+        sliderLongitude.valueProperty().addListener((observable, oldValue, newValue) -> {
+            longitude = (double) newValue;
+            textFieldLongitude.setText(DECIMAL_FORMAT_LATLON.format(longitude));
         });
         rowIndex++;
         grid.add(sliderLongitude, 1, rowIndex, 28,1);
@@ -1280,12 +1159,9 @@ public class SolarSystemApplication extends Application {
         // Button to select Solar System bodies
         rowIndex++;
         Button buttonBodySelector = new Button("Select Solar System bodies");
-        buttonBodySelector.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                bodySelectorPanel.show();
-                bodySelectorPanel.toFront();
-            }
+        buttonBodySelector.setOnAction(event -> {
+            bodySelectorPanel.show();
+            bodySelectorPanel.toFront();
         });
         buttonBodySelector.setMinWidth(SELECTORWIDTH);
         grid.add(buttonBodySelector, 1, rowIndex, 28, 1);
@@ -1293,12 +1169,9 @@ public class SolarSystemApplication extends Application {
         // Button to show 3D visualization
         rowIndex++;
         Button buttonVisualization = new Button("3D Visualization");
-        buttonVisualization.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                visualization.show();
-                visualization.toFront();
-            }
+        buttonVisualization.setOnAction(event -> {
+            visualization.show();
+            visualization.toFront();
         });
         buttonVisualization.setMinWidth(SELECTORWIDTH);
         grid.add(buttonVisualization, 1, rowIndex, 28, 1);
@@ -1702,7 +1575,7 @@ public class SolarSystemApplication extends Application {
                 catch (FileNotFoundException ex) {
                     showMessage("Error","File not found");
                 }
-                try (ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+                try (ObjectOutput objectOut = new ObjectOutputStream(fileOut)) {
                     objectOut.writeObject(solarSystem);
                 }
                 catch (IOException ex) {
@@ -1746,67 +1619,57 @@ public class SolarSystemApplication extends Application {
     private CheckBox createCheckBox(String name, String label, String toolTipText) {
         CheckBox checkBox = bodySelectorPanel.createCheckBox(label,toolTipText);
         checkBoxesBodies.put(name,checkBox);
-        checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                boolean isSelected = !oldValue && newValue;
-                try {
-                    monitor.startDrawing();
-                    if (name.endsWith("Moons")) {
-                        String planetName = name.substring(0, name.length() - 5);
-                        if (isSelected) {
-                            try {
-                                solarSystem.createPlanetSystem(planetName);
-                            } catch (SolarSystemException ex) {
-                                checkBox.setSelected(false);
-                                showMessage("Error", ex.getMessage());
-                            }
-                        } else {
-                            solarSystem.removePlanetSystem(planetName);
-                            for (String moonName : moons.get(planetName)) {
-                                if (informationPanels.containsKey(moonName)) {
-                                    informationPanels.get(moonName).close();
-                                    informationPanels.remove(moonName);
-                                }
-                            }
+        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            boolean isSelected = !oldValue && newValue;
+            try {
+                monitor.startDrawing();
+                if (name.endsWith("Moons")) {
+                    String planetName = name.substring(0, name.length() - 5);
+                    if (isSelected) {
+                        try {
+                            solarSystem.createPlanetSystem(planetName);
+                        } catch (SolarSystemException ex) {
+                            checkBox.setSelected(false);
+                            showMessage("Error", ex.getMessage());
                         }
-                        showMoons.put(planetName, isSelected);
-                        updateBodiesShown();
-                    }
-                    else {
-                        if (isSelected) {
-                            bodiesShown.add(name);
-                        }
-                        else {
-                            bodiesShown.remove(name);
-                            if (informationPanels.containsKey(name)) {
-                                informationPanels.get(name).close();
-                                informationPanels.remove(name);
+                    } else {
+                        solarSystem.removePlanetSystem(planetName);
+                        for (String moonName : moons.get(planetName)) {
+                            if (informationPanels.containsKey(moonName)) {
+                                informationPanels.get(moonName).close();
+                                informationPanels.remove(moonName);
                             }
                         }
                     }
+                    showMoons.put(planetName, isSelected);
+                    updateBodiesShown();
+                } else {
+                    if (isSelected) {
+                        bodiesShown.add(name);
+                    } else {
+                        bodiesShown.remove(name);
+                        if (informationPanels.containsKey(name)) {
+                            informationPanels.get(name).close();
+                            informationPanels.remove(name);
+                        }
+                    }
                 }
-                catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    stop();
-                }
-                finally {
-                    monitor.stopDrawing();
-                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                stop();
+            } finally {
+                monitor.stopDrawing();
             }
         });
-        checkBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.SECONDARY) {
-                    if (!name.endsWith("Moons")) {
-                        boolean isSelected = checkBox.selectedProperty().getValue();
-                        if (!isSelected) {
-                            checkBox.setSelected(true);
-                            bodiesShown.add(name);
-                        }
-                        showInformationPanel(name);
+        checkBox.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+                if (!name.endsWith("Moons")) {
+                    boolean isSelected = checkBox.selectedProperty().getValue();
+                    if (!isSelected) {
+                        checkBox.setSelected(true);
+                        bodiesShown.add(name);
                     }
+                    showInformationPanel(name);
                 }
             }
         });
@@ -1903,8 +1766,6 @@ public class SolarSystemApplication extends Application {
 
         // Camera coordinates
         // https://www.ntu.edu.sg/home/ehchua/programming/opengl/cg_basicstheory.html
-        Vector3D xc = sideVector;
-        Vector3D yc = cameraUp;
         Vector3D zc = (viewingDirection.scalarProduct(-1.0)).normalize();
 
         // Translate
@@ -1913,7 +1774,7 @@ public class SolarSystemApplication extends Application {
 
         // Rotate
         // https://www.ntu.edu.sg/home/ehchua/programming/opengl/cg_basicstheory.html
-        Vector3D positionRotated = positionTranslated.rotate(xc,yc,zc);
+        Vector3D positionRotated = positionTranslated.rotate(sideVector, cameraUp,zc);
 
         // Take perspective into account
         // https://www.cse.unr.edu/~bebis/CS791E/Notes/PerspectiveProjection.pdf
@@ -2131,7 +1992,7 @@ public class SolarSystemApplication extends Application {
      * Draw circles for bodies to show on screen.
      * @param bodiesToShow bodies to show on screen
      */
-    private void drawCircles(List<SolarSystemBody> bodiesToShow) {
+    private void drawCircles(Iterable<SolarSystemBody> bodiesToShow) {
         for (SolarSystemBody body : bodiesToShow) {
             String bodyName = body.getName();
             Circle circle = bodies.get(bodyName);
@@ -2165,7 +2026,7 @@ public class SolarSystemApplication extends Application {
      * @param frontColor color when in front of the Sun
      * @param backColor  color when behind the Sun
      */
-    private void setColor(GraphicsContext gc, Vector3D position, Color frontColor, Color backColor) {
+    private static void setColor(GraphicsContext gc, Vector3D position, Color frontColor, Color backColor) {
         if (position.getY() <= 0.0) {
             gc.setStroke(frontColor);
             gc.setFill(frontColor);
@@ -2203,14 +2064,13 @@ public class SolarSystemApplication extends Application {
         }
         double x1 = screenX(positionView);
         double y1 = screenY(positionView);
-        for (int i = 0; i < orbit.length; i++) {
+        for (Vector3D vector3D : orbit) {
             if (observationFromEarth) {
-                positionView = convertToScreenView(observationFromEarthView(orbit[i]));
-                setColor(gc,positionView,frontColor,backColor);
-            }
-            else {
-                positionView = convertToScreenView(orbit[i]);
-                setColor(gc,orbit[i],frontColor,backColor);
+                positionView = convertToScreenView(observationFromEarthView(vector3D));
+                setColor(gc, positionView, frontColor, backColor);
+            } else {
+                positionView = convertToScreenView(vector3D);
+                setColor(gc, vector3D, frontColor, backColor);
             }
             double x2 = screenX(positionView);
             double y2 = screenY(positionView);
@@ -2243,7 +2103,7 @@ public class SolarSystemApplication extends Application {
      * Orbits are drawn as green lines.
      * @param bodiesToShow bodies to show on screen
      */
-    private void drawOrbits(List<SolarSystemBody> bodiesToShow) {
+    private void drawOrbits(Iterable<SolarSystemBody> bodiesToShow) {
         if (showEphemeris) {
             for (SolarSystemBody body : bodiesToShow) {
                 Vector3D[] orbit = body.getOrbit();
@@ -2358,7 +2218,7 @@ public class SolarSystemApplication extends Application {
      * of particles. Orbits are drawn as cyan lines. Spacecraft trajectories as red lines.
      * @param bodiesToShow bodies to show on screen
      */
-    private void drawOrbitsCorrespondingToPositionVelocity(List<SolarSystemBody> bodiesToShow) {
+    private void drawOrbitsCorrespondingToPositionVelocity(Iterable<SolarSystemBody> bodiesToShow) {
         if (showSimulation) {
             for (SolarSystemBody body : bodiesToShow) {
                 String bodyName = body.getName();
@@ -2517,7 +2377,7 @@ public class SolarSystemApplication extends Application {
      * @param circle Circle for which distance should be computed
      * @return distance to the circle in pixels
      */
-    private double distanceCircle(MouseEvent event, Circle circle) {
+    private static double distanceCircle(MouseEvent event, Circle circle) {
         double dx = event.getX() - circle.getCenterX();
         double dy = event.getY() - circle.getCenterY();
         return Math.sqrt(dx*dx + dy*dy);
@@ -2527,12 +2387,13 @@ public class SolarSystemApplication extends Application {
      * Update set of bodies to be shown.
      */
     private void updateBodiesShown() {
-        for (String planetName : showMoons.keySet()) {
-            if (showMoons.get(planetName)) {
+        for (Map.Entry<String, Boolean> entry : showMoons.entrySet()) {
+            String planetName = entry.getKey();
+            if (entry.getValue()) {
                 bodiesShown.addAll(moons.get(planetName));
             }
             else {
-                bodiesShown.removeAll(moons.get(planetName));
+                moons.get(planetName).forEach(bodiesShown::remove);
             }
         }
     }
@@ -2547,7 +2408,7 @@ public class SolarSystemApplication extends Application {
             Circle circle = bodies.get(bodyName);
             double distance = distanceCircle(event, circle);
             if (distance < minDistance) {
-                if (viewMode.equals(SolarSystemViewMode.FROMSPACECRAFT) && !spacecraftNames.contains(bodyName)) {
+                if (viewMode == SolarSystemViewMode.FROMSPACECRAFT && !spacecraftNames.contains(bodyName)) {
                     observedBody = bodyName;
                 }
                 else {
@@ -2640,33 +2501,27 @@ public class SolarSystemApplication extends Application {
         }
         if (observationFromEarth) {
             // Sort bodies, such that bodies further away from the Earth are drawn first
-            Collections.sort(bodies, new Comparator<SolarSystemBody>() {
-                @Override
-                public int compare(SolarSystemBody body1, SolarSystemBody body2) {
-                    double distanceBody1 = positionEarth().euclideanDistance(body1.getPosition());
-                    double distanceBody2 = positionEarth().euclideanDistance(body2.getPosition());
-                    if (distanceBody1 < distanceBody2) {
-                        return 1;
-                    }
-                    else {
-                        return -1;
-                    }
-                }
+            bodies.sort((body1, body2) -> {
+                final Vector3D pe = positionEarth();
+                double distanceBody1 = pe.euclideanDistance(body1.getPosition());
+                double distanceBody2 = pe.euclideanDistance(body2.getPosition());
+                return Double.compare(distanceBody1, distanceBody2);
+//                if (distanceBody1 < distanceBody2) {
+//                    return 1;
+//                } else {
+//                    return -1;
+//                }
             });
         }
         else {
             // Sort bodies, such that bodies behind the Sun are drawn first
             // Earth-Moon Barycenter is drawn latest
-            Collections.sort(bodies, new Comparator<SolarSystemBody>() {
-                @Override
-                public int compare(SolarSystemBody body1, SolarSystemBody body2) {
-                    if (body1.getPosition().getY() < body2.getPosition().getY() ||
-                            "EarthMoonBarycenter".equals(body1.getName())) {
-                        return 1;
-                    }
-                    else {
-                        return -1;
-                    }
+            bodies.sort((body1, body2) -> {
+                if (body1.getPosition().getY() < body2.getPosition().getY() ||
+                        "EarthMoonBarycenter".equals(body1.getName())) {
+                    return 1;
+                } else {
+                    return -1;
                 }
             });
         }
@@ -2820,9 +2675,8 @@ public class SolarSystemApplication extends Application {
     /**
      * Halt simulation of Solar System for a period of time.
      * Length of period depends on simulation mode and slider settings.
-     * @throws InterruptedException
      */
-    private void haltSimulation() throws InterruptedException {
+    private void haltSimulation() {
         int period;
         if (simulationIsRunningFast || simulationIsRunningStepMode) {
             period = 1;
@@ -2839,18 +2693,15 @@ public class SolarSystemApplication extends Application {
      * @param header   Header of the alert message
      * @param content  Content of the alert message
      */
-    private void showMessage(String header, String content) {
+    private static void showMessage(String header, String content) {
         // Use Platform.runLater() to ensure that code concerning
         // the Alert message is executed by the JavaFX Application Thread
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Solar System");
-                alert.setHeaderText(header);
-                alert.setContentText(content);
-                alert.showAndWait();
-            }
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Solar System");
+            alert.setHeaderText(header);
+            alert.setContentText(content);
+            alert.showAndWait();
         });
     }
 
@@ -2864,9 +2715,7 @@ public class SolarSystemApplication extends Application {
         }
         else {
             InformationPanel panel = new InformationPanel(solarSystem,bodyName);
-            panel.setOnCloseRequest((WindowEvent event) -> {
-                informationPanels.remove(bodyName);
-            });
+            panel.setOnCloseRequest((WindowEvent event) -> informationPanels.remove(bodyName));
             informationPanels.put(bodyName, panel);
             panel.show();
         }
@@ -2876,7 +2725,7 @@ public class SolarSystemApplication extends Application {
      * Update visualization settings.
      */
     private void updateVisualizationSettings() {
-        if (viewMode.equals(SolarSystemViewMode.TELESCOPE)) {
+        if (viewMode == SolarSystemViewMode.TELESCOPE) {
             updateVisualizationSettingsTelescopeView();
         }
         else {
@@ -2939,7 +2788,7 @@ public class SolarSystemApplication extends Application {
                     closestBodyFound = bodyName;
                 }
             }
-            if (!"".equals(closestBodyFound)) {
+            if (closestBodyFound == null || !closestBodyFound.isEmpty()) {
                 closestBody = closestBodyFound;
             }
             observedBody = closestBody;
@@ -3519,13 +3368,8 @@ public class SolarSystemApplication extends Application {
             showMessage("Error",ex.getMessage());
         }
 
-        for (String bodyName : checkBoxesBodies.keySet()) {
-            if (settings.getBodiesShown().contains(bodyName)) {
-                checkBoxesBodies.get(bodyName).setSelected(true);
-            }
-            else {
-                checkBoxesBodies.get(bodyName).setSelected(false);
-            }
+        for (Map.Entry<String, CheckBox> entry : checkBoxesBodies.entrySet()) {
+            entry.getValue().setSelected(settings.getBodiesShown().contains(entry.getKey()));
         }
         if (settings.getBodiesShown().contains("Shoemaker-Levy 9")) {
             bodiesShown.add("Shoemaker-Levy 9");
@@ -3551,7 +3395,7 @@ public class SolarSystemApplication extends Application {
         sliderZoomView.setValue(settings.getValueZoomView());
         sliderSimulationSpeed.setValue(settings.getValueSimulationSpeed());
 
-        if (settings.getViewMode().equals(SolarSystemViewMode.TELESCOPE)) {
+        if (settings.getViewMode() == SolarSystemViewMode.TELESCOPE) {
             radioTelescopeView.setSelected(true);
         }
         else {
@@ -3936,12 +3780,7 @@ public class SolarSystemApplication extends Application {
             finally {
                 monitor.stopSimulating();
             }
-            try {
-                haltSimulation();
-            }
-            catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+            haltSimulation();
         }
     }
 }

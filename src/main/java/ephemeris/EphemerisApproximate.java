@@ -114,8 +114,7 @@ public class EphemerisApproximate implements IEphemeris {
         double[] orbitElements = EphemerisUtil.computeOrbitalElements(orbitPars,date);
          
         // Compute (x,y,z) position [m] from orbital elements
-        Vector3D position = EphemerisUtil.computePosition(orbitElements);
-        return position;
+        return EphemerisUtil.computePosition(orbitElements);
     }
 
     @Override
@@ -134,7 +133,7 @@ public class EphemerisApproximate implements IEphemeris {
         double[] orbitPars = SolarSystemParameters.getInstance().getOrbitParameters(name);
         
         // Compute orbital elements for given date
-        double orbitElements[] = EphemerisUtil.computeOrbitalElements(orbitPars,date);
+        double[] orbitElements = EphemerisUtil.computeOrbitalElements(orbitPars,date);
          
         // Compute (x,y,z) velocity [m/s] from orbital elements
         /*
@@ -151,8 +150,6 @@ public class EphemerisApproximate implements IEphemeris {
         double meanAnomaly   = orbitElements[3]; // mean anomaly [degrees]
         double argPerihelion = orbitElements[4]; // argument of perihelion [degrees]
         double longNode      = orbitElements[5]; // longitude of ascending node [degrees]
-        double a = axis;
-        double e = eccentricity;
         double i = Math.toRadians(inclination);
         double M = Math.toRadians(meanAnomaly);
         double w = Math.toRadians(argPerihelion);
@@ -177,24 +174,24 @@ public class EphemerisApproximate implements IEphemeris {
         double sin_i = Math.sin(i);
 
         // Compute E from M
-        double E = EphemerisUtil.solveKeplerEquationHalley(M,e,1.0-14);
+        double E = EphemerisUtil.solveKeplerEquationHalley(M, eccentricity,1.0-14);
         double cos_E = Math.cos(E);
         double sin_E = Math.sin(E);
-        double E_dot = (M_dot + e_dot*sin_E)/(1.0 - e*cos_E);
+        double E_dot = (M_dot + e_dot*sin_E)/(1.0 - eccentricity *cos_E);
 
         // Compute position in orbit
-        double x = a*(cos_E - e);
-        double y = a*Math.sqrt(1.0 - e*e)*sin_E;
+        double x = axis *(cos_E - eccentricity);
+        double y = axis *Math.sqrt(1.0 - eccentricity * eccentricity)*sin_E;
 
         // Compute derivatives to compute velocity analytically
-        double Dx = a*(-sin_E)*E_dot + a_dot*cos_E - e_dot;
+        double Dx = axis *(-sin_E)*E_dot + a_dot*cos_E - e_dot;
         // double Dy = a*(Math.sqrt(1.0 - e*e) * cos_E * E_dot +
         //         (-e*e_dot/Math.sqrt(1.0-e*e)) * sin_E) +
         //         a_dot*(Math.sqrt(1.0 - e*e) * sin_E);
         // FACTOR 2
-        double Dy = a*(Math.sqrt(1.0 - e*e) * cos_E * E_dot +
-                (-2.0*e*e_dot/Math.sqrt(1.0-e*e)) * sin_E) +
-                a_dot*(Math.sqrt(1.0 - e*e) * sin_E);
+        double Dy = axis *(Math.sqrt(1.0 - eccentricity * eccentricity) * cos_E * E_dot +
+                (-2.0* eccentricity *e_dot/Math.sqrt(1.0- eccentricity * eccentricity)) * sin_E) +
+                a_dot*(Math.sqrt(1.0 - eccentricity * eccentricity) * sin_E);
 
 
         // Compute additional auxiliary variables
@@ -246,7 +243,7 @@ public class EphemerisApproximate implements IEphemeris {
         double[] orbitPars = SolarSystemParameters.getInstance().getOrbitParameters(name);
         
         // Compute orbital elements for given date
-        double orbitElements[] = EphemerisUtil.computeOrbitalElements(orbitPars,date);
+        double[] orbitElements = EphemerisUtil.computeOrbitalElements(orbitPars,date);
          
         // Compute (x,y,z) position [m] from orbital elements
         Vector3D position = EphemerisUtil.computePosition(orbitElements);

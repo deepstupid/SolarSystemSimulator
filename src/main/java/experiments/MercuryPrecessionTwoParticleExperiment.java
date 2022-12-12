@@ -34,10 +34,10 @@ import java.util.GregorianCalendar;
 public class MercuryPrecessionTwoParticleExperiment {
 
     // Number of seconds per day
-    private final long nrSecondsPerDay = (long) 24 * 60 * 60;
+    private static final long nrSecondsPerDay = (long) 24 * 60 * 60;
 
     // Average number of days per century
-    private final double nrDaysPerCentury = 36524.25;
+    private static final double nrDaysPerCentury = 36524.25;
 
     // The particle system
     private ParticleSystem particleSystem;
@@ -68,7 +68,7 @@ public class MercuryPrecessionTwoParticleExperiment {
 
         // Create Mercury
         double[] orbitParsMercury = SolarSystemParameters.getInstance().getOrbitParameters("Mercury");
-        double orbitElementsMercury[] = EphemerisUtil.computeOrbitalElements(orbitParsMercury,startDate);
+        double[] orbitElementsMercury = EphemerisUtil.computeOrbitalElements(orbitParsMercury,startDate);
         Vector3D positionMercury = EphemerisUtil.computePosition(orbitElementsMercury);
         Vector3D velocityMercury = EphemerisUtil.computeVelocity(muSun,orbitElementsMercury);
         double massMercury = SolarSystemParameters.getInstance().getMass("Mercury");
@@ -99,8 +99,7 @@ public class MercuryPrecessionTwoParticleExperiment {
         Vector3D finalPositionPerihelionMercury = positionPerihelionMercury();
 
         // Precession
-        double precessionMercury = finalPositionPerihelionMercury.angleDeg(initialPositionPerihelionMercury);
-        return precessionMercury;
+        return finalPositionPerihelionMercury.angleDeg(initialPositionPerihelionMercury);
     }
 
     // Determine argument of perihelion for Mercury [degrees]
@@ -119,15 +118,14 @@ public class MercuryPrecessionTwoParticleExperiment {
 
         // Compute orbital elements from position and velocity
         double muSun = SolarSystemParameters.getInstance().getMu("Sun");
-        double orbitElements[]
+        double[] orbitElements
                 = EphemerisUtil.computeOrbitalElementsFromPositionVelocity(muSun,positionMercury, velocityMercury);
 
         // Set mean anomaly to zero to compute position of perihelion
         orbitElements[3] = 0.0;
 
         // Compute postition of perihelion
-        Vector3D positionPerihelion = EphemerisUtil.computePosition(orbitElements);
-        return positionPerihelion;
+        return EphemerisUtil.computePosition(orbitElements);
     }
 
     /**

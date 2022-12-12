@@ -41,13 +41,13 @@ public class SpacecraftEvent implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // Name of the spacecraft
-    private String spacecraftName;
+    private final String spacecraftName;
 
     // Date/time of this event
-    private GregorianCalendar dateTime;
+    private final GregorianCalendar dateTime;
 
     // Names of bodies to be moved
-    private List<String> bodyNames;
+    private final List<String> bodyNames;
 
     /**
      * Constructor. Set name of spacecraft and date/time for this event.

@@ -74,7 +74,7 @@ public class SpacecraftVelocityDistanceExperiment {
     // End date for simulation
     private GregorianCalendar simulationEndDate;
 
-    public SpacecraftVelocityDistanceExperiment() {
+    private SpacecraftVelocityDistanceExperiment() {
 
         // Define start dates for simulation
         startDates.put("Voyager 1", startDateVoyagerOne);

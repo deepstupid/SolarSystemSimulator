@@ -32,17 +32,17 @@ import java.util.*;
 public class EphemerisSaturnMoonsBSP implements IEphemeris {
 
     // File names of BSP files
-    private final String BSPfilenameA = "EphemerisFilesBSP/sat427_SaturnSystem_1970_1999.bsp";
-    private final String BSPfilenameB = "EphemerisFilesBSP/sat427_SaturnSystem_2000_2029.bsp";
+    private static final String BSPfilenameA = "EphemerisFilesBSP/sat427_SaturnSystem_1970_1999.bsp";
+    private static final String BSPfilenameB = "EphemerisFilesBSP/sat427_SaturnSystem_2000_2029.bsp";
 
     // Observer code for BSP file
-    private final int observer = 6;
+    private static final int observer = 6;
 
     // Target codes for BSP file
-    private Map<String,Integer> targets;
+    private final Map<String,Integer> targets;
 
     // Bodies for which ephemeris can be computed or approximated
-    private List<String> bodies;
+    private final List<String> bodies;
 
     // First valid date for ephemeris 1970-1999
     private final GregorianCalendar firstValidDateA;
@@ -57,7 +57,7 @@ public class EphemerisSaturnMoonsBSP implements IEphemeris {
     private static IEphemeris instance = null;
 
     // Read ephemeris from BSP file
-    private SPK[] spk = new SPK[2];
+    private final SPK[] spk = new SPK[2];
 
     /**
      * Constructor. Singleton pattern.

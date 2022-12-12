@@ -35,7 +35,7 @@ import java.util.List;
 public class EphemerisGalileoBSP implements IEphemeris {
 
     // Bodies for which ephemeris can be computed or approximated
-    private List<String> bodies;
+    private final List<String> bodies;
 
     // First valid date
     private final GregorianCalendar firstValidDate;
@@ -50,9 +50,9 @@ public class EphemerisGalileoBSP implements IEphemeris {
     private SPK spk;
 
     // Compute position and velocity in case no record is found
-    private Vector3D positionStored = new Vector3D();
-    private Vector3D velocityStored = new Vector3D();
-    private GregorianCalendar dateTimeStored = null;
+    private final Vector3D positionStored = new Vector3D();
+    private final Vector3D velocityStored = new Vector3D();
+    private final GregorianCalendar dateTimeStored = null;
 
     // Use ephemeris with center body Sun for Interplanetary cruise
     private final IEphemeris ephemerisGalileoCruise;

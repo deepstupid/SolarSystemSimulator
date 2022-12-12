@@ -35,19 +35,19 @@ public interface IEphemeris {
      * Get the first date for which Ephemeris is valid.
      * @return first date for which Ephemeris is valid
      */
-    public GregorianCalendar getFirstValidDate();
+    GregorianCalendar getFirstValidDate();
     
     /**
      * Get the last date for which Ephemeris is valid.
      * @return last date for which Ephemeris is valid
      */
-    public GregorianCalendar getLastValidDate();
+    GregorianCalendar getLastValidDate();
     
     /**
      * Get the names of bodies for which ephemeris data can be obtained.
      * @return list of body names
      */
-    public List<String> getBodies();
+    List<String> getBodies();
     
     /**
      * Get position [m] of body from Ephemeris.
@@ -56,7 +56,7 @@ public interface IEphemeris {
      * @param date date/time
      * @return position of body [m]
      */
-    public Vector3D getBodyPosition(String name, GregorianCalendar date);
+    Vector3D getBodyPosition(String name, GregorianCalendar date);
     
     /**
      * Get velocity [m/s] of body from Ephemeris.
@@ -65,7 +65,7 @@ public interface IEphemeris {
      * @param date date/time
      * @return velocity of body [m/s]
      */
-    public Vector3D getBodyVelocity(String name, GregorianCalendar date);
+    Vector3D getBodyVelocity(String name, GregorianCalendar date);
     
     /**
      * Get position [m] and velocity [m/s] of body from Ephemeris.
@@ -75,7 +75,7 @@ public interface IEphemeris {
      * @param date date/time
      * @return array containing position [m] and velocity [m/s]
      */
-    public Vector3D[] getBodyPositionVelocity(String name, GregorianCalendar date);
+    Vector3D[] getBodyPositionVelocity(String name, GregorianCalendar date);
     
     /**
      * Get position [m] of body from Ephemeris.
@@ -85,7 +85,7 @@ public interface IEphemeris {
      * @param date date/time
      * @return position of body [m]
      */
-    public Vector3D getBodyPositionBarycenter(String name, GregorianCalendar date);
+    Vector3D getBodyPositionBarycenter(String name, GregorianCalendar date);
     
     /**
      * Get velocity [m/s] of body from Ephemeris.
@@ -95,7 +95,7 @@ public interface IEphemeris {
      * @param date date/time
      * @return velocity of body [m/s]
      */
-    public Vector3D getBodyVelocityBarycenter(String name, GregorianCalendar date);
+    Vector3D getBodyVelocityBarycenter(String name, GregorianCalendar date);
     
     /**
      * Get position [m] and velocity [m/s] of body from Ephemeris.
@@ -105,5 +105,5 @@ public interface IEphemeris {
      * @param date date/time
      * @return array containing position [m] and velocity [m/s]
      */
-    public Vector3D[] getBodyPositionVelocityBarycenter(String name, GregorianCalendar date);
+    Vector3D[] getBodyPositionVelocityBarycenter(String name, GregorianCalendar date);
 }

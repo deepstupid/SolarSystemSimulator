@@ -96,26 +96,26 @@ public class EphemerisAccurate implements IEphemeris {
     private static IEphemeris instance = null;
 
     // Location of the JPL DE405 ephemeris files (text versions) 
-    private final String locationDE405EphemerisFiles = "DE405EphemerisFiles/";
+    private static final String locationDE405EphemerisFiles = "DE405EphemerisFiles/";
 
     // Number of records for current ephemeris file
     private int records;
 
     // Ratio of mass of Earth to mass of Moon
-    private final double earthMoonMassRatio = 81.30056;
+    private static final double earthMoonMassRatio = 81.30056;
 
     /*
      * Chebyshev coefficients for the DE405 ephemeris are contained in the 
      * files "ASCPxxxx.405". These files are broken into intervals of 
      * length "interval_duration", in days.
      */
-    private final int intervalDuration = 32;
+    private static final int intervalDuration = 32;
 
     /*
      * Each interval contains an interval number, length, start and end 
      * jultimes, and Chebyshev coefficients. We keep only the coefficients.  
      */
-    private final int numbersPerInterval = 816;
+    private static final int numbersPerInterval = 816;
     
     /*
      * For each planet (and the Moon makes 10, and the Sun makes 11), 
@@ -168,9 +168,7 @@ public class EphemerisAccurate implements IEphemeris {
 
         // Names of planets, moon, and sun for which ephemeris can be computed
         bodies = new ArrayList<>();
-        for (String body : indexMap.keySet()) {
-            bodies.add(body);
-        }
+        bodies.addAll(indexMap.keySet());
 
         // First valid date: January 1, 1620
         firstValidDate = JulianDateConverter.convertJulianDateToCalendar(2312752.5);
@@ -215,10 +213,9 @@ public class EphemerisAccurate implements IEphemeris {
 
     @Override
     public Vector3D getBodyPosition(String name, GregorianCalendar date) {
-        // Check whether body name is valid
-        if (!indexMap.keySet().contains(name)) {
+        Integer indexBody = indexMap.get(name);
+        if (indexBody == null)
             throw new IllegalArgumentException("Unknown body " + name + " for Ephemeris DE405");
-        }
 
         // Check whether date is valid
         if (date.before(firstValidDate) || date.after(lastValidDate)) {
@@ -229,7 +226,6 @@ public class EphemerisAccurate implements IEphemeris {
         updateEphemeris(date);
 
         // Position of body with given name [m]
-        int indexBody = indexMap.get(name);
         Vector3D positionBody = currentPositions[indexBody];
 
         // Position of Sun [m]
@@ -246,9 +242,10 @@ public class EphemerisAccurate implements IEphemeris {
     @Override
     public Vector3D getBodyVelocity(String name, GregorianCalendar date) {
         // Check whether body name is valid
-        if (!indexMap.keySet().contains(name)) {
+        Integer indexBody = indexMap.get(name);
+        if (indexBody == null)
             throw new IllegalArgumentException("Unknown body " + name + " for Ephemeris DE405");
-        }
+
 
         // Check whether date is valid
         if (date.before(firstValidDate) || date.after(lastValidDate)) {
@@ -259,7 +256,6 @@ public class EphemerisAccurate implements IEphemeris {
         updateEphemeris(date);
 
         // Velocity of body with given name [m/s]
-        int indexBody = indexMap.get(name);
         Vector3D velocityBody = currentVelocities[indexBody];
 
         // Velocity of Sun [m/s]
@@ -283,9 +279,10 @@ public class EphemerisAccurate implements IEphemeris {
     @Override
     public Vector3D getBodyPositionBarycenter(String name, GregorianCalendar date) {
         // Check whether body name is valid
-        if (!indexMap.keySet().contains(name)) {
+        Integer indexBody = indexMap.get(name);
+        if (indexBody == null)
             throw new IllegalArgumentException("Unknown body " + name + " for Ephemeris DE405");
-        }
+
 
         // Check whether date is valid
         if (date.before(firstValidDate) || date.after(lastValidDate)) {
@@ -296,7 +293,6 @@ public class EphemerisAccurate implements IEphemeris {
         updateEphemeris(date);
 
         // Position of body with given name
-        int indexBody = indexMap.get(name);
         Vector3D position = currentPositions[indexBody];
 
         // Inverse transformation for 23.4 degrees J2000 frame
@@ -306,9 +302,8 @@ public class EphemerisAccurate implements IEphemeris {
     @Override
     public Vector3D getBodyVelocityBarycenter(String name, GregorianCalendar date) {
         // Check whether body name is valid
-        if (!indexMap.keySet().contains(name)) {
-            throw new IllegalArgumentException("Unknown body " + name + " for Ephemeris DE405");
-        }
+        int indexBody = indexMap.get(name);
+
 
         // Check whether date is valid
         if (date.before(firstValidDate) || date.after(lastValidDate)) {
@@ -319,7 +314,6 @@ public class EphemerisAccurate implements IEphemeris {
         updateEphemeris(date);
 
         // Velocity of body with given name
-        int indexBody = indexMap.get(name);
         Vector3D velocity = currentVelocities[indexBody];
 
         // Inverse transformation for 23.4 degrees J2000 frame
@@ -338,7 +332,7 @@ public class EphemerisAccurate implements IEphemeris {
      * and the Sun.
      * @param date current date/time for ephemeris
      */
-    public void updateEphemeris(GregorianCalendar date) {
+    private void updateEphemeris(GregorianCalendar date) {
         // Compute Julian date/time
         double julianDateTime = JulianDateConverter.convertCalendarToJulianDate(date);
         
@@ -548,10 +542,14 @@ public class EphemerisAccurate implements IEphemeris {
          * of the Earth-Moon barycenter is determined, while a geocentric vector from the
          * Earth to the Moon is determined instead of the position of the moon.
          */
-        for (int i = 0; i < indexMap.size() - 1; i++) {
+        Vector3D[] P = currentPositions;
+        Vector3D[] V = currentVelocities;
+
+        int n = indexMap.size() - 1;
+        for (int i = 0; i < n; i++) {
             Vector3D[] positionVelocity = getPlanetPositionVelocity(julianDateTime, i);
-            currentPositions[i] = positionVelocity[0];
-            currentVelocities[i] = positionVelocity[1];
+            P[i] = positionVelocity[0];
+            V[i] = positionVelocity[1];
         }
         
         /* 
@@ -565,18 +563,18 @@ public class EphemerisAccurate implements IEphemeris {
         int indexEarth = indexMap.get("Earth");
         int indexMoon = indexMap.get("Moon");
 
-        Vector3D earthPosition = currentPositions[indexEarthMoonBarycenter].
-                        minus(currentPositions[indexMoon].
+        Vector3D earthPosition = P[indexEarthMoonBarycenter].
+                        minus(P[indexMoon].
                               scalarProduct(1.0 / (1.0 + earthMoonMassRatio)));
-        currentPositions[indexEarth] = earthPosition;
-        Vector3D moonPosition = earthPosition.plus(currentPositions[indexMoon]);
-        currentPositions[indexMoon] = moonPosition;
-        Vector3D earthVelocity = currentVelocities[indexEarthMoonBarycenter].
-                        minus(currentVelocities[indexMoon].
+        P[indexEarth] = earthPosition;
+        Vector3D moonPosition = earthPosition.plus(P[indexMoon]);
+        P[indexMoon] = moonPosition;
+        Vector3D earthVelocity = V[indexEarthMoonBarycenter].
+                        minus(V[indexMoon].
                               scalarProduct(1.0 / (1.0 + earthMoonMassRatio)));
-        currentVelocities[indexEarth] = earthVelocity;
-        Vector3D moonVelocity = earthVelocity.plus(currentVelocities[indexMoon]);
-        currentVelocities[indexMoon] = moonVelocity;
+        V[indexEarth] = earthVelocity;
+        Vector3D moonVelocity = earthVelocity.plus(V[indexMoon]);
+        V[indexMoon] = moonVelocity;
     }
 
     /**
@@ -620,16 +618,18 @@ public class EphemerisAccurate implements IEphemeris {
             pointer = pointer + 3 * numberCoefSets[j] * numberCoefs[j];
         }
 
+        int nci = numberCoefs[index];
+
         // Skip the next (subinterval - 1) * 3 * numberOfCoefs(index) coefficients
-        pointer = pointer + (subinterval - 1) * 3 * numberCoefs[index];
+        pointer += (subinterval - 1) * 3 * nci;
 
         // Read the coefficients
         double[][] coef = new double[3][19];
         for (int j = 0; j < 3; j++) {
-            for (int k = 0; k < numberCoefs[index]; k++) {
+            for (int k = 0; k < nci; k++) {
                 // Read the coefficient at the pointer as the array entry coef[j][k]
                 coef[j][k] = ephemerisCoefficients[pointer];
-                pointer = pointer + 1;
+                pointer++;
             }
         }
 
@@ -642,7 +642,7 @@ public class EphemerisAccurate implements IEphemeris {
         double[] positionPoly = new double[19];
         positionPoly[0] = 1;
         positionPoly[1] = chebyshevTime;
-        for (int j = 2; j < numberCoefs[index]; j++) {
+        for (int j = 2; j < nci; j++) {
             positionPoly[j] = 2 * chebyshevTime * positionPoly[j - 1] - positionPoly[j - 2];
         }
 
@@ -650,8 +650,8 @@ public class EphemerisAccurate implements IEphemeris {
         double[] ephemerisPosition = new double[3];
         for (int j = 0; j < 3; j++) {
             ephemerisPosition[j] = 0;
-            for (int k = 0; k < numberCoefs[index]; k++) {
-                ephemerisPosition[j] = ephemerisPosition[j] + coef[j][k] * positionPoly[k];
+            for (int k = 0; k < nci; k++) {
+                ephemerisPosition[j] += coef[j][k] * positionPoly[k];
             }
         }
 
@@ -660,7 +660,7 @@ public class EphemerisAccurate implements IEphemeris {
         velocityPoly[0] = 0;
         velocityPoly[1] = 1;
         velocityPoly[2] = 4 * chebyshevTime;
-        for (int j = 3; j < numberCoefs[index]; j++) {
+        for (int j = 3; j < nci; j++) {
             velocityPoly[j] = 2 * chebyshevTime * velocityPoly[j - 1] + 
                               2 * positionPoly[j - 1] - velocityPoly[j - 2];
         }
@@ -669,8 +669,8 @@ public class EphemerisAccurate implements IEphemeris {
         double[] ephemerisVelocity = new double[3];
         for (int j = 0; j < 3; j++) {
             ephemerisVelocity[j] = 0;
-            for (int k = 0; k < numberCoefs[index]; k++) {
-                ephemerisVelocity[j] = ephemerisVelocity[j] + coef[j][k] * velocityPoly[k];
+            for (int k = 0; k < nci; k++) {
+                ephemerisVelocity[j] += coef[j][k] * velocityPoly[k];
             }
             /*
              * The next line accounts for differentiation of the iterative formula with respect 
@@ -678,8 +678,7 @@ public class EphemerisAccurate implements IEphemeris {
              * Essentially, if dx/dt = (dx/dct) times (dct/dt), the next line includes the 
              * factor (dct/dt) so that the units are km/day
              */
-            ephemerisVelocity[j] = ephemerisVelocity[j] * 
-                                   (2.0 * numberCoefSets[index] / intervalDuration);
+            ephemerisVelocity[j] *= (2.0 * numberCoefSets[index] / intervalDuration);
         }
         
         // Position of the body - convert from km to m
@@ -716,8 +715,7 @@ public class EphemerisAccurate implements IEphemeris {
         int lineNr = 0;
 
         String filename = selectFileForJulianDate(julianDateTime);
-        File file = new File(locationDE405EphemerisFiles,filename);
-        try (BufferedReader buff = Files.newBufferedReader(file.toPath())) {
+        try (BufferedReader buff = Files.newBufferedReader(new File(locationDE405EphemerisFiles,filename).toPath())) {
 
             // Read each record in the file
             for (int j = 1; j <= records; j++) {
@@ -733,7 +731,7 @@ public class EphemerisAccurate implements IEphemeris {
                         mantissa1 = Integer.parseInt(line.substring(4, 13));
                         mantissa2 = Integer.parseInt(line.substring(13, 22));
                         exponent = Integer.parseInt(line.substring(24, 26));
-                        if (line.substring(23, 24).equals("+")) {
+                        if (line.charAt(23) == '+') {
                             ephemerisCoefficients[(j - 1) * 816 + (3 * (lineNr - 2) - 1)] = 
                                     mantissa1 * Math.pow(10, (exponent - 9)) + 
                                     mantissa2 * Math.pow(10, (exponent - 18));
@@ -742,7 +740,7 @@ public class EphemerisAccurate implements IEphemeris {
                                     mantissa1 * Math.pow(10, -(exponent + 9)) + 
                                     mantissa2 * Math.pow(10, -(exponent + 18));
                         }
-                        if (line.substring(1, 2).equals("-")) {
+                        if (line.charAt(1) == '-') {
                             ephemerisCoefficients[(j - 1) * 816 + (3 * (lineNr - 2) - 1)] = 
                                     -ephemerisCoefficients[(j - 1) * 816 + (3 * (lineNr - 2) - 1)];
                         }
@@ -752,7 +750,7 @@ public class EphemerisAccurate implements IEphemeris {
                         mantissa1 = Integer.parseInt(line.substring(30, 39));
                         mantissa2 = Integer.parseInt(line.substring(39, 48));
                         exponent = Integer.parseInt(line.substring(50, 52));
-                        if (line.substring(49, 50).equals("+")) {
+                        if (line.charAt(49) == '+') {
                             ephemerisCoefficients[(j - 1) * 816 + 3 * (lineNr - 2)] = 
                                     mantissa1 * Math.pow(10, (exponent - 9)) + 
                                     mantissa2 * Math.pow(10, (exponent - 18));
@@ -761,7 +759,7 @@ public class EphemerisAccurate implements IEphemeris {
                                     mantissa1 * Math.pow(10, -(exponent + 9)) + 
                                     mantissa2 * Math.pow(10, -(exponent + 18));
                         }
-                        if (line.substring(27, 28).equals("-")) {
+                        if (line.charAt(27) == '-') {
                             ephemerisCoefficients[(j - 1) * 816 + 3 * (lineNr - 2)] = 
                                     -ephemerisCoefficients[(j - 1) * 816 + 3 * (lineNr - 2)];
                         }
@@ -771,7 +769,7 @@ public class EphemerisAccurate implements IEphemeris {
                         mantissa1 = Integer.parseInt(line.substring(56, 65));
                         mantissa2 = Integer.parseInt(line.substring(65, 74));
                         exponent = Integer.parseInt(line.substring(76, 78));
-                        if (line.substring(75, 76).equals("+")) {
+                        if (line.charAt(75) == '+') {
                             ephemerisCoefficients[(j - 1) * 816 + (3 * (lineNr - 2) + 1)] = 
                                     mantissa1 * Math.pow(10, (exponent - 9)) + 
                                     mantissa2 * Math.pow(10, (exponent - 18));
@@ -780,7 +778,7 @@ public class EphemerisAccurate implements IEphemeris {
                                     mantissa1 * Math.pow(10, -(exponent + 9)) + 
                                     mantissa2 * Math.pow(10, -(exponent + 18));
                         }
-                        if (line.substring(53, 54).equals("-")) {
+                        if (line.charAt(53) == '-') {
                             ephemerisCoefficients[(j - 1) * 816 + (3 * (lineNr - 2) + 1)] = 
                                     -ephemerisCoefficients[(j - 1) * 816 + (3 * (lineNr - 2) + 1)];
                         }
@@ -794,7 +792,7 @@ public class EphemerisAccurate implements IEphemeris {
             }
 
         } catch (IOException e) {
-            System.out.println("Error = " + e.toString());
+            System.out.println("Error = " + e);
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("String index out of bounds at line number " + lineNr);
         }

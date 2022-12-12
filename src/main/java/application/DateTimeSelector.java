@@ -37,7 +37,7 @@ import java.util.TimeZone;
  * ss represent seconds (2 digits), 00-59
  * @author Nico Kuijpers
  */
-public class DateTimeSelector extends TextField {
+class DateTimeSelector extends TextField {
 
     public DateTimeSelector(GregorianCalendar dateTime) {
         // Set text representing given date/time
@@ -73,7 +73,7 @@ public class DateTimeSelector extends TextField {
      * @param calendar GregorianCalendar-object
      * @return era, date, and time as string
      */
-    private String calendarToString(GregorianCalendar calendar) {
+    private static String calendarToString(GregorianCalendar calendar) {
         // Obtain era, date, and time from calendar
         int era = calendar.get(Calendar.ERA);
         int year = calendar.get(Calendar.YEAR);
@@ -112,7 +112,7 @@ public class DateTimeSelector extends TextField {
      * @param text era, date, and time as string
      * @return GregorianCalendar object corresponding to given string
      */
-    private GregorianCalendar stringToCalendar(String text) {
+    private static GregorianCalendar stringToCalendar(String text) {
         // Obatain era, date, and time from string
         int era = GregorianCalendar.AD;
         if (text.startsWith("BC")) {

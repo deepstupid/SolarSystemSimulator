@@ -100,7 +100,7 @@ public class SpacecraftExperiment {
     // End date for simulation
     private GregorianCalendar simulationEndDate;
 
-    public SpacecraftExperiment() {
+    private SpacecraftExperiment() {
 
         // Define start dates for simulation
         startDates.put("Pioneer 10", startDatePioneerTen);

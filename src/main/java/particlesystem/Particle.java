@@ -22,7 +22,6 @@ package particlesystem;
 import util.Vector3D;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * Represents a single particle of a particle system.
@@ -45,8 +44,8 @@ public class Particle implements Serializable {
     // https://simple.wikipedia.org/wiki/Speed_of_light
     // https://ipnpr.jpl.nasa.gov/progress_report/42-196/196C.pdf
     // Page 47, Table 4
-    public static final double LIGHTSPEED = 299792458.0;
-    public static final double LIGHTSPEEDSQUARE = 8987551787368176400.0;
+    private static final double LIGHTSPEED = 299792458.0;
+//    public static final double LIGHTSPEEDSQUARE = 8987551787368176400.0;
     
     private double mass;
     private double mu;
@@ -58,8 +57,8 @@ public class Particle implements Serializable {
 
     // Store position and velocity of former time step for
     // Runge-Kutta method and four-step Adams-Bashforth-Moulton method
-    public Vector3D formerPosition;
-    public Vector3D formerVelocity;
+    private Vector3D formerPosition;
+    private Vector3D formerVelocity;
     
     // Store intermediate state for Runge-Kutta method
     private Vector3D k1, k2, k3, k4;
@@ -67,8 +66,8 @@ public class Particle implements Serializable {
 
     // Cyclic arrays to store velocity and acceleration for
     // four-step Adams-Bashforth-Moulton method
-    private Vector3D[] velocityABM4 = new Vector3D[4];
-    private Vector3D[] accelerationABM4 = new Vector3D[4];
+    private final Vector3D[] velocityABM4 = new Vector3D[4];
+    private final Vector3D[] accelerationABM4 = new Vector3D[4];
 
     /**
      * Default constructor.
@@ -239,7 +238,7 @@ public class Particle implements Serializable {
      * The potential energy for this particle is also computed.
      * @param particles all particles
      */
-    public void computeAccelerationNewtonMechanics(Collection<Particle> particles) {
+    public void computeAccelerationNewtonMechanics(Iterable<Particle> particles) {
         acceleration = new Vector3D();
         potentialEnergy = 0.0;
         for (Particle p : particles) {
@@ -269,7 +268,7 @@ public class Particle implements Serializable {
      * is used to compute acceleration using General Relativity.
      * @param particles all particles
      */
-    public void computeAccelerationGeneralRelativity(Collection<Particle> particles) {
+    public void computeAccelerationGeneralRelativity(Iterable<Particle> particles) {
         /*
          * The gravitational acceleration of each body due to external
          * point masses is derived from the isotropic, parameterized
@@ -661,9 +660,8 @@ public class Particle implements Serializable {
         // Contribution to potential energy
         // http://www.physics.arizona.edu/~varnes/Teaching/141Hspring2004/Notes/Lecture38.pdf
         // Use standard gravitional parameter mu = G*M of other particle
-        double Epot  = -(p.mu * this.mass) / distance;
-        
+
         // Contribution to potential energy
-        return Epot;
+        return -(p.mu * this.mass) / distance;
     }
 }

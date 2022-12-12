@@ -28,7 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class BodySelectorPanel extends Stage {
+class BodySelectorPanel extends Stage {
 
     // Definition of constant values
     private static final int PANELWIDTH = 370;
@@ -41,11 +41,11 @@ public class BodySelectorPanel extends Stage {
     private final GridPane grid;
 
     // Font for labels of check boxes
-    private Font font;
+    private final Font font;
 
     // Size for check boxes within grid pane
-    private final int horsize = 1;
-    private final int versize = 1;
+    private static final int horsize = 1;
+    private static final int versize = 1;
 
     // Location of next checkbox within grid pane
     private int rowIndex = 0;

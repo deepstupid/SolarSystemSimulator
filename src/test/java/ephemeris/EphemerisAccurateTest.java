@@ -11,6 +11,7 @@ import util.Vector3D;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test consistency of AccurateEphemeris by predicting the position of each
@@ -70,13 +71,13 @@ public class EphemerisAccurateTest {
         // winter time to summer time and vice versa
         date.setTimeZone(TimeZone.getTimeZone("UTC"));
         
-        // End test at January 31, 2200
-        GregorianCalendar endDate = new GregorianCalendar(2200,0,31);
-        
+        GregorianCalendar endDate = new GregorianCalendar(2200,0,1);
+        assertTrue(endDate.before(JulianDateConverter.convertJulianDateToCalendar(2524623.5)));
+
         // Previous position and velocity
         Map<String,Vector3D> positionPrevious = new HashMap<>();
         Map<String,Vector3D> velocityPrevious = new HashMap<>();
-        
+
         // Start test
         while (date.before(endDate)) {
             
@@ -106,6 +107,7 @@ public class EphemerisAccurateTest {
                         plus(velocity.scalarProduct(1800.0)));
                 
                         double difference = positionPredicted.euclideanDistance(position);
+                        //System.out.println(difference);
                         assertEquals("Difference between position and predicted position for " + 
                             bodyName, 0.0, difference, 500.0); // 500 m
                 }

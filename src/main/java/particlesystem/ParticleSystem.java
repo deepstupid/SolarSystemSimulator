@@ -49,13 +49,13 @@ public class ParticleSystem implements Serializable {
     /**
      * List of all particles.
      */
-    protected Map<String, Particle> particles;
+    protected final Map<String, Particle> particles;
 
     /**
      * List of particles with mass.
      * These particles apply force to all other particles.
      */
-    protected Map<String, Particle> particlesWithMass;
+    private final Map<String, Particle> particlesWithMass;
 
     /**
      * Default constructor.

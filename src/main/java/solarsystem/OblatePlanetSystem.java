@@ -26,6 +26,7 @@ import util.Vector3D;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -43,10 +44,10 @@ public class OblatePlanetSystem extends ParticleSystem implements Serializable {
     private static final SolarSystemParameters solarSystemParameters = SolarSystemParameters.getInstance();
 
     // Name of the planet
-    private String planetName;
+    private final String planetName;
 
     // Particles from Solar System
-    private List<Particle> solarSystemParticles;
+    private final List<Particle> solarSystemParticles;
 
     /**
      * Constructor.
@@ -82,7 +83,7 @@ public class OblatePlanetSystem extends ParticleSystem implements Serializable {
     protected void computeAcceleration() {
         // Compute acceleration using Newton mechanics
         // Include the Sun and large planets from the Solar System
-        List<Particle> tempParticles = new ArrayList<>(particles.values());
+        Collection<Particle> tempParticles = new ArrayList<>(particles.values());
         tempParticles.addAll(solarSystemParticles);
         for (Particle p : particles.values()) {
             p.computeAccelerationNewtonMechanics(tempParticles);

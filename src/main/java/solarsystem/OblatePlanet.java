@@ -42,19 +42,19 @@ public class OblatePlanet extends Particle {
     private static final SolarSystemParameters solarSystemParameters = SolarSystemParameters.getInstance();
 
     // Name of the planet
-    private String planetName;
+    private final String planetName;
 
     // Gravitational parameter of oblate plane [m3/s2]
     private double oblateMu;
 
     // Equatorial radius of oblate planet [m]
-    private double equatorialRadius;
+    private final double equatorialRadius;
 
     // Zonal coefficients of oblate planet [-]
-    private double[] zonalCoefficients;
+    private final double[] zonalCoefficients;
 
     // Ecliptic angle [rad]
-    private double eclipticAngle = Math.toRadians(SolarSystemParameters.AXIALTILT);
+    private final double eclipticAngle = Math.toRadians(SolarSystemParameters.AXIALTILT);
     // From EphemerisNeptuneMoons:
     // private double eclipticAngle = Math.toRadians(23.43929);
 
@@ -181,7 +181,6 @@ public class OblatePlanet extends Particle {
         double sin_h = Math.sin(-eclipticAngle);
         double yg1 = cos_h * y + sin_h * z;
         double zg1 =-sin_h * y + cos_h * z;
-        double xg1 = x;
 
         /*
          * Transform from Earth equatorial plane to equatorial plane of oblate planet
@@ -191,9 +190,9 @@ public class OblatePlanet extends Particle {
          * https://academic.oup.com/mnras/article/454/2/2205/2892708
          * https://doi.org/10.1093/mnras/stv2116
          */
-        double xg = -Math.sin(alpha)*xg1 + Math.cos(alpha)*yg1;
-        double yg = -Math.cos(alpha)*Math.sin(delta)*xg1 - Math.sin(alpha)*Math.sin(delta)*yg1 + Math.cos(delta)*zg1;
-        double zg =  Math.cos(alpha)*Math.cos(delta)*xg1 + Math.sin(alpha)*Math.cos(delta)*yg1 + Math.sin(delta)*zg1;
+        double xg = -Math.sin(alpha)* x + Math.cos(alpha)*yg1;
+        double yg = -Math.cos(alpha)*Math.sin(delta)* x - Math.sin(alpha)*Math.sin(delta)*yg1 + Math.cos(delta)*zg1;
+        double zg =  Math.cos(alpha)*Math.cos(delta)* x + Math.sin(alpha)*Math.cos(delta)*yg1 + Math.sin(delta)*zg1;
 
         return new Vector3D(xg,yg,zg);
     }
@@ -321,7 +320,6 @@ public class OblatePlanet extends Particle {
         }
 
         // To compute acceleration in body frame
-        double sinLat = xi;
         double cosLat = Math.sqrt(1.0 - xi*xi);
         double a1     = cosLat*r;
         double cosLon = position.getX()/a1;
@@ -349,9 +347,9 @@ public class OblatePlanet extends Particle {
         acc[2] = acc[2] / (r*r);
 
         // Rotate back to equatorial frame
-        double ax = cosLat*acc[0] - sinLat*acc[2];
+        double ax = cosLat*acc[0] - xi *acc[2];
         double ay = acc[1];
-        double az = sinLat*acc[0] + cosLat*acc[2];
+        double az = xi *acc[0] + cosLat*acc[2];
         acc[0] = (cosLon*ax - sinLon*ay)*GMplanet;
         acc[1] = (sinLon*ax + cosLon*ay)*GMplanet;
         acc[2] = az*GMplanet;
